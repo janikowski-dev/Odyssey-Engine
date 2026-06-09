@@ -1,6 +1,6 @@
 #include "JsonProxy.h"
 
-namespace Engine::Editor
+namespace Core::Editor
 {
     bool JsonProxy::Dispatch(const std::string& Name, const Json& Data)
     {

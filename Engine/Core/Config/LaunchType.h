@@ -1,4 +1,4 @@
-namespace Engine::Config
+namespace Core::Config
 {
     enum LaunchType
     {

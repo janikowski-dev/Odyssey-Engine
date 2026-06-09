@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace Engine::Messaging
+namespace Core::Messaging
 {
     void HandlerList::Sort()
     {

@@ -1,6 +1,6 @@
 #include "Registry.h"
 
-namespace Engine::ECS
+namespace Core::ECS
 {
     Entity Registry::Create()
     {

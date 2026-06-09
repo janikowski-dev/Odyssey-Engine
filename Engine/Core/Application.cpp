@@ -2,7 +2,7 @@
 
 #include "Editor/Bindings.h"
 
-namespace Engine
+namespace Core
 {
 	Application::Application(const Config::ApplicationConfig& InConfig) 
 	{

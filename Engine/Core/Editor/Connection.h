@@ -8,7 +8,7 @@
 #include <thread>
 #include <vector>
 
-namespace Engine::Editor
+namespace Core::Editor
 {
     class Connection
     {

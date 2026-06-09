@@ -1,6 +1,6 @@
 #include "Bridge.h"
 
-namespace Engine::Editor
+namespace Core::Editor
 {
     Bridge::Bridge(Messaging::EventBus& InBus) : Proxy(InBus)
     {

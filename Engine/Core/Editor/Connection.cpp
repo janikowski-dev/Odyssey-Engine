@@ -7,7 +7,7 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
-namespace Engine::Editor
+namespace Core::Editor
 {
     namespace
     {

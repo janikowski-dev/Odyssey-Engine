@@ -1,6 +1,6 @@
 #include "EventBus.h"
 
-namespace Engine::Messaging
+namespace Core::Messaging
 {
     void EventBus::Flush()
     {

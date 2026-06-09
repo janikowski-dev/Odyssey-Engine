@@ -1,8 +1,8 @@
 #include "CLIParser.h"
 
-Engine::Config::ApplicationConfig CLIParser::Parse(int argc, char **argv)
+Core::Config::ApplicationConfig CLIParser::Parse(int argc, char **argv)
 {
-    Engine::Config::ApplicationConfig config;
+    Core::Config::ApplicationConfig config;
 
     for (int i = 0; i < argc; i++)
     {
@@ -10,12 +10,12 @@ Engine::Config::ApplicationConfig CLIParser::Parse(int argc, char **argv)
 
         if (arg == "-game")
         {
-            config.LaunchType = Engine::Config::LaunchType::Game;
+            config.LaunchType = Core::Config::LaunchType::Game;
         }
 
         if (arg == "-editor")
         {
-            config.LaunchType = Engine::Config::LaunchType::Editor;
+            config.LaunchType = Core::Config::LaunchType::Editor;
         }
 
         if (arg == "-hide")

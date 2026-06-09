@@ -2,7 +2,7 @@
 
 #include "Registry.h"
 
-namespace Engine::ECS
+namespace Core::ECS
 {
     template<typename T, typename... Args>
     T& Registry::Add(Entity InEntity, Args&&... InArgs)

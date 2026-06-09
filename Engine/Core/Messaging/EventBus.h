@@ -10,7 +10,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace Engine::Messaging
+namespace Core::Messaging
 {
     class Subscription;
 

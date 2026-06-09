@@ -3,8 +3,8 @@
 
 int main(int argc, char** argv)
 {
-    Engine::Config::ApplicationConfig Config = CLIParser::Parse(argc, argv);
-    Engine::Application Application(Config);
+    Core::Config::ApplicationConfig Config = CLIParser::Parse(argc, argv);
+    Core::Application Application(Config);
     Application.Run();
     return 0;
 }

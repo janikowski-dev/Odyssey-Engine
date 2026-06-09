@@ -2,7 +2,7 @@
 
 #include "EventBus.h"
 
-namespace Engine::Messaging
+namespace Core::Messaging
 {
     Subscription::Subscription(Subscription&& Other) noexcept
     {

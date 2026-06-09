@@ -4,7 +4,7 @@
 #include <functional>
 #include <vector>
 
-namespace Engine::Messaging
+namespace Core::Messaging
 {
     using SubID = std::uint64_t;
     inline constexpr SubID INVALID_SUB = 0;

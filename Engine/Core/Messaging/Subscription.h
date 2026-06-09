@@ -2,7 +2,7 @@
 
 #include "HandlerData.h"
 
-namespace Engine::Messaging
+namespace Core::Messaging
 {
     class EventBus;
 

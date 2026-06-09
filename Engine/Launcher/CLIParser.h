@@ -5,5 +5,5 @@
 class CLIParser
 {
 public:
-    static Engine::Config::ApplicationConfig Parse(int argc, char** argv);
+    static Core::Config::ApplicationConfig Parse(int argc, char** argv);
 };

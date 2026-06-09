@@ -6,7 +6,7 @@
 
 #include <utility>
 
-namespace Engine::Messaging
+namespace Core::Messaging
 {
     template<typename T>
     [[nodiscard]] Subscription EventBus::Subscribe(std::function<void(T&)> Handler, int Priority)

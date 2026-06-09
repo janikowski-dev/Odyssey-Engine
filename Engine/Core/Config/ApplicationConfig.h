@@ -3,7 +3,7 @@
 #include "WindowConfig.h"
 #include "LaunchType.h"
 
-namespace Engine::Config
+namespace Core::Config
 {
     struct ApplicationConfig
     {

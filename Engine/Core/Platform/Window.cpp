@@ -10,7 +10,7 @@
 #include <iostream>
 #include <assert.h>
 
-namespace Engine::Platform
+namespace Core::Platform
 {
 	Window::Window(const Config::WindowConfig& InConfig) : Config(InConfig)
 	{

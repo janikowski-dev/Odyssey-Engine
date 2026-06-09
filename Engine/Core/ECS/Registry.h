@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 
-namespace Engine::ECS
+namespace Core::ECS
 {
     class Registry
     {

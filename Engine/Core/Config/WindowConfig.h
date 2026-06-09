@@ -3,7 +3,7 @@
 #include <string>
 #include <functional>
 
-namespace Engine::Config
+namespace Core::Config
 {
 	struct WindowConfig
 	{

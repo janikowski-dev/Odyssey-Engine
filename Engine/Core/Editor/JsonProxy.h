@@ -10,7 +10,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace Engine::Editor
+namespace Core::Editor
 {
     template<typename... Ts>
     struct EventList
@@ -58,7 +58,7 @@ namespace Engine::Editor
 }
 
 #define ENGINE_EVENT_KEY(Type, Key)                  \
-    template<> struct Engine::Editor::EventKey<Type> \
+    template<> struct Core::Editor::EventKey<Type> \
     {                                                \
         static constexpr const char* Value = Key;    \
     }

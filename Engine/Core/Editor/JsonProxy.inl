@@ -2,7 +2,7 @@
 
 #include "JsonProxy.h"
 
-namespace Engine::Editor
+namespace Core::Editor
 {
     template<typename... Ts>
     void JsonProxy::RegisterInbound(EventList<Ts...>)

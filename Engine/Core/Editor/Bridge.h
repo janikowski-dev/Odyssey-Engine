@@ -12,7 +12,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace Engine::Editor
+namespace Core::Editor
 {
     class Bridge
     {

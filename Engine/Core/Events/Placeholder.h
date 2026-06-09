@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace Engine::Events
+namespace Core::Events
 {
     struct Placeholder
     {

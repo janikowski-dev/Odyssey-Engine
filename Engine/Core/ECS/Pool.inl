@@ -2,7 +2,7 @@
 
 #include "Pool.h"
 
-namespace Engine::ECS
+namespace Core::ECS
 {
     template<typename T>
     bool Pool<T>::Has(std::uint32_t Index) const

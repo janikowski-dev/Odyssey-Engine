@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace Engine::ECS
+namespace Core::ECS
 {
     struct Entity
     {

@@ -5,7 +5,7 @@
 #include <utility>
 #include <vector>
 
-namespace Engine::ECS
+namespace Core::ECS
 {
     inline constexpr std::uint32_t INVALID_SLOT = ~0u;
 
