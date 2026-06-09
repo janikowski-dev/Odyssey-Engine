@@ -6,6 +6,10 @@ set(SOURCES
     Application.cpp
     Application.h
 
+    Components/MeshRenderer.h
+    Components/Spin.h
+    Components/Transform.h
+
     Editor/Connection.cpp
     Editor/Connection.h
     Editor/Bridge.cpp
@@ -27,6 +31,17 @@ set(SOURCES
 
     Platform/Window.cpp
     Platform/Window.h
+
+    Rendering/Camera.h
+    Rendering/Mesh.cpp
+    Rendering/Mesh.h
+    Rendering/Renderer.cpp
+    Rendering/Renderer.h
+    Rendering/Shader.cpp
+    Rendering/Shader.h
+
+    Systems/RenderSystem.h
+    Systems/SpinSystem.h
 
     Messaging/EventBus.cpp
     Messaging/EventBus.h

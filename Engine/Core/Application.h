@@ -1,9 +1,12 @@
 #pragma once
 
 #include "Config/ApplicationConfig.h"
+#include "Systems/RenderSystem.h"
+#include "Systems/SpinSystem.h"
 #include "Messaging/EventBus.h"
 #include "Platform/Window.h"
 #include "Editor/Bridge.h"
+#include "ECS/Registry.h"
 
 #include <memory>
 
@@ -18,9 +21,17 @@ namespace Core
 		void Run();
 
 	private:
+    	using Duration = std::chrono::duration<float>;
+    	using Clock = std::chrono::steady_clock;
+
+		std::unique_ptr<Systems::RenderSystem> RenderSystem;
+		std::unique_ptr<Systems::SpinSystem> SpinSystem;
 		std::unique_ptr<Messaging::EventBus> EventBus;
 		std::unique_ptr<Editor::Bridge> EditorBridge;
 		std::unique_ptr<Platform::Window> AppWindow;
-		bool IsRunning = false;
+		std::unique_ptr<ECS::Registry> World;
+
+		std::unique_ptr<Renderer::Renderer> RendererBackend;
+		std::shared_ptr<Renderer::Mesh> Cube;
 	};
 }

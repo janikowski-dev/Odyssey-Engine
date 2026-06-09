@@ -40,11 +40,6 @@ namespace Core::Platform
         glfwTerminate();
 	}
 
-	bool Window::ShouldClose() const
-	{
-		return glfwWindowShouldClose(Handle);
-	}
-
 	void Window::Tick() const
 	{
     	glfwSwapBuffers(Handle);

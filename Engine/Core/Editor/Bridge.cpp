@@ -15,11 +15,6 @@ namespace Core::Editor
         return Connection.Listen(Port);
     }
 
-    bool Bridge::IsConnected() const
-    {
-        return Connection.IsConnected();
-    }
-
     void Bridge::On(const std::string& Method, Handler InHandler)
     {
         Handlers[Method] = std::move(InHandler);

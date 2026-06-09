@@ -24,7 +24,6 @@ namespace Core::Editor
 
         bool Start(std::uint16_t Port);
         void Tick();
-        bool IsConnected() const;
 
         void On(const std::string& Method, Handler InHandler);
 

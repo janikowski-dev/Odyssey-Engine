@@ -16,7 +16,6 @@ namespace Core::Platform
 		void Create(Editor::Bridge& InBridge);
 		void Destroy();
 
-		bool ShouldClose() const;
 		void Tick() const;
 
     private:
