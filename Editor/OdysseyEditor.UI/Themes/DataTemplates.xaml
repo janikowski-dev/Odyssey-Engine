@@ -1,0 +1,35 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:hierarchy="clr-namespace:OdysseyEditor.UI.ViewModels.Hierarchy"
+                    xmlns:console="clr-namespace:OdysseyEditor.UI.ViewModels.Console"
+                    xmlns:workspace="clr-namespace:OdysseyEditor.UI.ViewModels.Workspace"
+                    xmlns:controlsBar="clr-namespace:OdysseyEditor.UI.ViewModels.ControlsBar"
+                    xmlns:inspector="clr-namespace:OdysseyEditor.UI.ViewModels.Inspector"
+                    xmlns:workspace1="clr-namespace:OdysseyEditor.UI.ViewModels.Workspace"
+                    xmlns:views="clr-namespace:OdysseyEditor.UI.Views"
+                    xmlns:controlsBar1="clr-namespace:OdysseyEditor.UI.ViewModels.ControlsBar"
+                    xmlns:hierarchy1="clr-namespace:OdysseyEditor.UI.ViewModels.Hierarchy"
+                    xmlns:inspector1="clr-namespace:OdysseyEditor.UI.ViewModels.Inspector"
+                    xmlns:console1="clr-namespace:OdysseyEditor.UI.ViewModels.Console">
+
+    <DataTemplate DataType="{x:Type workspace1:WorkspaceViewModel}">
+        <views:WorkspaceView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type controlsBar1:ControlsBarViewModel}">
+        <views:ControlsBarView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type hierarchy1:HierarchyViewModel}">
+        <views:HierarchyView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type inspector1:InspectorViewModel}">
+        <views:InspectorView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type console1:ConsoleViewModel}">
+        <views:ConsoleView/>
+    </DataTemplate>
+
+</ResourceDictionary>
