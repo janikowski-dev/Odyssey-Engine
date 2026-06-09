@@ -2,7 +2,7 @@
 
 #include <utility>
 
-namespace Core::Renderer
+namespace Core::Rendering
 {
     Mesh::Mesh(const std::vector<Vertex>& Vertices, const std::vector<std::uint32_t>& Indices) : IndexCount(static_cast<GLsizei>(Indices.size()))
     {

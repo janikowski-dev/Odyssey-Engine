@@ -9,7 +9,7 @@ namespace Core::Components
 {
     struct MeshRenderer
     {
-        std::shared_ptr<Renderer::Mesh> Mesh;
+        std::shared_ptr<Rendering::Mesh> Mesh;
         glm::vec3 Color { 1.0f };
     };
 }

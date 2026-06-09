@@ -31,7 +31,7 @@ namespace Core
 		std::unique_ptr<Platform::Window> AppWindow;
 		std::unique_ptr<ECS::Registry> World;
 
-		std::unique_ptr<Renderer::Renderer> RendererBackend;
-		std::shared_ptr<Renderer::Mesh> Cube;
+		std::unique_ptr<Rendering::Renderer> RendererBackend;
+		std::shared_ptr<Rendering::Mesh> Cube;
 	};
 }

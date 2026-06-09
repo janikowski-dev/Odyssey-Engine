@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <vector>
 
-namespace Core::Renderer
+namespace Core::Rendering
 {
     struct Vertex
     {

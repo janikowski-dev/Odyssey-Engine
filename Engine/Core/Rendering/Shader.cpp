@@ -5,7 +5,7 @@
 #include <iostream>
 #include <utility>
 
-namespace Core::Renderer
+namespace Core::Rendering
 {
     GLuint Shader::Compile(GLenum Stage, const char* Source)
     {
@@ -72,7 +72,7 @@ namespace Core::Renderer
             Program = Other.Program;
             Other.Program = 0;
         }
-        
+
         return *this;
     }
 

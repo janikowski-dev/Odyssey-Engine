@@ -2,7 +2,7 @@
 
 #include <glad/gl.h>
 
-namespace Core::Renderer
+namespace Core::Rendering
 {
     namespace
     {

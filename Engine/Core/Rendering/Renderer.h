@@ -6,7 +6,7 @@
 
 #include <glm/glm.hpp>
 
-namespace Core::Renderer
+namespace Core::Rendering
 {
     class Renderer
     {

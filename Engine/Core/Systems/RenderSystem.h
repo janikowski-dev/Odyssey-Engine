@@ -10,7 +10,7 @@ namespace Core::Systems
     class RenderSystem
     {
     public:
-        explicit RenderSystem(Renderer::Renderer& InRenderer) : Backend(InRenderer) {}
+        explicit RenderSystem(Rendering::Renderer& InRenderer) : Backend(InRenderer) {}
 
         void Update(Core::ECS::Registry& World)
         {
@@ -30,6 +30,6 @@ namespace Core::Systems
         }
 
     private:
-        Renderer::Renderer& Backend;
+        Rendering::Renderer& Backend;
     };
 }

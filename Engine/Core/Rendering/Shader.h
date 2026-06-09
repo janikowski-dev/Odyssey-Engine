@@ -3,7 +3,7 @@
 #include <glad/gl.h>
 #include <glm/glm.hpp>
 
-namespace Core::Renderer
+namespace Core::Rendering
 {
     class Shader
     {

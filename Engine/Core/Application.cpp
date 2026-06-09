@@ -7,9 +7,9 @@
 
 namespace Core
 {
-	void SetupScene(Core::ECS::Registry& World, std::shared_ptr<Renderer::Mesh>& OutCube)
+	void SetupScene(Core::ECS::Registry& World, std::shared_ptr<Rendering::Mesh>& OutCube)
 	{
-	    OutCube = std::make_shared<Renderer::Mesh>(Renderer::Mesh::Cube());
+	    OutCube = std::make_shared<Rendering::Mesh>(Rendering::Mesh::Cube());
 
 	    Core::ECS::Entity e1 = World.Create();
 	    World.Add<Components::Transform>(e1, Components::Transform{ {0,0,0}, {0,0,0}, {1,1,1} });
@@ -40,9 +40,9 @@ namespace Core
 		AppWindow = std::make_unique<Platform::Window>(InConfig.WindowConfig);
 		AppWindow->Create(*EditorBridge);
 
-		RendererBackend = std::make_unique<Renderer::Renderer>();
+		RendererBackend = std::make_unique<Rendering::Renderer>();
     	RendererBackend->SetViewport(1920, 1080);
-    	Renderer::Camera Camera;
+    	Rendering::Camera Camera;
 		Camera.Position = {3, 3, 6};
     	RendererBackend->SetCamera(Camera);
 

@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace Core::Renderer
+namespace Core::Rendering
 {
     struct Camera
     {
@@ -20,7 +20,7 @@ namespace Core::Renderer
         {
             return glm::lookAt(Position, Target, Up);
         }
-        
+
         glm::mat4 Projection() const
         {
             return glm::perspective(glm::radians(FovDegrees), Aspect, Near, Far);
