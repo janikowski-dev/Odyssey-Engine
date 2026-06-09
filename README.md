@@ -101,5 +101,3 @@ The engine can also run standalone via the launcher, which accepts:
 | `-port <n>` | editor bridge port |
 | `-width` / `-height <n>` | window size |
 | `-vsync <0\|1>` | toggle vsync |
-
----
