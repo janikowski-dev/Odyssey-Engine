@@ -2,7 +2,7 @@
 
 install 2022 build tools
 
-set correct path to vsDevCmd in config.json
+set correct path to vsDevCmd in justconfig.json
 
 winget install Ninja-build.Ninja
 
@@ -11,6 +11,6 @@ winget install Casey.Just
 
 # Available Commands
 
-just build
+just build-engine
 
-just clean
+just clean-engine

@@ -1,7 +1,7 @@
 set shell := ["powershell.exe", "-NoLogo", "-NoProfile", "-Command"]
 
-build:
-    powershell -ExecutionPolicy Bypass -File Commands/Build.ps1
+build-engine:
+    powershell -ExecutionPolicy Bypass -File Commands/BuildEngine.ps1
 
-clean:
-    powershell -ExecutionPolicy Bypass -File Commands/Clean.ps1
+clean-engine:
+    powershell -ExecutionPolicy Bypass -File Commands/CleanEngine.ps1
