@@ -7,7 +7,7 @@ namespace Core::Rendering
 {
     struct Camera
     {
-        glm::vec3 Position { 0.0f, 2.0f, 6.0f };
+        glm::vec3 Position { 0.0f, 2.0f, 0.0f };
         glm::vec3 Target { 0.0f, 0.0f, 0.0f };
         glm::vec3 Up { 0.0f, 1.0f, 0.0f };
 

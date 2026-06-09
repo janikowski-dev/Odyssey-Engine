@@ -8,7 +8,35 @@
              d:DataContext="{d:DesignInstance Type=inspector:InspectorViewModel, IsDesignTimeCreatable=False}">
 
     <Border Background="{StaticResource InspectorBgBrush}">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-        </ScrollViewer>
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    MaxWidth="220">
+
+            <Border Width="56" Height="56" CornerRadius="28"
+                    Background="#22FFFFFF"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,16">
+                <TextBlock Text="&#xE946;"
+                           FontFamily="Segoe MDL2 Assets"
+                           FontSize="24"
+                           Foreground="#CCFFFFFF"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+            </Border>
+
+            <TextBlock Text="Hierarchy"
+                       Foreground="#EEEEEE"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"/>
+
+            <TextBlock Text="This is placeholder until actual functionality is ready."
+                       Foreground="#88FFFFFF"
+                       FontSize="12"
+                       TextAlignment="Center"
+                       TextWrapping="Wrap"
+                       Margin="0,6,0,0"/>
+        </StackPanel>
     </Border>
+    
 </UserControl>

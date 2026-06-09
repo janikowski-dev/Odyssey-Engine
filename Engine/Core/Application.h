@@ -21,6 +21,15 @@ namespace Core
 		void Run();
 
 	private:
+		void InitRendering();
+		void InitScene();
+		void InitMessaging();
+		void InitBridge(const Config::ApplicationConfig& InConfig);
+		void InitPlatform(const Config::ApplicationConfig& InConfig);
+		void InitEcs();
+		void InitSpinning();
+
+	private:
     	using Duration = std::chrono::duration<float>;
     	using Clock = std::chrono::steady_clock;
 
@@ -31,6 +40,7 @@ namespace Core
 		std::unique_ptr<Platform::Window> AppWindow;
 		std::unique_ptr<ECS::Registry> World;
 
+		// It is here only temporarily
 		std::unique_ptr<Rendering::Renderer> RendererBackend;
 		std::shared_ptr<Rendering::Mesh> Cube;
 	};

@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using OdysseyEditor.UI.ViewModels.Console;
 using OdysseyEditor.UI.ViewModels.ControlsBar;
@@ -22,18 +21,10 @@ public partial class MainWindowViewModel(
     public WorkspaceViewModel Workspace { get; } = workspace;
     public InspectorViewModel Inspector { get; } = inspector;
     public ConsoleViewModel Console { get; } = console;
-    
-    public ICommand UndoCommand => ControlsBar.UndoCommand;
-    public ICommand RedoCommand => ControlsBar.RedoCommand;
-    public ICommand SaveCommand => ControlsBar.SaveCommand;
 
     [RelayCommand]
     private async Task InitAsync()
     {
-        Inspector.Init();
-        ControlsBar.Init();
-        Console.Init();
-        Workspace.Init();
-        await Hierarchy.InitAsync();
+        await Workspace.InitAsync();
     }
 }

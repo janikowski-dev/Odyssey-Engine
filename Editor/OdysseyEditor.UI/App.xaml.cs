@@ -26,7 +26,7 @@ public partial class App
             .ConfigureServices((context, services) =>
             {
                 ConfigureApplication(services);
-                ConfigureViews(services);
+                ConfigureViews(context, services);
             })
             .Build()
         );
@@ -47,13 +47,13 @@ public partial class App
         services.AddSingleton<ILogService, LogService>();
     }
 
-    private static void ConfigureViews(IServiceCollection services)
+    private static void ConfigureViews(HostBuilderContext context, IServiceCollection services)
     {
+        services.AddSingleton(new WorkspaceViewModel(context.Configuration["EnginePath"]!, int.Parse(context.Configuration["Port"]!)));
         services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
         services.AddSingleton<ControlsBarViewModel>();
         services.AddSingleton<HierarchyViewModel>();
         services.AddSingleton<InspectorViewModel>();
-        services.AddSingleton<WorkspaceViewModel>();
         services.AddSingleton<ConsoleViewModel>();
         services.AddSingleton<MainWindowViewModel>();
     }

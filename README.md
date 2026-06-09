@@ -2,6 +2,8 @@
 
 install 2022 build tools
 
+set correct path to engine in Editor/appsettings.json
+
 set correct path to vsDevCmd in justconfig.json
 
 winget install Ninja-build.Ninja
