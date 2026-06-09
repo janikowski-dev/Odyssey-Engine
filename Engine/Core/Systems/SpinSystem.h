@@ -9,12 +9,12 @@ namespace Core::Systems
     class SpinSystem
     {
     public:
-        void Update(Core::ECS::Registry& World, float Dt)
+        void Update(Core::ECS::Registry& World, float DeltaTime)
         {
             World.View<Components::Transform, Components::Spin>(
-                [Dt](Core::ECS::Entity, Components::Transform& T, Components::Spin& S)
+                [DeltaTime](Core::ECS::Entity, Components::Transform& T, Components::Spin& S)
                 {
-                    T.Rotation += S.Speed * Dt;
+                    T.Rotation += S.Speed * DeltaTime;
                 }
             );
         }

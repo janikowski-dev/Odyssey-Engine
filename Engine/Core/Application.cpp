@@ -70,6 +70,7 @@ namespace Core
 
 			SpinSystem->Update(*World, DeltaTime);
 			RenderSystem->Update(*World);
+			
 			EditorBridge->Tick();
 			AppWindow->Tick();
 			EventBus->Flush();
