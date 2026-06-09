@@ -24,7 +24,7 @@
                            VerticalAlignment="Center"/>
             </Border>
 
-            <TextBlock Text="Hierarchy"
+            <TextBlock Text="Inspector"
                        Foreground="#EEEEEE"
                        FontSize="16"
                        FontWeight="SemiBold"
