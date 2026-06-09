@@ -3,7 +3,7 @@
 
 # Odyssey Engine
 
-A from-scratch 3D game engine written in modern **C++23**, paired with a native **C# editor** that embeds the live engine viewport directly inside its own window. The engine handles rendering, the entity model, and simulation. The editor is a separate process that launches the engine headless, then reparents the engine's render window into a docked workspace panel - so you edit in C#/WPF while looking at real OpenGL output from the C++ runtime. The two talk to each other over a small length-prefixed JSON protocol on a local socket.
+A custom 3D game engine in C++23 with a separate C#/WPF editor. The editor communicates with the engine over a local socket, allowing the engine to be restarted independently if it crashes without taking down the editor.
 
 ---
 
