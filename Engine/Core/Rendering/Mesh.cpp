@@ -4,7 +4,7 @@
 
 namespace Core::Rendering
 {
-    Mesh::Mesh(const std::vector<Vertex>& Vertices, const std::vector<std::uint32_t>& Indices) : IndexCount(static_cast<GLsizei>(Indices.size()))
+    Mesh::Mesh(const std::vector<Vertex>& Vertices, const std::vector<uint32>& Indices) : IndexCount(static_cast<GLsizei>(Indices.size()))
     {
         glGenVertexArrays(1, &Vao);
         glGenBuffers(1, &Vbo);
@@ -16,7 +16,7 @@ namespace Core::Rendering
         glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(Vertices.size() * sizeof(Vertex)), Vertices.data(), GL_STATIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(Indices.size() * sizeof(std::uint32_t)), Indices.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(Indices.size() * sizeof(uint32)), Indices.data(), GL_STATIC_DRAW);
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const void*>(offsetof(Vertex, Position)));
@@ -43,6 +43,7 @@ namespace Core::Rendering
         {
             glDeleteVertexArrays(1, &Vao);
         }
+        
         Vao = Vbo = Ebo = 0;
         IndexCount = 0;
     }
@@ -98,11 +99,11 @@ namespace Core::Rendering
         };
 
         std::vector<Vertex> Vertices;
-        std::vector<std::uint32_t> Indices;
+        std::vector<uint32> Indices;
 
         for (const Face& f : F)
         {
-            std::uint32_t base = static_cast<std::uint32_t>(Vertices.size());
+            uint32 base = static_cast<uint32>(Vertices.size());
             Vertices.push_back({ P[f.a], f.n });
             Vertices.push_back({ P[f.b], f.n });
             Vertices.push_back({ P[f.c], f.n });

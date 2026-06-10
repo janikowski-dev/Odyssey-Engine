@@ -1,12 +1,14 @@
 #pragma once
 
+#include "../Types.h"
+
 #include <cstdint>
 #include <functional>
 #include <vector>
 
 namespace Core::Messaging
 {
-    using SubID = std::uint64_t;
+    using SubID = uint64;
     inline constexpr SubID INVALID_SUB = 0;
 
     struct HandlerEntry

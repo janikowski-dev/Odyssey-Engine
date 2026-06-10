@@ -2,6 +2,7 @@
 
 #include "../Config/WindowConfig.h"
 #include "../Editor/Bridge.h"
+#include "../Types.h"
 
 struct GLFWwindow;
 

@@ -2,8 +2,7 @@
 
 #include "../Messaging/EventBus.h"
 #include "../Messaging/Subscription.h"
-
-#include <nlohmann/json.hpp>
+#include "../Types.h"
 
 #include <functional>
 #include <string>
@@ -25,7 +24,6 @@ namespace Core::Editor
     class JsonProxy
     {
     public:
-        using Json = nlohmann::json;
         using OutSink = std::function<void(const std::string& Name, const Json& Data)>;
 
         explicit JsonProxy(Messaging::EventBus& InBus) : Bus(InBus) {}
@@ -57,10 +55,10 @@ namespace Core::Editor
     };
 }
 
-#define ENGINE_EVENT_KEY(Type, Key)                  \
-    template<> struct Core::Editor::EventKey<Type> \
-    {                                                \
-        static constexpr const char* Value = Key;    \
+#define ENGINE_EVENT_KEY(Type, Key)                 \
+    template<> struct Core::Editor::EventKey<Type>  \
+    {                                               \
+        static constexpr const char* Value = Key;   \
     }
 
 #include "JsonProxy.inl"

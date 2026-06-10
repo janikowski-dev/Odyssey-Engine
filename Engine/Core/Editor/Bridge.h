@@ -1,11 +1,10 @@
 #pragma once
 
 #include "Connection.h"
-
-#include "Messaging/EventBus.h"
 #include "JsonProxy.h"
 
-#include <nlohmann/json.hpp>
+#include "Messaging/EventBus.h"
+#include "../Types.h"
 
 #include <cstdint>
 #include <functional>
@@ -17,7 +16,6 @@ namespace Core::Editor
     class Bridge
     {
     public:
-        using Json = nlohmann::json;
         using Handler = std::function<Json(const Json& Params)>;
 
         explicit Bridge(Messaging::EventBus& InBus);

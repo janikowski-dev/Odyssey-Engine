@@ -5,36 +5,36 @@
 namespace Core::ECS
 {
     template<typename T>
-    bool Pool<T>::Has(std::uint32_t Index) const
+    bool Pool<T>::Has(uint32 Index) const
     {
         return Index < Sparse.size() && Sparse[Index] != INVALID_SLOT;
     }
 
     template<typename T>
     template<typename... Args>
-    T& Pool<T>::Add(std::uint32_t Index, Args&&... InArgs)
+    T& Pool<T>::Add(uint32 Index, Args&&... InArgs)
     {
         if (Index >= Sparse.size())
         {
             Sparse.resize(Index + 1, INVALID_SLOT);
         }
 
-        Sparse[Index] = static_cast<std::uint32_t>(Components.size());
+        Sparse[Index] = static_cast<uint32>(Components.size());
         Packed.push_back(Index);
         Components.emplace_back(std::forward<Args>(InArgs)...);
         return Components.back();
     }
 
     template<typename T>
-    void Pool<T>::Remove(std::uint32_t Index)
+    void Pool<T>::Remove(uint32 Index)
     {
         if (!Has(Index))
         {
             return;
         }
 
-        const std::uint32_t Slot = Sparse[Index];
-        const std::uint32_t Last = static_cast<std::uint32_t>(Components.size() - 1);
+        const uint32 Slot = Sparse[Index];
+        const uint32 Last = static_cast<uint32>(Components.size() - 1);
 
         Components[Slot] = std::move(Components[Last]);
         Packed[Slot] = Packed[Last];
@@ -46,7 +46,7 @@ namespace Core::ECS
     }
 
     template<typename T>
-    T& Pool<T>::Get(std::uint32_t Index)
+    T& Pool<T>::Get(uint32 Index)
     {
         return Components[Sparse[Index]];
     }

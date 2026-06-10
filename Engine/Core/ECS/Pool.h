@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Types.h"
+
 #include <cassert>
 #include <cstdint>
 #include <utility>
@@ -7,35 +9,35 @@
 
 namespace Core::ECS
 {
-    inline constexpr std::uint32_t INVALID_SLOT = ~0u;
+    inline constexpr uint32 INVALID_SLOT = ~0u;
 
     class IPool
     {
     public:
         virtual ~IPool() = default;
-        virtual bool Has(std::uint32_t Index) const = 0;
-        virtual void Remove(std::uint32_t Index) = 0;
+        virtual bool Has(uint32 Index) const = 0;
+        virtual void Remove(uint32 Index) = 0;
     };
 
     template<typename T>
     class Pool final : public IPool
     {
     public:
-        bool Has(std::uint32_t Index) const override;
+        bool Has(uint32 Index) const override;
 
         template<typename... Args>
-        T& Add(std::uint32_t Index, Args&&... InArgs);
+        T& Add(uint32 Index, Args&&... InArgs);
 
-        void Remove(std::uint32_t Index) override;
+        void Remove(uint32 Index) override;
 
-        T& Get(std::uint32_t Index);
+        T& Get(uint32 Index);
 
-        const std::vector<std::uint32_t>& Entities() const { return Packed; }
+        const std::vector<uint32>& Entities() const { return Packed; }
         std::size_t Size() const { return Components.size(); }
 
     private:
-        std::vector<std::uint32_t> Sparse;
-        std::vector<std::uint32_t> Packed;
+        std::vector<uint32> Sparse;
+        std::vector<uint32> Packed;
         std::vector<T> Components;
     };
 }

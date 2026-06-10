@@ -71,7 +71,7 @@ namespace Core::Messaging
 
         Queue.push_back(QueuedEvent
         {
-            std::make_shared<T>(std::move(InEvent)),
+            MakeShared<T>(std::move(InEvent)),
             std::type_index(typeid(T))
         });
     }

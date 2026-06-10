@@ -2,6 +2,8 @@
 
 #include "HandlerData.h"
 
+#include "../Types.h"
+
 namespace Core::Messaging
 {
     class EventBus;

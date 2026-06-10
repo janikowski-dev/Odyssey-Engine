@@ -6,6 +6,6 @@ namespace Core::Events
 {
     struct Placeholder
     {
-        std::uint64_t Handle = 0;
+        uint64 Handle = 0;
     };
 }

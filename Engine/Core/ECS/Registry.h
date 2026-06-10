@@ -3,6 +3,8 @@
 #include "Entity.h"
 #include "Pool.h"
 
+#include "../Types.h"
+
 #include <memory>
 #include <tuple>
 #include <typeindex>
@@ -38,9 +40,9 @@ namespace Core::ECS
         template<typename T>
         Pool<T>& GetPool();
 
-        std::unordered_map<std::type_index, std::unique_ptr<IPool>> Pools;
-        std::vector<std::uint32_t> FreeList;
-        std::vector<std::uint32_t> Versions;
+        std::unordered_map<std::type_index, UniquePtr<IPool>> Pools;
+        std::vector<uint32> FreeList;
+        std::vector<uint32> Versions;
     };
 }
 

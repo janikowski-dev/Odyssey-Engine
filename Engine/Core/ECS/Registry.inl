@@ -34,9 +34,9 @@ namespace Core::ECS
         using First = std::tuple_element_t<0, std::tuple<Ts...>>;
         Pool<First>& Primary = GetPool<First>();
 
-        const std::vector<std::uint32_t> EntityList = Primary.Entities();
+        const std::vector<uint32> EntityList = Primary.Entities();
 
-        for (std::uint32_t Index : EntityList)
+        for (uint32 Index : EntityList)
         {
             if ((GetPool<Ts>().Has(Index) && ...))
             {
@@ -53,7 +53,7 @@ namespace Core::ECS
         
         if (It == Pools.end())
         {
-            It = Pools.emplace(Key, std::make_unique<Pool<T>>()).first;
+            It = Pools.emplace(Key, MakeUnique<Pool<T>>()).first;
         }
 
         return *static_cast<Pool<T>*>(It->second.get());

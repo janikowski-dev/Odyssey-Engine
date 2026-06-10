@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Types.h"
+
 #include <glad/gl.h>
 #include <glm/glm.hpp>
 
@@ -17,7 +19,7 @@ namespace Core::Rendering
     class Mesh
     {
     public:
-        Mesh(const std::vector<Vertex>& Vertices, const std::vector<std::uint32_t>& Indices);
+        Mesh(const std::vector<Vertex>& Vertices, const std::vector<uint32>& Indices);
         ~Mesh();
 
         Mesh(const Mesh&) = delete;

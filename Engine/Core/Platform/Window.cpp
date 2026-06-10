@@ -71,8 +71,8 @@ namespace Core::Platform
 
 	void Window::Attach(Editor::Bridge& InBridge)
 	{
-		InBridge.On("get_viewport", [this](const nlohmann::json&) {
-    		return nlohmann::json{ {"hwnd", (uint64_t)(uintptr_t)glfwGetWin32Window(Handle)} };
+		InBridge.On("get_viewport", [this](const Json&) {
+    		return Json{ {"hwnd", (uint64_t)(uintptr_t)glfwGetWin32Window(Handle)} };
 		});
 	}
 

@@ -33,7 +33,7 @@ namespace Core::Messaging
     private:
         struct QueuedEvent
         {
-            std::shared_ptr<void> Data;
+            SharedPtr<void> Data;
             std::type_index TypeId;
         };
 

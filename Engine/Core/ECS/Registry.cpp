@@ -4,11 +4,11 @@ namespace Core::ECS
 {
     Entity Registry::Create()
     {
-        std::uint32_t Index;
+        uint32 Index;
 
         if (FreeList.empty())
         {
-            Index = static_cast<std::uint32_t>(Versions.size());
+            Index = static_cast<uint32>(Versions.size());
             Versions.push_back(0);
         }
         else

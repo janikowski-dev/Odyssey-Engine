@@ -7,8 +7,7 @@
 #include "Platform/Window.h"
 #include "Editor/Bridge.h"
 #include "ECS/Registry.h"
-
-#include <memory>
+#include "Types.h"
 
 namespace Core
 {
@@ -30,18 +29,15 @@ namespace Core
 		void InitSpinning();
 
 	private:
-    	using Duration = std::chrono::duration<float>;
-    	using Clock = std::chrono::steady_clock;
-
-		std::unique_ptr<Systems::RenderSystem> RenderSystem;
-		std::unique_ptr<Systems::SpinSystem> SpinSystem;
-		std::unique_ptr<Messaging::EventBus> EventBus;
-		std::unique_ptr<Editor::Bridge> EditorBridge;
-		std::unique_ptr<Platform::Window> AppWindow;
-		std::unique_ptr<ECS::Registry> World;
+		UniquePtr<Systems::RenderSystem> RenderSystem;
+		UniquePtr<Systems::SpinSystem> SpinSystem;
+		UniquePtr<Messaging::EventBus> EventBus;
+		UniquePtr<Editor::Bridge> EditorBridge;
+		UniquePtr<Platform::Window> AppWindow;
+		UniquePtr<ECS::Registry> World;
 
 		// It is here only temporarily
-		std::unique_ptr<Rendering::Renderer> RendererBackend;
-		std::shared_ptr<Rendering::Mesh> Cube;
+		UniquePtr<Rendering::Renderer> RendererBackend;
+		SharedPtr<Rendering::Mesh> Cube;
 	};
 }

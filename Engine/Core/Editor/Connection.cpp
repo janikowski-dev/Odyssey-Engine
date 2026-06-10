@@ -1,5 +1,7 @@
 #include "Connection.h"
 
+#include "../Types.h"
+
 #define WIN32_LEAN_AND_MEAN
 
 #include <winsock2.h>
@@ -22,7 +24,7 @@ namespace Core::Editor
             static WinsockGuard Guard;
         }
 
-        constexpr std::uint32_t MaxMessage = 16u * 1024 * 1024;
+        constexpr uint32 MaxMessage = 16u * 1024 * 1024;
     }
 
     Connection::~Connection() { Close(); }
@@ -32,6 +34,7 @@ namespace Core::Editor
         EnsureWinsock();
 
         SOCKET Sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+
         if (Sock == INVALID_SOCKET)
         {
             return false;
@@ -53,8 +56,8 @@ namespace Core::Editor
         }
 
         ListenSocket = (SocketHandle)Sock;
-        Running      = true;
-        ReadThread   = std::thread(&Connection::AcceptAndRead, this);
+        Running = true;
+        ReadThread = std::thread(&Connection::AcceptAndRead, this);
         return true;
     }
 
@@ -116,14 +119,14 @@ namespace Core::Editor
     {
         while (Running)
         {
-            std::uint32_t NetLength = 0;
+            uint32 NetLength = 0;
 
             if (!ReceiveExact((char*)&NetLength, 4))
             {
                 break;
             }
 
-            std::uint32_t Length = ntohl(NetLength);
+            uint32 Length = ntohl(NetLength);
 
             if (Length == 0 || Length > MaxMessage)
             {
@@ -168,7 +171,7 @@ namespace Core::Editor
             return false;
         }
 
-        std::uint32_t NetLength = htonl((std::uint32_t)Payload.size());
+        uint32 NetLength = htonl((uint32)Payload.size());
 
         if (!SendExact((char*)&NetLength, 4) || !SendExact(Payload.data(), (int)Payload.size()))
         {
