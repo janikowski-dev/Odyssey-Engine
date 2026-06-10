@@ -2,29 +2,16 @@
 
 namespace Core::Editor
 {
-    Bridge::Bridge(Messaging::EventBus& InBus) : Proxy(InBus)
-    {
-        Proxy.SetSink([this](const std::string& Name, const Json& Data)
-        {
-            SendEvent(Name, Data);
-        });
-    }
-
-    bool Bridge::Start(std::uint16_t Port)
+    bool Bridge::Start(uint16 Port)
     {
         return Connection.Listen(Port);
-    }
-
-    void Bridge::On(const std::string& Method, Handler InHandler)
-    {
-        Handlers[Method] = std::move(InHandler);
     }
 
     void Bridge::SendEvent(const std::string& Name, const Json& Data)
     {
         Json Message;
         Message["event"] = Name;
-        Message["data"]  = Data;
+        Message["data"] = Data;
         Connection.Send(Message.dump());
     }
 
@@ -45,14 +32,6 @@ namespace Core::Editor
             return;
         }
 
-        if (Message.contains("event") && Message["event"].is_string())
-        {
-            const std::string Name = Message["event"].get<std::string>();
-            const Json Data = Message.value("data", Json::object());
-            Proxy.Dispatch(Name, Data);
-            return;
-        }
-
         if (Message.contains("method") && Message["method"].is_string())
         {
             HandleRpc(Message);
@@ -63,7 +42,7 @@ namespace Core::Editor
     {
         const std::string Method = Message["method"].get<std::string>();
         const Json Params = Message.value("params", Json::object());
-        const bool HasId  = Message.contains("id");
+        const bool HasId = Message.contains("id");
 
         Json Response;
 

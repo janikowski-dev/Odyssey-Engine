@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Connection.h"
-#include "JsonProxy.h"
 
 #include "Messaging/EventBus.h"
 #include "../Types.h"
@@ -10,6 +9,7 @@
 #include <functional>
 #include <string>
 #include <unordered_map>
+#include <type_traits>
 
 namespace Core::Editor
 {
@@ -18,20 +18,13 @@ namespace Core::Editor
     public:
         using Handler = std::function<Json(const Json& Params)>;
 
-        explicit Bridge(Messaging::EventBus& InBus);
-
-        bool Start(std::uint16_t Port);
+        bool Start(uint16_t Port);
         void Tick();
 
-        void On(const std::string& Method, Handler InHandler);
+        template<typename TIn, typename TOut>
+        void On(const std::string& Method, std::function<TOut(const TIn&)> Fn);
 
         void SendEvent(const std::string& Name, const Json& Data);
-
-        template<typename... Ts>
-        void RegisterInbound(EventList<Ts...> List)  { Proxy.RegisterInbound(List); }
-
-        template<typename... Ts>
-        void RegisterOutbound(EventList<Ts...> List) { Proxy.RegisterOutbound(List); }
 
     private:
         void HandleMessage(const std::string& Raw);
@@ -39,6 +32,7 @@ namespace Core::Editor
 
         std::unordered_map<std::string, Handler> Handlers;
         Connection Connection;
-        JsonProxy Proxy;
     };
 }
+
+#include "Bridge.inl"

@@ -10,13 +10,15 @@ set(SOURCES
     Components/Spin.h
     Components/Transform.h
 
+    Config/ApplicationConfig.h
+    Config/LaunchType.h
+    Config/WindowConfig.h
+
     Editor/Connection.cpp
     Editor/Connection.h
     Editor/Bridge.cpp
     Editor/Bridge.h
-    Editor/JsonProxy.cpp
-    Editor/JsonProxy.h
-    Editor/JsonProxy.inl
+    Editor/Bridge.inl
 
     ECS/Entity.h
     ECS/Pool.h
@@ -25,9 +27,8 @@ set(SOURCES
     ECS/Registry.h
     ECS/Registry.inl
 
-    Config/ApplicationConfig.h
-    Config/LaunchType.h
-    Config/WindowConfig.h
+    Events/Ping.h
+    Events/Viewport.h
 
     Platform/Window.cpp
     Platform/Window.h
@@ -39,6 +40,12 @@ set(SOURCES
     Rendering/Renderer.h
     Rendering/Shader.cpp
     Rendering/Shader.h
+
+    Serialization/ComponentRegistry.cpp
+    Serialization/ComponentRegistry.h
+    Serialization/ComponentRegistry.inl
+    Serialization/SceneSerializer.cpp
+    Serialization/SceneSerializer.h
 
     Systems/RenderSystem.h
     Systems/SpinSystem.h

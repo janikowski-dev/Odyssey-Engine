@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Types.h"
+
 #include <atomic>
 #include <cstdint>
 #include <mutex>
@@ -22,7 +24,7 @@ namespace Core::Editor
         Connection(const Connection&) = delete;
         Connection& operator=(const Connection&) = delete;
 
-        bool Listen(std::uint16_t Port);
+        bool Listen(uint16 Port);
 
         std::vector<std::string> Poll();
 

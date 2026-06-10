@@ -1,5 +1,7 @@
 #include "Window.h"
 
+#include "../Events/Viewport.h"
+
 #define GLFW_EXPOSE_NATIVE_WIN32
 
 #include <glad/gl.h>
@@ -71,9 +73,10 @@ namespace Core::Platform
 
 	void Window::Attach(Editor::Bridge& InBridge)
 	{
-		InBridge.On("get_viewport", [this](const Json&) {
-    		return Json{ {"hwnd", (uint64_t)(uintptr_t)glfwGetWin32Window(Handle)} };
-		});
+		InBridge.On<Events::ViewportRequest, Events::ViewportResponse>("get_viewport", [this](const Events::ViewportRequest&)
+    	{
+    	    return Events::ViewportResponse { (uint64_t)(uintptr_t)glfwGetWin32Window(Handle) };
+    	});
 	}
 
 	bool Window::TryCache(GLFWwindow* NewHandle)

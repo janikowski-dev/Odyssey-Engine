@@ -29,7 +29,7 @@ namespace Core::Editor
 
     Connection::~Connection() { Close(); }
 
-    bool Connection::Listen(std::uint16_t Port)
+    bool Connection::Listen(uint16 Port)
     {
         EnsureWinsock();
 

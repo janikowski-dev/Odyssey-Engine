@@ -2,7 +2,7 @@
 
 #include "Components/MeshRenderer.h"
 #include "Components/Transform.h"
-#include "Editor/Bindings.h"
+#include "Events/Ping.h"
 #include "ECS/Entity.h"
 
 namespace Core
@@ -49,12 +49,11 @@ namespace Core
 
 	void Application::InitBridge(const Config::ApplicationConfig& InConfig)
 	{
-		EditorBridge = MakeUnique<Editor::Bridge>(*EventBus);
-		EditorBridge->RegisterOutbound(Editor::EditorOutbound{});
-		EditorBridge->RegisterInbound(Editor::EditorInbound{});
-		EditorBridge->On("ping", [](const Json&) { 
-			return Json::object();
-		});
+		EditorBridge = MakeUnique<Editor::Bridge>();
+		EditorBridge->On<Events::PingRequest, Events::PingResponse>("ping", [](const Events::PingRequest&)
+    	{
+    	    return Events::PingResponse();
+    	});
 		EditorBridge->Start(InConfig.EditorPort);
 	}
 
