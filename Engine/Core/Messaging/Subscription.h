@@ -6,13 +6,13 @@
 
 namespace Core::Messaging
 {
-    class EventBus;
+    class MessageBus;
 
     class Subscription
     {
     public:
         Subscription() = default;
-        Subscription(EventBus* Bus, SubID Id) : Bus(Bus), Id(Id) {}
+        Subscription(MessageBus* Bus, SubID Id) : Bus(Bus), Id(Id) {}
         Subscription(Subscription&& Other) noexcept;
         Subscription(const Subscription&) = delete;
 
@@ -30,7 +30,7 @@ namespace Core::Messaging
         void Invalidate(Subscription& Other);
 
     private:
-        EventBus* Bus = nullptr;
+        MessageBus* Bus = nullptr;
         SubID Id = INVALID_SUB;
     };
 }

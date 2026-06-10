@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Types.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -22,4 +24,6 @@ namespace Core::Components
             return M;
         }
     };
+    
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Transform, Position, Rotation, Scale)
 }

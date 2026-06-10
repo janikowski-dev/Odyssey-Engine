@@ -26,6 +26,14 @@ namespace Core::ECS
     }
 
     template<typename T>
+    void Pool<T>::Clear()
+    {
+        Sparse.clear();
+        Packed.clear();
+        Components.clear();
+    }
+
+    template<typename T>
     void Pool<T>::Remove(uint32 Index)
     {
         if (!Has(Index))

@@ -16,14 +16,7 @@ namespace Core::Rendering
         float Near = 0.1f;
         float Far = 100.0f;
 
-        glm::mat4 View() const
-        {
-            return glm::lookAt(Position, Target, Up);
-        }
-
-        glm::mat4 Projection() const
-        {
-            return glm::perspective(glm::radians(FovDegrees), Aspect, Near, Far);
-        }
+        glm::mat4 View() const { return glm::lookAt(Position, Target, Up); }
+        glm::mat4 Projection() const { return glm::perspective(glm::radians(FovDegrees), Aspect, Near, Far); }
     };
 }

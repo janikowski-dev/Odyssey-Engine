@@ -27,13 +27,24 @@ namespace Core::ECS
             return;
         }
 
-        for (auto& [Type, PoolPtr] : Pools)
+        for (auto& [Type, Pool] : Pools)
         {
-            PoolPtr->Remove(InEntity.Index);
+            Pool->Remove(InEntity.Index);
         }
 
         ++Versions[InEntity.Index];
         FreeList.push_back(InEntity.Index);
+    }
+
+    void Registry::Clear()    
+    {
+        for (auto& [Type, Pool] : Pools)
+        {
+            Pool->Clear();
+        }
+    
+        FreeList.clear();
+        Versions.clear();
     }
 
     bool Registry::IsValid(Entity InEntity) const

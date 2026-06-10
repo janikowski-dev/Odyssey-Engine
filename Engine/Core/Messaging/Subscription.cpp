@@ -1,6 +1,6 @@
 #include "Subscription.h"
 
-#include "EventBus.h"
+#include "MessageBus.h"
 
 namespace Core::Messaging
 {

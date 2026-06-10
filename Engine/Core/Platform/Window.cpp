@@ -73,7 +73,7 @@ namespace Core::Platform
 
 	void Window::Attach(Editor::Bridge& InBridge)
 	{
-		InBridge.On<Events::ViewportRequest, Events::ViewportResponse>("get_viewport", [this](const Events::ViewportRequest&)
+		InBridge.On<Events::ViewportRequest, Events::ViewportResponse>(Events::ViewportKey, [this](const Events::ViewportRequest&)
     	{
     	    return Events::ViewportResponse { (uint64_t)(uintptr_t)glfwGetWin32Window(Handle) };
     	});

@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 
-namespace Core::Scene
+namespace Core::Serialization
 {
     void ComponentRegistry::Save(ECS::Registry& World, ECS::Entity E, Json& Out) const
     {

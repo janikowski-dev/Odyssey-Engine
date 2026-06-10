@@ -16,7 +16,6 @@ namespace Core::Platform
 
 		void Create(Editor::Bridge& InBridge);
 		void Destroy();
-
 		void Tick() const;
 
     private:

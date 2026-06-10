@@ -4,6 +4,8 @@
 
 namespace Core::Events
 {
+    inline constexpr std::string_view PingKey = "ping";
+
     struct PingRequest
     {
     };

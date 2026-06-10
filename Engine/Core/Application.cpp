@@ -2,8 +2,16 @@
 
 #include "Components/MeshRenderer.h"
 #include "Components/Transform.h"
+#include "Components/Spin.h"
+
+#include "Events/CreateEntity.h"
+#include "Events/SaveScene.h"
+#include "Events/LoadScene.h"
 #include "Events/Ping.h"
+
 #include "ECS/Entity.h"
+
+#include <random>
 
 namespace Core
 {
@@ -14,13 +22,13 @@ namespace Core
 		InitEcs();
 		InitPlatform(InConfig);
 		InitRendering();
-    	InitScene();
+    	InitSerialization();
 		InitSpinning();
 	}
 
 	Application::~Application()
 	{
-		AppWindow->Destroy();
+		Window->Destroy();
 	}
 
 	void Application::Run()
@@ -37,30 +45,56 @@ namespace Core
 			RenderSystem->Update(*World);
 			
 			EditorBridge->Tick();
-			AppWindow->Tick();
-			EventBus->Flush();
+			Window->Tick();
+			MessageBus->Flush();
     	}
 	}
 
 	void Application::InitMessaging()
 	{
-		EventBus = MakeUnique<Messaging::EventBus>();
+		MessageBus = MakeUnique<Messaging::MessageBus>();
 	}
 
 	void Application::InitBridge(const Config::ApplicationConfig& InConfig)
 	{
+        static std::mt19937 rng{ std::random_device{}() };
+        static std::uniform_real_distribution<float> dist(-2.0f, 2.0f);
+
 		EditorBridge = MakeUnique<Editor::Bridge>();
-		EditorBridge->On<Events::PingRequest, Events::PingResponse>("ping", [](const Events::PingRequest&)
+
+		EditorBridge->On<Events::PingRequest, Events::PingResponse>(Events::PingKey, [](const Events::PingRequest&)
     	{
     	    return Events::PingResponse();
     	});
+		
+		EditorBridge->On<Events::CreateEntiryRequest, Events::CreateEntityResponse>(Events::CreateEntityKey, [this](const Events::CreateEntiryRequest&)
+    	{
+	    	Core::ECS::Entity E = World->Create();
+	    	World->Add<Components::Transform>(E, Components::Transform{ {dist(rng), 0, 0}, {0, 0, 0}, {1, 1, 1} });
+	    	World->Add<Components::MeshRenderer>(E, Components::MeshRenderer{ {0.85f, 0.30f, 0.22f} });
+	    	World->Add<Components::Spin>(E, Components::Spin{ {0.0f, 0.8f, 0.0f} });
+    	    return Events::CreateEntityResponse();
+    	});
+		
+		EditorBridge->On<Events::SaveSceneRequest, Events::SaveSceneResponse>(Events::SaveSceneKey, [this](const Events::SaveSceneRequest& Request)
+    	{
+			SceneSerializer->SaveToFile(*World, Request.Path);
+    	    return Events::SaveSceneResponse();
+    	});
+		
+		EditorBridge->On<Events::LoadSceneRequest, Events::LoadSceneResponse>(Events::LoadSceneKey, [this](const Events::LoadSceneRequest& Request)
+    	{
+			SceneSerializer->LoadFromFile(Request.Path, *World);
+    	    return Events::LoadSceneResponse();
+    	});
+
 		EditorBridge->Start(InConfig.EditorPort);
 	}
 
 	void Application::InitPlatform(const Config::ApplicationConfig& InConfig)
 	{
-		AppWindow = MakeUnique<Platform::Window>(InConfig.WindowConfig);
-		AppWindow->Create(*EditorBridge);
+		Window = MakeUnique<Platform::Window>(InConfig.WindowConfig);
+		Window->Create(*EditorBridge);
 	}
 
 	void Application::InitEcs()
@@ -81,19 +115,15 @@ namespace Core
 		RenderSystem = MakeUnique<Systems::RenderSystem>(*RendererBackend);
 	}
 
-	void Application::InitScene()
+	void Application::InitSerialization()
 	{
-	    Cube = MakeShared<Rendering::Mesh>(Rendering::Mesh::Cube());
+		ComponentRegistry = MakeUnique<Serialization::ComponentRegistry>();
 
-	    Core::ECS::Entity e1 = World->Create();
-	    World->Add<Components::Transform>(e1, Components::Transform{ {-1.6f, 0, 0}, {0, 0, 0}, {1, 1, 1} });
-	    World->Add<Components::MeshRenderer>(e1, Components::MeshRenderer{ Cube, {0.85f, 0.30f, 0.22f} });
-	    World->Add<Components::Spin>(e1, Components::Spin{ {0.0f, 0.8f, 0.0f} });
+		ComponentRegistry->Register<Components::Transform>("Transform");
+		ComponentRegistry->Register<Components::MeshRenderer>("Mesh");
+		ComponentRegistry->Register<Components::Spin>("Spin");
 
-	    Core::ECS::Entity e2 = World->Create();
-	    World->Add<Components::Transform>(e2, Components::Transform{ {1.6f, 0, 0}, {0, 0, 0}, {0.8f, 0.8f, 0.8f} });
-	    World->Add<Components::MeshRenderer>(e2, Components::MeshRenderer{ Cube, {0.25f, 0.55f, 0.90f} });
-	    World->Add<Components::Spin>(e2, Components::Spin{ {0.5f, 0.0f, 0.6f} });
+		SceneSerializer = MakeUnique<Serialization::SceneSerializer>(*ComponentRegistry);
 	}
 
 	void Application::InitSpinning()

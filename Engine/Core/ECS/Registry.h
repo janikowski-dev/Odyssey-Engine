@@ -19,6 +19,7 @@ namespace Core::ECS
     public:
         Entity Create();
         void Destroy(Entity InEntity);
+        void Clear();
         bool IsValid(Entity InEntity) const;
 
         template<typename T, typename... Args>

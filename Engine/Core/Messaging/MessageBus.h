@@ -14,7 +14,7 @@ namespace Core::Messaging
 {
     class Subscription;
 
-    class EventBus
+    class MessageBus
     {
     public:
         template<typename T>
@@ -31,7 +31,7 @@ namespace Core::Messaging
         void Flush();
 
     private:
-        struct QueuedEvent
+        struct QueuedMessage
         {
             SharedPtr<void> Data;
             std::type_index TypeId;
@@ -39,9 +39,9 @@ namespace Core::Messaging
 
         mutable std::mutex Mutex;
         std::unordered_map<std::type_index, HandlerList> Handlers;
-        std::deque<QueuedEvent> Queue;
+        std::deque<QueuedMessage> Queue;
         SubID NextId = 1;
     };
 }
 
-#include "EventBus.inl"
+#include "MessageBus.inl"

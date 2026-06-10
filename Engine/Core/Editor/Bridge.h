@@ -2,7 +2,6 @@
 
 #include "Connection.h"
 
-#include "Messaging/EventBus.h"
 #include "../Types.h"
 
 #include <cstdint>
@@ -18,11 +17,11 @@ namespace Core::Editor
     public:
         using Handler = std::function<Json(const Json& Params)>;
 
-        bool Start(uint16_t Port);
+        bool Start(uint16 Port);
         void Tick();
 
-        template<typename TIn, typename TOut>
-        void On(const std::string& Method, std::function<TOut(const TIn&)> Fn);
+        template<typename TIn, typename TOut, typename Fn>
+        void On(std::string_view Method, Fn&& Function);
 
         void SendEvent(const std::string& Name, const Json& Data);
 

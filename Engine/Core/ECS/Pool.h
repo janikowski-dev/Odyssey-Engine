@@ -17,21 +17,21 @@ namespace Core::ECS
         virtual ~IPool() = default;
         virtual bool Has(uint32 Index) const = 0;
         virtual void Remove(uint32 Index) = 0;
+        virtual void Clear() = 0;
     };
 
     template<typename T>
     class Pool final : public IPool
     {
     public:
-        bool Has(uint32 Index) const override;
-
         template<typename... Args>
         T& Add(uint32 Index, Args&&... InArgs);
 
+        bool Has(uint32 Index) const override;
         void Remove(uint32 Index) override;
-
+        void Clear() override;
+        
         T& Get(uint32 Index);
-
         const std::vector<uint32>& Entities() const { return Packed; }
         std::size_t Size() const { return Components.size(); }
 

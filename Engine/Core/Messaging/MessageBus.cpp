@@ -1,10 +1,10 @@
-#include "EventBus.h"
+#include "MessageBus.h"
 
 namespace Core::Messaging
 {
-    void EventBus::Flush()
+    void MessageBus::Flush()
     {
-        std::deque<QueuedEvent> Local;
+        std::deque<QueuedMessage> Local;
         {
             std::lock_guard Lock(Mutex);
             std::swap(Local, Queue);
@@ -33,7 +33,7 @@ namespace Core::Messaging
         }
     }
 
-    void EventBus::Unsubscribe(SubID Id)
+    void MessageBus::Unsubscribe(SubID Id)
     {
         std::lock_guard Lock(Mutex);
 

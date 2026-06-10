@@ -1,15 +1,17 @@
 #pragma once
 
-#include "EventBus.h"
-#include "Event.h"
+#include "MessageBus.h"
+#include "Message.h"
 #include "Subscription.h"
+
+#include "../Types.h"
 
 #include <utility>
 
 namespace Core::Messaging
 {
     template<typename T>
-    [[nodiscard]] Subscription EventBus::Subscribe(std::function<void(T&)> Handler, int Priority)
+    [[nodiscard]] Subscription MessageBus::Subscribe(std::function<void(T&)> Handler, int Priority)
     {
         std::lock_guard Lock(Mutex);
 
@@ -32,7 +34,7 @@ namespace Core::Messaging
     }
 
     template<typename T>
-    void EventBus::Publish(T& InEvent)
+    void MessageBus::Publish(T& InEvent)
     {
         const auto Key = std::type_index(typeid(T));
 
@@ -65,11 +67,11 @@ namespace Core::Messaging
     }
 
     template<typename T>
-    void EventBus::Enqueue(T InEvent)
+    void MessageBus::Enqueue(T InEvent)
     {
         std::lock_guard Lock(Mutex);
 
-        Queue.push_back(QueuedEvent
+        Queue.push_back(QueuedMessage
         {
             MakeShared<T>(std::move(InEvent)),
             std::type_index(typeid(T))

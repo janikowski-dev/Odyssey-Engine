@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace Core::Scene
+namespace Core::Serialization
 {
     class ComponentRegistry
     {
@@ -17,9 +17,7 @@ namespace Core::Scene
         void Register(const std::string& Name);
 
         void Save(ECS::Registry& World, ECS::Entity E, Json& Out) const;
-
         void Load(ECS::Registry& World, ECS::Entity E, const Json& Data) const;
-
         std::vector<ECS::Entity> CollectEntities(ECS::Registry& World) const;
 
     private:

@@ -2,37 +2,31 @@
 
 #include "Bridge.h"
 
+#include "../Types.h"
+
 namespace Core::Editor
 {
-    template<typename TIn, typename TOut>
-    void Bridge::On(const std::string& Method, std::function<TOut(const TIn&)> Fn)
+    template<typename TIn, typename TOut, typename Fn>
+    void Bridge::On(std::string_view Method, Fn&& Function)
     {
-        Handlers[Method] = [Fn = std::move(Fn)](const Json& Params) -> Json
+        Handlers[std::string(Method)] = [Fn = std::forward<Fn>(Function)](const Json& Params) -> Json
         {
-            TIn input{};
+            TIn Input{};
 
-            if constexpr (!std::is_empty_v<TIn>)
+            if constexpr (!IsEmpty<TIn>)
             {
-                input = Params.get<TIn>();
+                Input = Params.get<TIn>();
             }
 
-            if constexpr (std::is_empty_v<TOut>)
+            if constexpr (IsEmpty<TOut>)
             {
-                Fn(input);
+                Fn(Input);
                 return Json::object();
             }
             else
             {
-                TOut output = Fn(input);
-
-                if constexpr (std::is_empty_v<TOut>)
-                {
-                    return Json::object();
-                }
-                else
-                {
-                    return Json(output);
-                }
+                TOut Output = Fn(Input);
+                return Json(Output);
             }
         };
     }

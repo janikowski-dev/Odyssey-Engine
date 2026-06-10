@@ -2,7 +2,7 @@
 
 #include "ComponentRegistry.h"
 
-namespace Core::Scene
+namespace Core::Serialization
 {
     template<typename T>
     void ComponentRegistry::Register(const std::string& Name)

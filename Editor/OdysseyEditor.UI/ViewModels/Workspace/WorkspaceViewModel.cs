@@ -8,7 +8,7 @@ namespace OdysseyEditor.UI.ViewModels.Workspace;
 
 public class WorkspaceViewModel(string enginePath, int port) : HwndHost
 {
-    private readonly EngineConnection _connection = new();
+    public static readonly EngineConnection _connection = new();
 
     private const int GwlStyle = -16;
     private const int WsChild = 0x40000000;
@@ -28,6 +28,7 @@ public class WorkspaceViewModel(string enginePath, int port) : HwndHost
     public async Task InitAsync()
     {
         Show(await GetHandle());
+        await _connection.RequestAsync("create_entity", null, TimeSpan.FromSeconds(3));
     }
 
     protected override void OnWindowPositionChanged(System.Windows.Rect rcBoundingBox)

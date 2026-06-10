@@ -25,13 +25,9 @@ namespace Core::Editor
         Connection& operator=(const Connection&) = delete;
 
         bool Listen(uint16 Port);
-
         std::vector<std::string> Poll();
-
         bool Send(const std::string& Payload);
-
         bool IsConnected() const { return Connected.load(); }
-
         void Close();
 
     private:

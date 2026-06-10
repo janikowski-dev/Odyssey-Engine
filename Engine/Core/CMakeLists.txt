@@ -27,6 +27,7 @@ set(SOURCES
     ECS/Registry.h
     ECS/Registry.inl
 
+    Events/CreateEntity.h
     Events/Ping.h
     Events/Viewport.h
 
@@ -50,9 +51,9 @@ set(SOURCES
     Systems/RenderSystem.h
     Systems/SpinSystem.h
 
-    Messaging/EventBus.cpp
-    Messaging/EventBus.h
-    Messaging/EventBus.inl
+    Messaging/MessageBus.cpp
+    Messaging/MessageBus.h
+    Messaging/MessageBus.inl
     Messaging/HandlerData.h
     Messaging/HandlerData.cpp
     Messaging/Subscription.cpp

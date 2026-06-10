@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Types.h"
+
 #include <glm/glm.hpp>
 
 namespace Core::Components
@@ -8,4 +10,6 @@ namespace Core::Components
     {
         glm::vec3 Speed { 0.0f };
     };
+
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Spin, Speed)
 }
