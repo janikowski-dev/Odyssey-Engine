@@ -1,10 +1,10 @@
-#include "Application.h"
+#include "Core/Application.h"
 #include "CLIParser.h"
 
 int main(int argc, char** argv)
 {
-    Core::ApplicationConfig Config = CLIParser::Parse(argc, argv);
-    Core::Application Application(Config);
+    Source::Core::ApplicationConfig Config = CLIParser::Parse(argc, argv);
+    Source::Core::Application Application(Config);
     Application.Run();
     return 0;
 }

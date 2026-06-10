@@ -18,7 +18,7 @@ add_compile_definitions(
     GLFW_INCLUDE_NONE
 )
 
-target_link_libraries(Launcher Core)
+target_link_libraries(Launcher Source)
 
 set_target_properties(Launcher PROPERTIES
     WIN32_EXECUTABLE TRUE

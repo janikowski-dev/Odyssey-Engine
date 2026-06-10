@@ -10,5 +10,5 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include(Dependencies.cmake)
 
 # Projects
-add_subdirectory(Core)
 add_subdirectory(Launcher)
+add_subdirectory(Source)
