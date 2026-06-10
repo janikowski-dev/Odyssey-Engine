@@ -1,8 +1,8 @@
 #include "CLIParser.h"
 
-Core::Config::ApplicationConfig CLIParser::Parse(int argc, char **argv)
+Core::ApplicationConfig CLIParser::Parse(int argc, char **argv)
 {
-    Core::Config::ApplicationConfig config;
+    Core::ApplicationConfig config;
 
     for (int i = 0; i < argc; i++)
     {

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Config/ApplicationConfig.h"
+#include "ApplicationConfig.h"
 
 class CLIParser
 {
 public:
-    static Core::Config::ApplicationConfig Parse(int argc, char** argv);
+    static Core::ApplicationConfig Parse(int argc, char** argv);
 };

@@ -6,6 +6,8 @@
 #include "../Rendering/Renderer.h"
 #include "../Types.h"
 
+#include <iostream>
+
 namespace Core::Systems
 {
     class RenderSystem
@@ -27,6 +29,8 @@ namespace Core::Systems
                     {
                         Backend.DrawMesh(T.Matrix(), *Cube, M.Color);
                     }
+
+                    std::cout << "test\n";
                 }
             );
 

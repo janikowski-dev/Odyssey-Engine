@@ -3,14 +3,18 @@
 #
 
 set(SOURCES
+    ApplicationConfig.h
     Application.cpp
     Application.h
+    Context.h
+    IModule.h
+    Types.h
 
     Components/MeshRenderer.h
     Components/Spin.h
     Components/Transform.h
 
-    Config/ApplicationConfig.h
+    Config/EngineConfig.h
     Config/LaunchType.h
     Config/WindowConfig.h
 
@@ -28,7 +32,9 @@ set(SOURCES
     ECS/Registry.inl
 
     Events/CreateEntity.h
+    Events/LoadScene.h
     Events/Ping.h
+    Events/SaveScene.h
     Events/Viewport.h
 
     Platform/Window.cpp
@@ -58,6 +64,12 @@ set(SOURCES
     Messaging/HandlerData.cpp
     Messaging/Subscription.cpp
     Messaging/Subscription.h
+
+    Modules/EditorModule.h
+    Modules/MessagingModule.h
+    Modules/PlatformModule.h
+    Modules/SerializationModule.h
+    Modules/SystemsModule.h
 )
 
 add_library(Core STATIC)

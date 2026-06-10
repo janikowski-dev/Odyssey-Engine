@@ -20,11 +20,11 @@ add_compile_definitions(
 
 target_link_libraries(Launcher Core)
 
-set_target_properties(Launcher PROPERTIES
-    WIN32_EXECUTABLE TRUE
-)
-
-target_link_options(Launcher PRIVATE "/ENTRY:mainCRTStartup")
+#set_target_properties(Launcher PROPERTIES
+#    WIN32_EXECUTABLE TRUE
+#)
+#
+#target_link_options(Launcher PRIVATE "/ENTRY:mainCRTStartup")
 
 set_target_properties(Launcher PROPERTIES
     VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/Launcher"
