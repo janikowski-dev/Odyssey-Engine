@@ -10,19 +10,15 @@ namespace Core
 {
 	Application::Application(const ApplicationConfig& InConfig) 
 	{
-		Context = MakeUnique<Core::Context>();
-		
-		Context->World = MakeUnique<ECS::Registry>();
-
-        Modules.push_back(MakeUnique<SerializationModule>());
-        Modules.push_back(MakeUnique<MessagingModule>());
-        Modules.push_back(MakeUnique<EditorModule>());
-        Modules.push_back(MakeUnique<PlatformModule>());
-        Modules.push_back(MakeUnique<SystemsModule>());
+        Modules.push_back(MakeUnique<Modules::SerializationModule>());
+        Modules.push_back(MakeUnique<Modules::MessagingModule>());
+        Modules.push_back(MakeUnique<Modules::EditorModule>());
+        Modules.push_back(MakeUnique<Modules::PlatformModule>());
+        Modules.push_back(MakeUnique<Modules::SystemsModule>());
 
 		for (auto& Module : Modules)
         {
-            Module->Init(InConfig, *Context);
+            Module->Init(InConfig, Context);
         }
 	}
 
@@ -32,7 +28,7 @@ namespace Core
     	{
             for (auto& Module : Modules)
             {
-                Module->Tick(*Context);
+                Module->Tick(Context);
             }
     	}
 	}

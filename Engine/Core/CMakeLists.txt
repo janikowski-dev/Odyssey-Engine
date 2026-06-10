@@ -65,10 +65,15 @@ set(SOURCES
     Messaging/Subscription.cpp
     Messaging/Subscription.h
 
+    Modules/EditorModule.cpp
     Modules/EditorModule.h
+    Modules/MessagingModule.cpp
     Modules/MessagingModule.h
+    Modules/PlatformModule.cpp
     Modules/PlatformModule.h
+    Modules/SerializationModule.cpp
     Modules/SerializationModule.h
+    Modules/SystemsModule.cpp
     Modules/SystemsModule.h
 )
 

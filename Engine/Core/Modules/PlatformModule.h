@@ -1,25 +1,15 @@
 #pragma once
 
 #include "../IModule.h"
-#include "../Platform/Window.h"
 
-namespace Core
+namespace Core::Platfom { class Window; }
+
+namespace Core::Modules
 {
     class PlatformModule final : public IModule
     {
     public:
-        PlatformModule() = default;
-        ~PlatformModule() override = default;
-
-        void Init(const ApplicationConfig Config, Context& Context) override
-        {
-		    Context.Window = MakeUnique<Platform::Window>(Config.WindowConfig);
-		    Context.Window->Create(*Context.EditorBridge);
-        }
-
-        void Tick(const Context& Context) override
-        {
-			Context.Window->Tick();
-        }
+        void Init(const ApplicationConfig Config, Context& Context) override;
+        void Tick(const Context& Context) override;
     };
 }

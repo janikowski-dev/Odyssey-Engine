@@ -53,6 +53,25 @@ namespace Core::Rendering
         IndexCount = 0;
     }
 
+    Mesh::Mesh(Mesh&& Other) noexcept : Vao(Other.Vao), Vbo(Other.Vbo), Ebo(Other.Ebo), IndexCount(Other.IndexCount)
+    {
+        Other.Vao = Other.Vbo = Other.Ebo = 0;
+        Other.IndexCount = 0;
+    }
+
+    Mesh& Mesh::operator=(Mesh&& Other) noexcept
+    {
+        if (this != &Other)
+        {
+            Release();
+            Vao = Other.Vao; Vbo = Other.Vbo; Ebo = Other.Ebo; IndexCount = Other.IndexCount;
+            Other.Vao = Other.Vbo = Other.Ebo = 0;
+            Other.IndexCount = 0;
+        }
+
+        return *this;
+    }
+
     void Mesh::Draw() const
     {
         glBindVertexArray(Vao);

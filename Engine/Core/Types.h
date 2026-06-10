@@ -34,6 +34,7 @@ namespace Core
     // Time
     using Duration = std::chrono::duration<float>;
     using Clock = std::chrono::steady_clock;
+    using Time = std::chrono::steady_clock::time_point;
     
     // Is Empty
     template<typename T, typename = void>

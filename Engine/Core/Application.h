@@ -16,6 +16,6 @@ namespace Core
 
 	private:
 		std::vector<UniquePtr<IModule>> Modules;
-		UniquePtr<Context> Context;
+		Context Context;
 	};
 }

@@ -22,6 +22,11 @@ namespace Core::Rendering
         Mesh(const std::vector<Vertex>& Vertices, const std::vector<uint32>& Indices);
         ~Mesh();
 
+        Mesh(const Mesh&) = delete;
+        Mesh& operator=(const Mesh&) = delete;
+        Mesh(Mesh&& Other) noexcept;
+        Mesh& operator=(Mesh&& Other) noexcept;
+
         void Draw() const;
 
     private:
