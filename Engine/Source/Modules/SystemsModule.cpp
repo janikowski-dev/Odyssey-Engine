@@ -60,6 +60,13 @@ namespace Source::Modules
 
     void SystemsModule::UpdateSystems(const Core::Context& Context)
     {
+        Context.World->View<Components::Transform, Components::Spin>(
+            [this](Source::ECS::Entity, Components::Transform& T, Components::Spin& S)
+            {
+                T.Rotation += S.Speed * DeltaTime;
+            }
+        );
+
         RendererBackend->Begin();
 
         Context.World->View<Components::Transform, Components::MeshRenderer>(
@@ -69,13 +76,6 @@ namespace Source::Modules
                 {
                     RendererBackend->DrawMesh(T.Matrix(), *Cube, M.Color);
                 }
-            }
-        );
-        
-        Context.World->View<Components::Transform, Components::Spin>(
-            [this](Source::ECS::Entity, Components::Transform& T, Components::Spin& S)
-            {
-                T.Rotation += S.Speed * DeltaTime;
             }
         );
 

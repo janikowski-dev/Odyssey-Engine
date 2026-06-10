@@ -12,6 +12,6 @@ namespace Source::Modules
 
     void PlatformModule::Tick(const Core::Context& Context)
     {
-        Context.Window->Tick();
+        Context.Window->Refresh();
     }
 }

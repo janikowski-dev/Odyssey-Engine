@@ -42,7 +42,7 @@ namespace Source::Platform
         glfwTerminate();
 	}
 
-	void Window::Tick() const
+	void Window::Refresh() const
 	{
     	glfwSwapBuffers(Handle);
     	glfwPollEvents();
