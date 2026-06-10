@@ -3,24 +3,6 @@
 #include "../Rendering/Mesh.h"
 #include "../Core/Types.h"
 
-#include <glm/glm.hpp>
-#include <memory>
-
-namespace glm
-{
-    inline void to_json(Source::Json& J, const glm::vec3& V)
-    {
-        J = Source::Json::array({ V.x, V.y, V.z });
-    }
-
-    inline void from_json(const Source::Json& J, glm::vec3& V)
-    {
-        V.x = J.at(0).get<float>();
-        V.y = J.at(1).get<float>();
-        V.z = J.at(2).get<float>();
-    }
-}
-
 namespace Source::Components
 {
     struct MeshRenderer

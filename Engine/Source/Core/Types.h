@@ -6,6 +6,8 @@
 #include <chrono>
 #include <cstdint>
 #include <nlohmann/json.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 // Namespace needs to be named like that, so the other classes can use these types easily
 namespace Source
@@ -64,4 +66,20 @@ namespace Source
 
     template<typename T>
     inline constexpr bool IsConsumable = is_consumable<T>::value;
+}
+
+// Namespace has to be like this so the json serializer sees these methods
+namespace glm
+{
+    inline void to_json(Source::Json& J, const glm::vec3& V)
+    {
+        J = Source::Json::array({ V.x, V.y, V.z });
+    }
+
+    inline void from_json(const Source::Json& J, glm::vec3& V)
+    {
+        V.x = J.at(0).get<float>();
+        V.y = J.at(1).get<float>();
+        V.z = J.at(2).get<float>();
+    }
 }

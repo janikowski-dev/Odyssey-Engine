@@ -2,8 +2,6 @@
 
 #include "../Core/Types.h"
 
-#include <glm/glm.hpp>
-
 namespace Source::Components
 {
     struct Spin

@@ -50,9 +50,6 @@ set(SOURCES
     Serialization/SceneSerializer.cpp
     Serialization/SceneSerializer.h
 
-    Systems/RenderSystem.h
-    Systems/SpinSystem.h
-
     Messaging/MessageBus.cpp
     Messaging/MessageBus.h
     Messaging/MessageBus.inl
