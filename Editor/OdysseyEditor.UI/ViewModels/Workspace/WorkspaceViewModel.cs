@@ -114,7 +114,7 @@ public class WorkspaceViewModel(string enginePath, int port) : HwndHost
         await _connection.ConnectAsync("127.0.0.1", port, TimeSpan.FromSeconds(10));
 
         JsonElement viewport = await _connection.RequestAsync("get_viewport", null, TimeSpan.FromSeconds(3));
-        return new IntPtr(viewport.GetProperty("hwnd").GetInt64());
+        return new IntPtr(viewport.GetProperty("Hwnd").GetInt64());
     }
 
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]

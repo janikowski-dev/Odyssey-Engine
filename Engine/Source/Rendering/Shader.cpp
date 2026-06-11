@@ -68,7 +68,11 @@ namespace Source::Rendering
     {
         if (this != &Other)
         {
-            if (Program) glDeleteProgram(Program);
+            if (Program)
+            {
+                glDeleteProgram(Program);
+            }
+            
             Program = Other.Program;
             Other.Program = 0;
         }

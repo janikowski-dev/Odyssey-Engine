@@ -15,6 +15,6 @@ namespace Source::Modules
         void Init(const Core::ApplicationConfig Config, Core::Context& Context) override;
 
     private:
-        UniquePtr<Serialization::ComponentRegistry> ComponentRegistry;
+        Serialization::ComponentRegistry ComponentRegistry;
     };
 }

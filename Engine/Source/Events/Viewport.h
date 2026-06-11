@@ -12,8 +12,8 @@ namespace Source::Events
 
     struct ViewportResponse
     {
-        uint64 hwnd;
+        uint64 Hwnd;
     };
 
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ViewportResponse, hwnd);
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ViewportResponse, Hwnd);
 }

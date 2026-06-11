@@ -3,9 +3,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace Source::Rendering
+namespace Source::Components
 {
-    struct Camera
+    struct CameraComponent
     {
         glm::vec3 Position { 0.0f, 2.0f, 0.0f };
         glm::vec3 Target { 0.0f, 0.0f, 0.0f };
@@ -16,7 +16,11 @@ namespace Source::Rendering
         float Near = 0.1f;
         float Far = 100.0f;
 
+        int32 Priority;
+
         glm::mat4 View() const { return glm::lookAt(Position, Target, Up); }
         glm::mat4 Projection() const { return glm::perspective(glm::radians(FovDegrees), Aspect, Near, Far); }
     };
+    
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(CameraComponent, Position, Target, Up, FovDegrees, Aspect, Near, Far, Priority)
 }

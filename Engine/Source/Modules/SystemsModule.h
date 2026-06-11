@@ -25,15 +25,9 @@ namespace Source::Modules
         void HandleTime();
 
     private:
-        // This method is here temporarily
-        Rendering::Mesh MakeCube();
-
-    private:
         UniquePtr<Rendering::Renderer> RendererBackend;
-        // This variable is here temporarily
-		UniquePtr<Rendering::Mesh> Cube;
         float DeltaTime = 0.0f;
-        Time LastTime{};
-        Time CurrentTime{};
+        Time CurrentTime {};
+        Time LastTime {};
     };
 }

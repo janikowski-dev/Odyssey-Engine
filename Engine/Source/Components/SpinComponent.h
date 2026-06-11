@@ -4,10 +4,10 @@
 
 namespace Source::Components
 {
-    struct Spin
+    struct SpinComponent
     {
         glm::vec3 Speed { 0.0f };
     };
 
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Spin, Speed)
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SpinComponent, Speed)
 }

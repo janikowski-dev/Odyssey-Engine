@@ -2,12 +2,12 @@
 
 #include "../Messaging/MessageBus.h"
 #include "../Rendering/Renderer.h"
-#include "../Rendering/Camera.h"
 #include "../Rendering/Mesh.h"
 #include "../ECS/Registry.h"
-#include "../Components/MeshRenderer.h"
-#include "../Components/Transform.h"
-#include "../Components/Spin.h"
+#include "../Components/RendererComponent.h"
+#include "../Components/TransformComponent.h"
+#include "../Components/CameraComponent.h"
+#include "../Components/SpinComponent.h"
 
 namespace Source::Modules
 {
@@ -30,15 +30,6 @@ namespace Source::Modules
     void SystemsModule::InitRendering()
     {
         RendererBackend = MakeUnique<Rendering::Renderer>();
-        RendererBackend->SetViewport(1280, 720);
-
-        Rendering::Camera Camera;
-        Camera.Position = { 4.0f, 3.0f, 6.0f };
-        Camera.Target = { 0.0f, 0.0f, 0.0f };
-        Camera.Up = { 0.0f, 1.0f, 0.0f };
-        RendererBackend->SetCamera(Camera);
-
-        Cube = MakeUnique<Rendering::Mesh>(MakeCube());
     }
 
     void SystemsModule::InitTime()
@@ -49,6 +40,7 @@ namespace Source::Modules
     void SystemsModule::InitSystems(const Core::ApplicationConfig Config, Core::Context& Context)
     {
         Context.World = MakeUnique<ECS::Registry>();
+        Context.World->Add<Components::CameraComponent>(Context.World->Create(), Components::CameraComponent{ { 4.0f, 3.0f, 6.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f } });
     }
 
     void SystemsModule::HandleTime()
@@ -60,60 +52,39 @@ namespace Source::Modules
 
     void SystemsModule::UpdateSystems(const Core::Context& Context)
     {
-        Context.World->View<Components::Transform, Components::Spin>(
-            [this](Source::ECS::Entity, Components::Transform& T, Components::Spin& S)
+        Context.World->View<Components::TransformComponent, Components::SpinComponent>(
+            [this](ECS::Entity, Components::TransformComponent& T, Components::SpinComponent& S)
             {
                 T.Rotation += S.Speed * DeltaTime;
             }
         );
 
-        RendererBackend->Begin();
+        Components::CameraComponent* ActiveCamera = nullptr;
 
-        Context.World->View<Components::Transform, Components::MeshRenderer>(
-            [this](Source::ECS::Entity, Components::Transform& T, Components::MeshRenderer& M)
+        Context.World->View<Components::CameraComponent>(
+            [&ActiveCamera](ECS::Entity, Components::CameraComponent& C)
             {
-                if (Cube)
+                if (!ActiveCamera || C.Priority > ActiveCamera->Priority)
                 {
-                    RendererBackend->DrawMesh(T.Matrix(), *Cube, M.Color);
+                    ActiveCamera = &C;
                 }
             }
         );
 
-        RendererBackend->End();
-    }
-
-    Rendering::Mesh SystemsModule::MakeCube()
-    {
-        const glm::vec3 P[8] = {
-            {-0.5f,-0.5f,-0.5f}, { 0.5f,-0.5f,-0.5f}, { 0.5f, 0.5f,-0.5f}, {-0.5f, 0.5f,-0.5f},
-            {-0.5f,-0.5f, 0.5f}, { 0.5f,-0.5f, 0.5f}, { 0.5f, 0.5f, 0.5f}, {-0.5f, 0.5f, 0.5f},
-        };
-
-        struct Face
+        if (!ActiveCamera)
         {
-            int a, b, c, d;
-            glm::vec3 n;
-        };
-
-        const Face F[6] = {
-            {4,5,6,7, { 0, 0, 1}}, {1,0,3,2, { 0, 0,-1}},
-            {0,4,7,3, {-1, 0, 0}}, {5,1,2,6, { 1, 0, 0}},
-            {3,7,6,2, { 0, 1, 0}}, {0,1,5,4, { 0,-1, 0}},
-        };
-
-        std::vector<Rendering::Vertex> Vertices;
-        std::vector<uint32> Indices;
-
-        for (const Face& f : F)
-        {
-            uint32 base = static_cast<uint32>(Vertices.size());
-            Vertices.push_back({ P[f.a], f.n });
-            Vertices.push_back({ P[f.b], f.n });
-            Vertices.push_back({ P[f.c], f.n });
-            Vertices.push_back({ P[f.d], f.n });
-            Indices.insert(Indices.end(), { base, base + 1, base + 2, base, base + 2, base + 3 });
+            return;
         }
 
-        return Rendering::Mesh(Vertices, Indices);
+        RendererBackend->Begin(*ActiveCamera);
+
+        Context.World->View<Components::TransformComponent, Components::RendererComponent>(
+            [this, ActiveCamera](ECS::Entity, Components::TransformComponent& T, Components::RendererComponent& R)
+            {
+                RendererBackend->DrawMesh(T.Matrix(), *R.Mesh, *R.Shader, R.Color);
+            }
+        );
+
+        RendererBackend->End();
     }
 }

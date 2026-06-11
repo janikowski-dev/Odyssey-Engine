@@ -5,6 +5,7 @@
 #include "../Modules/PlatformModule.h"
 #include "../Modules/SerializationModule.h"
 #include "../Modules/SystemsModule.h"
+#include "../Modules/ResourcesModule.h"
 
 namespace Source::Core
 {
@@ -14,6 +15,7 @@ namespace Source::Core
         Modules.push_back(MakeUnique<Modules::MessagingModule>());
         Modules.push_back(MakeUnique<Modules::EditorModule>());
         Modules.push_back(MakeUnique<Modules::PlatformModule>());
+        Modules.push_back(MakeUnique<Modules::ResourcesModule>());
         Modules.push_back(MakeUnique<Modules::SystemsModule>());
 
 		for (auto& Module : Modules)

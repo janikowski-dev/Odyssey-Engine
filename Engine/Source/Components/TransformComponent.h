@@ -4,7 +4,7 @@
 
 namespace Source::Components
 {
-    struct Transform
+    struct TransformComponent
     {
         glm::vec3 Position { 0.0f };
         glm::vec3 Rotation { 0.0f };
@@ -22,5 +22,5 @@ namespace Source::Components
         }
     };
     
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Transform, Position, Rotation, Scale)
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(TransformComponent, Position, Rotation, Scale)
 }

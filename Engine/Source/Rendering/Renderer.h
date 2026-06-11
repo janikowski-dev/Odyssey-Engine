@@ -1,27 +1,27 @@
 #pragma once
 
-#include "Camera.h"
-#include "Mesh.h"
-#include "Shader.h"
-
 #include <glm/glm.hpp>
+
+namespace Source::Components { class CameraComponent; }
 
 namespace Source::Rendering
 {
+    class Shader;
+    class Mesh;
+
     class Renderer
     {
     public:
-        Renderer();
-
-        void SetCamera(const Camera& InCamera) { Camera = InCamera; }
-        void SetViewport(int Width, int Height);
-
-        void Begin();
-        void DrawMesh(const glm::mat4& Model, const Mesh& InMesh, const glm::vec3& Color);
+        void Begin(const Components::CameraComponent& InCamera);
+        void DrawMesh(const glm::mat4& InModel, const Mesh& InMesh, const Shader& InShader, const glm::vec3& InColor);
         void End();
 
     private:
-        Shader DefaultShader;
-        Camera Camera;
+        void Begin();
+        void CacheCamera(const Components::CameraComponent& InCamera);
+
+    private:
+        glm::mat4 View { 1.0f };
+        glm::mat4 Projection { 1.0f };
     };
 }

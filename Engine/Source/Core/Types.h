@@ -8,6 +8,7 @@
 #include <nlohmann/json.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 
 // Namespace needs to be named like that, so the other classes can use these types easily
 namespace Source
@@ -33,6 +34,9 @@ namespace Source
 
     // Json
     using Json = nlohmann::json;
+
+    // Logs
+    inline std::ostream& Debug = std::cout;
 
     // Time
     using Duration = std::chrono::duration<float>;

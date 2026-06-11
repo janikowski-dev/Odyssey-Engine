@@ -1,24 +1,24 @@
 #include "SerializationModule.h"
 
-#include "../Platform/Window.h"
 #include "../Serialization/ComponentRegistry.h"
 #include "../Serialization/SceneSerializer.h"
-#include "../Components/MeshRenderer.h"
-#include "../Components/Transform.h"
-#include "../Components/Spin.h"
+#include "../Components/CameraComponent.h"
+#include "../Components/RendererComponent.h"
+#include "../Components/TransformComponent.h"
+#include "../Components/SpinComponent.h"
 
 namespace Source::Modules
 {
     SerializationModule::SerializationModule()
     {
-        ComponentRegistry = MakeUnique<Serialization::ComponentRegistry>();
-        ComponentRegistry->Register<Components::Transform>("Transform");
-        ComponentRegistry->Register<Components::MeshRenderer>("Mesh");
-        ComponentRegistry->Register<Components::Spin>("Spin");
+        ComponentRegistry.Register<Components::TransformComponent>("Transform");
+        ComponentRegistry.Register<Components::RendererComponent>("Renderer");
+        ComponentRegistry.Register<Components::CameraComponent>("Camera");
+        ComponentRegistry.Register<Components::SpinComponent>("Spin");
     }
 
     void SerializationModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
     {
-        Context.SceneSerializer = MakeUnique<Serialization::SceneSerializer>(*ComponentRegistry);
+        Context.SceneSerializer = MakeUnique<Serialization::SceneSerializer>(ComponentRegistry);
     }
 }

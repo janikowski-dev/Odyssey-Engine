@@ -10,9 +10,10 @@ set(SOURCES
     Core/IModule.h
     Core/Types.h
 
-    Components/MeshRenderer.h
-    Components/Spin.h
-    Components/Transform.h
+    Components/CameraComponent.h
+    Components/RendererComponent.h
+    Components/SpinComponent.h
+    Components/TransformComponent.h
 
     Editor/Connection.cpp
     Editor/Connection.h
@@ -36,7 +37,6 @@ set(SOURCES
     Platform/Window.cpp
     Platform/Window.h
 
-    Rendering/Camera.h
     Rendering/Mesh.cpp
     Rendering/Mesh.h
     Rendering/Renderer.cpp
@@ -64,10 +64,16 @@ set(SOURCES
     Modules/MessagingModule.h
     Modules/PlatformModule.cpp
     Modules/PlatformModule.h
+    Modules/ResourcesModule.cpp
+    Modules/ResourcesModule.h
     Modules/SerializationModule.cpp
     Modules/SerializationModule.h
     Modules/SystemsModule.cpp
     Modules/SystemsModule.h
+
+    Resources/ResourceCache.h
+    Resources/ResourceLibrary.h
+    Resources/ResourceLibrary.inl
 )
 
 add_library(Source STATIC)
