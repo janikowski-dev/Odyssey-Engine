@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Core/Types.h"
+#include "../Core/Minimal.h"
 
 #include <atomic>
 #include <cstdint>
@@ -24,24 +24,23 @@ namespace Source::Editor
         Connection(const Connection&) = delete;
         Connection& operator=(const Connection&) = delete;
 
-        bool Listen(uint16 Port);
-        std::vector<std::string> Poll();
+        bool Listen(std::string Host, uint16 Port);
         bool Send(const std::string& Payload);
-        bool IsConnected() const { return Connected.load(); }
-        void Close();
+        std::vector<std::string> Poll();
 
     private:
         void AcceptAndRead();
         void ReadLoop();
         bool ReceiveExact(char* Buffer, int Length);
         bool SendExact(const char* Buffer, int Length);
+        void Close();
 
     private:
         SocketHandle ListenSocket = InvalidSocket;
         SocketHandle ClientSocket = InvalidSocket;
 
-        std::atomic<bool> Connected{ false };
-        std::atomic<bool> Running{ false };
+        std::atomic<bool> Connected { false };
+        std::atomic<bool> Running { false };
         std::thread ReadThread;
 
         std::queue<std::string> Incoming;

@@ -2,7 +2,7 @@
 
 #include "ResourceLibrary.h"
 
-#include "../Core/Types.h"
+#include "../Core/Minimal.h"
 #include "../Rendering/Shader.h"
 #include "../Rendering/Mesh.h"
 

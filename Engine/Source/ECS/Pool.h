@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Core/Types.h"
+#include "../Core/Minimal.h"
 
 #include <cassert>
 #include <cstdint>

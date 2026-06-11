@@ -20,7 +20,7 @@ namespace Source::Messaging
         template<typename T>
         [[nodiscard]] Subscription Subscribe(std::function<void(T&)> Handler, int Priority = 0);
 
-        void Unsubscribe(SubID Id);
+        void Unsubscribe(SubId Id);
 
         template<typename T>
         void Publish(T& InEvent);
@@ -40,7 +40,7 @@ namespace Source::Messaging
         mutable std::mutex Mutex;
         std::unordered_map<std::type_index, HandlerList> Handlers;
         std::deque<QueuedMessage> Queue;
-        SubID NextId = 1;
+        SubId NextId = 1;
     };
 }
 

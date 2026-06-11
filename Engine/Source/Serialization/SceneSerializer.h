@@ -2,7 +2,7 @@
 
 #include "ComponentRegistry.h"
 
-#include "../Core/Types.h"
+#include "../Core/Minimal.h"
 
 #include <string>
 

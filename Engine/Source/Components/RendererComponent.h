@@ -2,7 +2,7 @@
 
 #include "../Rendering/Shader.h"
 #include "../Rendering/Mesh.h"
-#include "../Core/Types.h"
+#include "../Core/Minimal.h"
 
 namespace Source::Components
 {
@@ -21,16 +21,16 @@ namespace Source::Components
     inline void to_json(Json& J, const RendererComponent& R)
     {
         J = Json {
-            { "shader", R.ShaderId },
-            { "mesh", R.MeshId },
-            { "color", R.Color }
+            { "Shader", R.ShaderId },
+            { "Mesh", R.MeshId },
+            { "Color", R.Color }
         };
     }
 
     inline void from_json(const Json& J, RendererComponent& R)
     {
-        R.ShaderId = J.at("shader").get<std::string>();
-        R.MeshId = J.at("mesh").get<std::string>();
-        R.Color = J.at("color").get<glm::vec3>();
+        R.ShaderId = J.at("Shader").get<std::string>();
+        R.MeshId = J.at("Mesh").get<std::string>();
+        R.Color = J.at("Color").get<glm::vec3>();
     }
 }

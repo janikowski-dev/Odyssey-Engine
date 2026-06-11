@@ -2,20 +2,9 @@
 
 namespace Source::Editor
 {
-    bool Bridge::Start(uint16 Port)
-    {
-        return Connection.Listen(Port);
-    }
+    bool Bridge::Start(std::string Host, uint16 Port) { return Connection.Listen(Host, Port); }
 
-    void Bridge::SendEvent(const std::string& Name, const Json& Data)
-    {
-        Json Message;
-        Message["event"] = Name;
-        Message["data"] = Data;
-        Connection.Send(Message.dump());
-    }
-
-    void Bridge::Tick()
+    void Bridge::Communicate()
     {
         for (const std::string& Raw : Connection.Poll())
         {
@@ -23,16 +12,11 @@ namespace Source::Editor
         }
     }
 
-    void Bridge::HandleMessage(const std::string& Raw)
+    void Bridge::HandleMessage(const std::string &Raw)
     {
         Json Message = Json::parse(Raw, nullptr, false);
 
-        if (Message.is_discarded())
-        {
-            return;
-        }
-
-        if (Message.contains("method") && Message["method"].is_string())
+        if (IsValid(Message))
         {
             HandleRpc(Message);
         }
@@ -41,7 +25,7 @@ namespace Source::Editor
     void Bridge::HandleRpc(const Json& Message)
     {
         const std::string Method = Message["method"].get<std::string>();
-        const Json Params = Message.value("params", Json::object());
+        const Json Data = Message.value("data", Json::object());
         const bool HasId = Message.contains("id");
 
         Json Response;
@@ -57,14 +41,14 @@ namespace Source::Editor
         {
             if (HasId)
             {
-                Response["error"] = "unknown method: " + Method;
+                Response["error"] = "Unknown method: " + Method;
             }
         }
         else
         {
             try
             {
-                Json Result = It->second(Params);
+                Json Result = It->second(Data);
                 
                 if (HasId)
                 {
@@ -84,5 +68,15 @@ namespace Source::Editor
         {
             Connection.Send(Response.dump());
         }
+    }
+
+    bool Bridge::IsValid(const Json &Message)
+    {
+        if (Message.is_discarded())
+        {
+            return false;
+        }
+
+        return Message.contains("method") && Message["method"].is_string();
     }
 }

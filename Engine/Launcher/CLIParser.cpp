@@ -23,6 +23,11 @@ Source::Core::ApplicationConfig CLIParser::Parse(int argc, char **argv)
             config.WindowConfig.RenderWindow = false;
         }
 
+        if (arg == "-host" && i + 1 < argc)
+        {
+            config.Host = argv[++i];
+        }
+
         if (arg == "-port" && i + 1 < argc)
         {
             config.EditorPort = std::stoi(argv[++i]);

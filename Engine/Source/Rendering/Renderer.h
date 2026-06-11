@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-namespace Source::Components { class CameraComponent; }
+namespace Source::Components { struct CameraComponent; }
 
 namespace Source::Rendering
 {

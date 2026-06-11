@@ -8,9 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Enums\" />
-      <Folder Include="Interfaces\" />
-      <Folder Include="Models\" />
+      <PackageReference Include="Microsoft.Extensions.Options" Version="11.0.0-preview.4.26230.115" />
     </ItemGroup>
 
 </Project>

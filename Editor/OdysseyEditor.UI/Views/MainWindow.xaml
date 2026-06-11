@@ -10,12 +10,6 @@
         Height="900" Width="1600"
         Background="{StaticResource WorkspaceBgBrush}"
         d:DataContext="{d:DesignInstance Type=main:MainWindowViewModel, IsDesignTimeCreatable=True}">
-    
-    <Window.InputBindings>
-        <KeyBinding Key="Z" Modifiers="Ctrl" Command="{Binding UndoCommand}"/>
-        <KeyBinding Key="Y" Modifiers="Ctrl" Command="{Binding RedoCommand}"/>
-        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding SaveCommand}"/>
-    </Window.InputBindings>
 
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">

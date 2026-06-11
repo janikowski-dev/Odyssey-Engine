@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Connection.h"
+#include "../Core/Minimal.h"
 
-#include "../Core/Types.h"
+#include "Connection.h"
 
 #include <cstdint>
 #include <functional>
@@ -17,17 +17,19 @@ namespace Source::Editor
     public:
         using Handler = std::function<Json(const Json& Params)>;
 
-        bool Start(uint16 Port);
-        void Tick();
+        bool Start(std::string Host, uint16 Port);
+        void Communicate();
 
         template<typename TIn, typename TOut, typename Fn>
         void On(std::string_view Method, Fn&& Function);
-
-        void SendEvent(const std::string& Name, const Json& Data);
+        
+        template<typename TIn>
+        void Send(std::string_view Method, TIn Data);
 
     private:
         void HandleMessage(const std::string& Raw);
         void HandleRpc(const Json& Message);
+        bool IsValid(const Json& Message);
 
         std::unordered_map<std::string, Handler> Handlers;
         Connection Connection;

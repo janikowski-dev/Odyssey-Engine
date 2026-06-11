@@ -16,7 +16,7 @@ namespace Source::Serialization
         }
 
         Json Scene;
-        Scene["entities"] = Json::array();
+        Scene["Entities"] = Json::array();
 
         for (ECS::Entity E : Registry.CollectEntities(World))
         {
@@ -25,7 +25,7 @@ namespace Source::Serialization
 
             if (!Components.empty())
             {
-                Scene["entities"].push_back({ { "components", Components } });
+                Scene["Entities"].push_back({ { "Components", Components } });
             }
         }
 
@@ -45,20 +45,20 @@ namespace Source::Serialization
         Json Scene;
         In >> Scene;
         
-        if (!Scene.contains("entities"))
+        if (!Scene.contains("Entities"))
         {
             return false;
         }
 
         World.Clear();
 
-        for (const auto& Entry : Scene.at("entities"))
+        for (const auto& Entry : Scene.at("Entities"))
         {
             ECS::Entity E = World.Create();
 
-            if (Entry.contains("components"))
+            if (Entry.contains("Components"))
             {
-                Registry.Load(World, E, Entry.at("components"));
+                Registry.Load(World, E, Entry.at("Components"));
             }
         }
 

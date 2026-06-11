@@ -3,7 +3,7 @@
 #include "Entity.h"
 #include "Pool.h"
 
-#include "../Core/Types.h"
+#include "../Core/Minimal.h"
 
 #include <memory>
 #include <tuple>

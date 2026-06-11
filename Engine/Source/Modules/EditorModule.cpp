@@ -4,6 +4,7 @@
 #include "../Events/SaveScene.h"
 #include "../Events/LoadScene.h"
 #include "../Events/Ping.h"
+#include "../Components/CameraComponent.h"
 #include "../Components/TransformComponent.h"
 #include "../Components/RendererComponent.h"
 #include "../Components/SpinComponent.h"
@@ -31,6 +32,7 @@ namespace Source::Modules
         Context.EditorBridge->On<Events::SaveSceneRequest, Events::SaveSceneResponse>(Events::SaveSceneKey, [&Context](const Events::SaveSceneRequest& Request)
         {
             Context.SceneSerializer->SaveToFile(*Context.World, Request.Path);
+            Debug << "Saving";
             return Events::SaveSceneResponse();
         });
 
@@ -46,14 +48,16 @@ namespace Source::Modules
                 }
             );
 
+            
+            Context.World->Add<Components::CameraComponent>(Context.World->Create(), Components::CameraComponent{ { 4.0f, 3.0f, 6.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f } });
             return Events::LoadSceneResponse();
         });
 
-        Context.EditorBridge->Start(Config.EditorPort);
+        Context.EditorBridge->Start(Config.Host, Config.EditorPort);
     }
 
     void EditorModule::Tick(const Core::Context& Context)
     {
-        Context.EditorBridge->Tick();
+        Context.EditorBridge->Communicate();
     }
 }

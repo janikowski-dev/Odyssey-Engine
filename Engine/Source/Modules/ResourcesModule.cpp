@@ -4,6 +4,7 @@
 
 namespace Source::Modules
 {
+    // === Temporary ===
     namespace
     {
         const char* DefaultVertex = R"(#version 330 core
@@ -73,6 +74,7 @@ namespace Source::Modules
 
         return Rendering::Mesh(Vertices, Indices);
     }
+    // === Temporary ===
 
     void ResourcesModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
     {

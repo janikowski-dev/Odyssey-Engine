@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Core/Types.h"
+#include "../Core/Minimal.h"
 
 #include <glad/gl.h>
 #include <glm/glm.hpp>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Types.h"
+#include "Minimal.h"
 
 #include "../Serialization/SceneSerializer.h"
 #include "../Resources/ResourceCache.h"

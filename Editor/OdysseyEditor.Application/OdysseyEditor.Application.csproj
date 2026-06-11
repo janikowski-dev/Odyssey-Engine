@@ -8,11 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\OdysseyEditor.Domain\OdysseyEditor.Domain.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Commands\" />
+      <ProjectReference Include="..\OdysseyEditor.Engine\OdysseyEditor.Engine.csproj" />
     </ItemGroup>
 
 </Project>

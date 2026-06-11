@@ -22,5 +22,5 @@ namespace Source::Components
         glm::mat4 Projection() const { return glm::perspective(glm::radians(FovDegrees), Aspect, Near, Far); }
     };
     
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(CameraComponent, Position, Target, Up, FovDegrees, Aspect, Near, Far, Priority)
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(CameraComponent, Position, Target, Up)
 }

@@ -4,6 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OdysseyEditor.Application.Interfaces;
 using OdysseyEditor.Application.Services;
+using OdysseyEditor.Domain.Data;
+using OdysseyEditor.Domain.Interfaces;
+using OdysseyEditor.Domain.Services;
 using OdysseyEditor.UI.ViewModels.Console;
 using OdysseyEditor.UI.ViewModels.ControlsBar;
 using OdysseyEditor.UI.ViewModels.Hierarchy;
@@ -25,8 +28,10 @@ public partial class App
         Start(Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
             {
+                ReadConfiguration(context, services);
                 ConfigureApplication(services);
-                ConfigureViews(context, services);
+                ConfigureEngine(services);
+                ConfigureViews(services);
             })
             .Build()
         );
@@ -41,16 +46,28 @@ public partial class App
         base.OnExit(eventArgs);
     }
 
+    private static void ReadConfiguration(HostBuilderContext context, IServiceCollection services)
+    {
+        services.Configure<EngineConfig>(context.Configuration.GetSection("Engine"));
+    }
+
     private static void ConfigureApplication(IServiceCollection services)
     {
         services.AddSingleton<IUndoService, UndoService>();
         services.AddSingleton<ILogService, LogService>();
     }
-
-    private static void ConfigureViews(HostBuilderContext context, IServiceCollection services)
+    
+    private static void ConfigureEngine(IServiceCollection services)
     {
-        services.AddSingleton(new WorkspaceViewModel(context.Configuration["EnginePath"]!, int.Parse(context.Configuration["Port"]!)));
+        services.AddSingleton<EngineService>();
+        services.AddSingleton<IEngineMessenger>(provider => provider.GetRequiredService<EngineService>());
+        services.AddSingleton<IEngineLauncher>(provider => provider.GetRequiredService<EngineService>());
+    }
+
+    private static void ConfigureViews(IServiceCollection services)
+    {
         services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
+        services.AddSingleton<WorkspaceViewModel>();
         services.AddSingleton<ControlsBarViewModel>();
         services.AddSingleton<HierarchyViewModel>();
         services.AddSingleton<InspectorViewModel>();

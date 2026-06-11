@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Core/IModule.h"
-#include "../Core/Types.h"
+#include "../Core/Minimal.h"
 
 namespace Source::Modules
 {

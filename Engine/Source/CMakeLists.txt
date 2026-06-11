@@ -8,7 +8,7 @@ set(SOURCES
     Core/Application.h
     Core/Context.h
     Core/IModule.h
-    Core/Types.h
+    Core/Minimal.h
 
     Components/CameraComponent.h
     Components/RendererComponent.h

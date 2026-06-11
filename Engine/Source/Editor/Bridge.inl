@@ -2,7 +2,7 @@
 
 #include "Bridge.h"
 
-#include "../Core/Types.h"
+#include "../Core/Minimal.h"
 
 namespace Source::Editor
 {
@@ -29,5 +29,14 @@ namespace Source::Editor
                 return Json(Output);
             }
         };
+    }
+
+    template<typename TIn>
+    void Bridge::Send(std::string_view Method, TIn Data)
+    {
+        Json Message;
+        Message["method"] = Method;
+        Message["data"] = Data;
+        Connection.Send(Message.dump());
     }
 }

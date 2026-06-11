@@ -21,7 +21,7 @@ namespace Source::Messaging
         IsDirty = false;
     }
 
-    void HandlerList::Remove(SubID Id)
+    void HandlerList::Remove(SubId Id)
     {
         Entries.erase(std::remove_if(Entries.begin(), Entries.end(), [Id](const HandlerEntry& Entry) { return Entry.Id == Id; }), Entries.end());
     }

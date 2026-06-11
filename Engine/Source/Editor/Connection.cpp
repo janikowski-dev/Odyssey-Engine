@@ -1,6 +1,6 @@
 #include "Connection.h"
 
-#include "../Core/Types.h"
+#include "../Core/Minimal.h"
 
 #define WIN32_LEAN_AND_MEAN
 
@@ -27,9 +27,12 @@ namespace Source::Editor
         constexpr uint32 MaxMessage = 16u * 1024 * 1024;
     }
 
-    Connection::~Connection() { Close(); }
+    Connection::~Connection()
+    {
+        Close();
+    }
 
-    bool Connection::Listen(uint16 Port)
+    bool Connection::Listen(std::string Host, uint16 Port)
     {
         EnsureWinsock();
 
@@ -45,11 +48,10 @@ namespace Source::Editor
 
         sockaddr_in Address{};
         Address.sin_family = AF_INET;
-        Address.sin_port   = htons(Port);
-        inet_pton(AF_INET, "127.0.0.1", &Address.sin_addr);
+        Address.sin_port = htons(Port);
+        inet_pton(AF_INET, Host.c_str(), &Address.sin_addr);
 
-        if (bind(Sock, (sockaddr*)&Address, sizeof(Address)) == SOCKET_ERROR ||
-            listen(Sock, 1) == SOCKET_ERROR)
+        if (bind(Sock, (sockaddr*)&Address, sizeof(Address)) == SOCKET_ERROR || listen(Sock, 1) == SOCKET_ERROR)
         {
             closesocket(Sock);
             return false;

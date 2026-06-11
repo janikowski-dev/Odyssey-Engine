@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../Core/Types.h"
+#include "../Core/Minimal.h"
 
 #include <functional>
 #include <string>
 #include <unordered_map>
 #include <vector>
 
-namespace Source::ECS { class Registry; class Entity; }
+namespace Source::ECS { class Registry; struct Entity; }
 
 namespace Source::Serialization
 {

@@ -4,7 +4,7 @@
 #include "Message.h"
 #include "Subscription.h"
 
-#include "../Core/Types.h"
+#include "../Core/Minimal.h"
 
 #include <utility>
 
@@ -16,7 +16,7 @@ namespace Source::Messaging
         std::lock_guard Lock(Mutex);
 
         HandlerList& SpecificHandlers = Handlers[std::type_index(typeid(T))];
-        const SubID Id = NextId++;
+        const SubId Id = NextId++;
 
         SpecificHandlers.Entries.push_back(HandlerEntry
         {

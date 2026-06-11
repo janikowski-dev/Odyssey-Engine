@@ -2,7 +2,7 @@
 
 #include "HandlerData.h"
 
-#include "../Core/Types.h"
+#include "../Core/Minimal.h"
 
 namespace Source::Messaging
 {
@@ -12,7 +12,7 @@ namespace Source::Messaging
     {
     public:
         Subscription() = default;
-        Subscription(MessageBus* Bus, SubID Id) : Bus(Bus), Id(Id) {}
+        Subscription(MessageBus* Bus, SubId Id) : Bus(Bus), Id(Id) {}
         Subscription(Subscription&& Other) noexcept;
         Subscription(const Subscription&) = delete;
 
@@ -23,7 +23,7 @@ namespace Source::Messaging
 
         void Reset();
         bool IsValid() const { return Bus != nullptr && Id != INVALID_SUB; }
-        SubID GetId() const { return Id; }
+        SubId GetId() const { return Id; }
 
     private:
         void Copy(Subscription& Other);
@@ -31,6 +31,6 @@ namespace Source::Messaging
 
     private:
         MessageBus* Bus = nullptr;
-        SubID Id = INVALID_SUB;
+        SubId Id = INVALID_SUB;
     };
 }

@@ -11,7 +11,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\OdysseyEditor.Application\OdysseyEditor.Application.csproj" />
-      <ProjectReference Include="..\OdysseyEditor.Domain\OdysseyEditor.Domain.csproj" />
+      <ProjectReference Include="..\OdysseyEditor.Engine\OdysseyEditor.Engine.csproj" />
     </ItemGroup>
 
     <ItemGroup>

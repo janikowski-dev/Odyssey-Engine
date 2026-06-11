@@ -3,7 +3,7 @@
 #include "ApplicationConfig.h"
 #include "Context.h"
 #include "IModule.h"
-#include "Types.h"
+#include "Minimal.h"
 
 namespace Source::Core
 {

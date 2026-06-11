@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OdysseyEditor.UI", "OdysseyEditor.UI\OdysseyEditor.UI.csproj", "{69897D0F-9740-4D29-B016-F01C3B2801BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OdysseyEditor.Domain", "OdysseyEditor.Domain\OdysseyEditor.Domain.csproj", "{04F5E179-C066-4E9D-BA7F-C2D64609DBF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OdysseyEditor.Engine", "OdysseyEditor.Engine\OdysseyEditor.Engine.csproj", "{04F5E179-C066-4E9D-BA7F-C2D64609DBF1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OdysseyEditor.Application", "OdysseyEditor.Application\OdysseyEditor.Application.csproj", "{A14B0B0F-9170-46A9-BEEB-94F5C6984DEB}"
 EndProject

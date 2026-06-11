@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Types.h"
+#include "Minimal.h"
 
 namespace Source::Core
 {
@@ -29,6 +29,7 @@ namespace Source::Core
         EngineConfig EngineConfig;
         WindowConfig WindowConfig;
         LaunchType LaunchType;
+        std::string Host;
         int EditorPort;
     };
 }

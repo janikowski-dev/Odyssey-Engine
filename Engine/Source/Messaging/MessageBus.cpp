@@ -33,7 +33,7 @@ namespace Source::Messaging
         }
     }
 
-    void MessageBus::Unsubscribe(SubID Id)
+    void MessageBus::Unsubscribe(SubId Id)
     {
         std::lock_guard Lock(Mutex);
 

@@ -40,7 +40,6 @@ namespace Source::Modules
     void SystemsModule::InitSystems(const Core::ApplicationConfig Config, Core::Context& Context)
     {
         Context.World = MakeUnique<ECS::Registry>();
-        Context.World->Add<Components::CameraComponent>(Context.World->Create(), Components::CameraComponent{ { 4.0f, 3.0f, 6.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f } });
     }
 
     void SystemsModule::HandleTime()
