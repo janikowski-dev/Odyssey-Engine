@@ -1,6 +1,10 @@
 #include "Window.h"
 
+#include "../Core/ApplicationConfig.h"
 #include "../Events/Viewport.h"
+#include "../Editor/Bridge.h"
+#include "../ECS/Registry.h"
+#include "../ECS/Entity.h"
 
 #define GLFW_EXPOSE_NATIVE_WIN32
 
@@ -14,7 +18,7 @@
 
 namespace Source::Platform
 {
-	Window::Window(const Source::Core::WindowConfig& InConfig) : Config(InConfig)
+	Window::Window(const Source::Core::WindowConfig& InConfig) : Config(&InConfig)
 	{
 	}
 
@@ -51,7 +55,7 @@ namespace Source::Platform
 	void Window::Init() const
 	{
         glfwInit();
-		glfwWindowHint(GLFW_VISIBLE, Config.RenderWindow ? GL_TRUE : GL_FALSE);
+		glfwWindowHint(GLFW_VISIBLE, Config->RenderWindow ? GL_TRUE : GL_FALSE);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -62,13 +66,13 @@ namespace Source::Platform
 	{
 		glfwMakeContextCurrent(Handle);
 		gladLoadGL(glfwGetProcAddress);
-		glfwSwapInterval(Config.UseVSync ? 1 : 0);
+		glfwSwapInterval(Config->UseVSync ? 1 : 0);
 		glfwSetWindowUserPointer(Handle, this);
 	}
 
 	GLFWwindow* Window::TryGet() const
 	{
-		return glfwCreateWindow(Config.Width, Config.Height, "Window", nullptr, nullptr);
+		return glfwCreateWindow(Config->Width, Config->Height, "Window", nullptr, nullptr);
 	}
 
 	void Window::Attach(Editor::Bridge& InBridge)

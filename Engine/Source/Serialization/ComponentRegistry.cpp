@@ -1,6 +1,7 @@
 #include "ComponentRegistry.h"
 
-#include <unordered_map>
+#include "../ECS/Registry.h"
+#include "../ECS/Entity.h"
 
 namespace Source::Serialization
 {

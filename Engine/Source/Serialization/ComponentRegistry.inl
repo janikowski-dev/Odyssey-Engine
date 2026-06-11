@@ -2,6 +2,9 @@
 
 #include "ComponentRegistry.h"
 
+#include "../ECS/Registry.h"
+#include "../ECS/Entity.h"
+
 namespace Source::Serialization
 {
     template<typename T>

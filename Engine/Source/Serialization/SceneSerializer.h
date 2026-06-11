@@ -6,6 +6,8 @@
 
 #include <string>
 
+namespace Source::ECS { class Registry; }
+
 namespace Source::Serialization
 {
     class SceneSerializer

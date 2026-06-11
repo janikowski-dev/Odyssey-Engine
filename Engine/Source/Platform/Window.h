@@ -1,8 +1,9 @@
 #pragma once
 
-#include "../Core/ApplicationConfig.h"
-#include "../Editor/Bridge.h"
 #include "../Core/Types.h"
+
+namespace Source::Core { struct WindowConfig; }
+namespace Source::Editor { class Bridge; }
 
 struct GLFWwindow;
 
@@ -11,7 +12,7 @@ namespace Source::Platform
 	class Window
 	{
 	public:
-		Window(const Source::Core::WindowConfig& InConfig = Source::Core::WindowConfig());
+		Window(const Core::WindowConfig& InConfig);
 		~Window();
 
 		void Create(Editor::Bridge& InBridge);
@@ -26,7 +27,7 @@ namespace Source::Platform
         void Setup();
 		
 	private:
-		Source::Core::WindowConfig Config;
+		const Core::WindowConfig* Config = nullptr;
 		GLFWwindow* Handle = nullptr;
 	};
 }

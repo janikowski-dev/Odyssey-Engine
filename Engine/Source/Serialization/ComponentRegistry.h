@@ -1,12 +1,13 @@
 #pragma once
 
-#include "../ECS/Registry.h"
 #include "../Core/Types.h"
 
 #include <functional>
 #include <string>
 #include <unordered_map>
 #include <vector>
+
+namespace Source::ECS { class Registry; class Entity; }
 
 namespace Source::Serialization
 {
