@@ -4,7 +4,7 @@
 #include "Message.h"
 #include "Subscription.h"
 
-#include "../Core/Minimal.h"
+#include "Core/Minimal.h"
 
 #include <utility>
 

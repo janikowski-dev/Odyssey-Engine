@@ -1,6 +1,6 @@
 #include "ResourcesModule.h"
 
-#include "../Resources/ResourceCache.h"
+#include "Resources/ResourceCache.h"
 
 namespace Source::Modules
 {

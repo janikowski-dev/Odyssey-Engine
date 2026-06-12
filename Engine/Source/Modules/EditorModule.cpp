@@ -1,13 +1,13 @@
 #include "EditorModule.h"
 
-#include "../Events/CreateEntity.h"
-#include "../Events/SaveScene.h"
-#include "../Events/LoadScene.h"
-#include "../Events/Ping.h"
-#include "../Components/CameraComponent.h"
-#include "../Components/TransformComponent.h"
-#include "../Components/RendererComponent.h"
-#include "../Components/SpinComponent.h"
+#include "Events/CreateEntity.h"
+#include "Events/SaveScene.h"
+#include "Events/LoadScene.h"
+#include "Events/Ping.h"
+#include "Components/CameraComponent.h"
+#include "Components/TransformComponent.h"
+#include "Components/RendererComponent.h"
+#include "Components/SpinComponent.h"
 
 namespace Source::Modules
 {

@@ -2,7 +2,7 @@
 
 #include "HandlerData.h"
 
-#include "../Core/Minimal.h"
+#include "Core/Minimal.h"
 
 namespace Source::Messaging
 {

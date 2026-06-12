@@ -1,10 +1,10 @@
 #include "Window.h"
 
-#include "../Core/ApplicationConfig.h"
-#include "../Events/Viewport.h"
-#include "../Editor/Bridge.h"
-#include "../ECS/Registry.h"
-#include "../ECS/Entity.h"
+#include "Core/ApplicationConfig.h"
+#include "Events/Viewport.h"
+#include "Editor/Bridge.h"
+#include "ECS/Registry.h"
+#include "ECS/Entity.h"
 
 #define GLFW_EXPOSE_NATIVE_WIN32
 

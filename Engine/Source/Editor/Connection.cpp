@@ -1,6 +1,6 @@
 #include "Connection.h"
 
-#include "../Core/Minimal.h"
+#include "Core/Minimal.h"
 
 #define WIN32_LEAN_AND_MEAN
 

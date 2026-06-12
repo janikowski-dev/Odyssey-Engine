@@ -1,13 +1,13 @@
 #include "SystemsModule.h"
 
-#include "../Messaging/MessageBus.h"
-#include "../Rendering/Renderer.h"
-#include "../Rendering/Mesh.h"
-#include "../ECS/Registry.h"
-#include "../Components/RendererComponent.h"
-#include "../Components/TransformComponent.h"
-#include "../Components/CameraComponent.h"
-#include "../Components/SpinComponent.h"
+#include "Messaging/MessageBus.h"
+#include "Rendering/Renderer.h"
+#include "Rendering/Mesh.h"
+#include "ECS/Registry.h"
+#include "Components/RendererComponent.h"
+#include "Components/TransformComponent.h"
+#include "Components/CameraComponent.h"
+#include "Components/SpinComponent.h"
 
 namespace Source::Modules
 {

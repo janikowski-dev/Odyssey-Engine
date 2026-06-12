@@ -1,11 +1,11 @@
 #include "Application.h"
 
-#include "../Modules/EditorModule.h"
-#include "../Modules/MessagingModule.h"
-#include "../Modules/PlatformModule.h"
-#include "../Modules/SerializationModule.h"
-#include "../Modules/SystemsModule.h"
-#include "../Modules/ResourcesModule.h"
+#include "Modules/EditorModule.h"
+#include "Modules/MessagingModule.h"
+#include "Modules/PlatformModule.h"
+#include "Modules/SerializationModule.h"
+#include "Modules/SystemsModule.h"
+#include "Modules/ResourcesModule.h"
 
 namespace Source::Core
 {

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../Rendering/Shader.h"
-#include "../Rendering/Mesh.h"
-#include "../Core/Minimal.h"
+#include "Rendering/Shader.h"
+#include "Rendering/Mesh.h"
+#include "Core/Minimal.h"
 
 namespace Source::Components
 {

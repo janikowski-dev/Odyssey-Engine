@@ -1,6 +1,6 @@
 #include "SceneSerializer.h"
 
-#include "../ECS/Registry.h"
+#include "ECS/Registry.h"
 
 #include <fstream>
 

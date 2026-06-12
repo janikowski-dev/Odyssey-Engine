@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Core/IModule.h"
+#include "Core/IModule.h"
 
 namespace Source::Modules
 {

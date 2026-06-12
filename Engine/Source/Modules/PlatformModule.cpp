@@ -1,6 +1,6 @@
 #include "PlatformModule.h"
 
-#include "../Platform/Window.h"
+#include "Platform/Window.h"
 
 namespace Source::Modules
 {

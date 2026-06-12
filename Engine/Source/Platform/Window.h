@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Core/Minimal.h"
+#include "Core/Minimal.h"
 
 namespace Source::Core { struct WindowConfig; }
 namespace Source::Editor { class Bridge; }

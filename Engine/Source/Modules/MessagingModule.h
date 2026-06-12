@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Core/IModule.h"
-#include "../Messaging/MessageBus.h"
+#include "Core/IModule.h"
+#include "Messaging/MessageBus.h"
 
 namespace Source::Modules
 {

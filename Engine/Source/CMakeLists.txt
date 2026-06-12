@@ -102,20 +102,16 @@ target_link_libraries(Source glad)
 target_link_libraries(Source glm)
 target_link_libraries(Source nlohmann_json)
 
+file(GLOB_RECURSE ALL_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+
+set(INCLUDE_DIRS "")
+foreach(HEADER ${ALL_HEADERS})
+    get_filename_component(DIR ${HEADER} DIRECTORY)
+    list(APPEND INCLUDE_DIRS ${DIR})
+endforeach()
+list(REMOVE_DUPLICATES INCLUDE_DIRS)
+
 target_include_directories(Source PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${INCLUDE_DIRS}
 )
-
-#file(GLOB_RECURSE ALL_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
-#
-#set(INCLUDE_DIRS "")
-#foreach(HEADER ${ALL_HEADERS})
-#    get_filename_component(DIR ${HEADER} DIRECTORY)
-#    list(APPEND INCLUDE_DIRS ${DIR})
-#endforeach()
-#list(REMOVE_DUPLICATES INCLUDE_DIRS)
-#
-#target_include_directories(Source PUBLIC
-#    ${CMAKE_CURRENT_SOURCE_DIR}
-#    ${INCLUDE_DIRS}
-#)

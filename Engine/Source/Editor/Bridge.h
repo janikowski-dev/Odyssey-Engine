@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Core/Minimal.h"
+#include "Core/Minimal.h"
 
 #include "Connection.h"
 

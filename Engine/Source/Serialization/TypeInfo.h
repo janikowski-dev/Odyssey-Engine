@@ -2,8 +2,8 @@
 
 #include "FieldMeta.h"
 
-#include "../Core/Minimal.h"
-#include "../ECS/Entity.h"
+#include "Core/Minimal.h"
+#include "ECS/Entity.h"
 
 #include <functional>
 #include <string>

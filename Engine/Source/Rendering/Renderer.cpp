@@ -3,7 +3,7 @@
 #include "Shader.h"
 #include "Mesh.h"
 
-#include "../Components/CameraComponent.h"
+#include "Components/CameraComponent.h"
 
 #include <glad/gl.h>
 

@@ -2,9 +2,9 @@
 
 #include "ResourceLibrary.h"
 
-#include "../Core/Minimal.h"
-#include "../Rendering/Shader.h"
-#include "../Rendering/Mesh.h"
+#include "Core/Minimal.h"
+#include "Rendering/Shader.h"
+#include "Rendering/Mesh.h"
 
 namespace Source::Resources
 {
