@@ -44,9 +44,20 @@ set(SOURCES
     Rendering/Shader.cpp
     Rendering/Shader.h
 
-    Serialization/ComponentRegistry.cpp
-    Serialization/ComponentRegistry.h
-    Serialization/ComponentRegistry.inl
+    Serialization/ECSBinding.h
+    Serialization/ECSBinding.inl
+    Serialization/FieldMeta.h
+    Serialization/FieldTraits.h
+    Serialization/PropertyAnnotations.h
+    Serialization/ReflectionHandler.cpp
+    Serialization/ReflectionHandler.h
+    Serialization/TypeBuilder.h
+    Serialization/TypeBuilder.inl
+    Serialization/TypeInfo.h
+    Serialization/TypeRegistry.cpp
+    Serialization/TypeRegistry.h
+    Serialization/TypeRegistry.inl
+
     Serialization/SceneSerializer.cpp
     Serialization/SceneSerializer.h
 
@@ -94,3 +105,17 @@ target_link_libraries(Source nlohmann_json)
 target_include_directories(Source PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
+
+#file(GLOB_RECURSE ALL_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+#
+#set(INCLUDE_DIRS "")
+#foreach(HEADER ${ALL_HEADERS})
+#    get_filename_component(DIR ${HEADER} DIRECTORY)
+#    list(APPEND INCLUDE_DIRS ${DIR})
+#endforeach()
+#list(REMOVE_DUPLICATES INCLUDE_DIRS)
+#
+#target_include_directories(Source PUBLIC
+#    ${CMAKE_CURRENT_SOURCE_DIR}
+#    ${INCLUDE_DIRS}
+#)

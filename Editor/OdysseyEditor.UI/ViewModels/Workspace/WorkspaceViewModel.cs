@@ -13,7 +13,6 @@ public class WorkspaceViewModel(IEngineLauncher engine, IEngineMessenger messeng
     public async Task InitAsync()
     {
         AttachEngine(await LaunchEngine());
-        await messenger.Send<CreateEntityRequest, CreateEntityResponse>(CreateEntity.Key, new CreateEntityRequest());
     }
 
     protected override HandleRef BuildWindowCore(HandleRef hwndParent) => new(this, _window.CreateHost(hwndParent.Handle));
