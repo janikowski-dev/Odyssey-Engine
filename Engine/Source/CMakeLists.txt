@@ -29,10 +29,11 @@ set(SOURCES
     ECS/Registry.inl
 
     Events/CreateEntity.h
+    Events/GetSchema.h
+    Events/GetViewport.h
     Events/LoadScene.h
     Events/Ping.h
     Events/SaveScene.h
-    Events/Viewport.h
 
     Platform/Window.cpp
     Platform/Window.h
@@ -48,7 +49,6 @@ set(SOURCES
     Serialization/ECSBinding.inl
     Serialization/FieldMeta.h
     Serialization/FieldTraits.h
-    Serialization/PropertyAnnotations.h
     Serialization/ReflectionHandler.cpp
     Serialization/ReflectionHandler.h
     Serialization/TypeBuilder.h
@@ -94,11 +94,54 @@ add_compile_definitions(
     GLFW_INCLUDE_NONE
 )
 
+# Libraries
 target_link_libraries(Source glfw)
 target_link_libraries(Source glad)
 target_link_libraries(Source glm)
 target_link_libraries(Source nlohmann_json)
 
+# Code generation
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+ 
+set(REFLECTGEN_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/CodeGenerator.py")
+ 
+set(REFLECT_HEADERS
+    Components/CameraComponent.h
+    Components/RendererComponent.h
+    Components/SpinComponent.h
+    Components/TransformComponent.h
+)
+ 
+set(REFLECTION_GENERATED
+    "${CMAKE_CURRENT_BINARY_DIR}/Serialization.generated.cpp"
+)
+ 
+set(_reflect_libclang_arg "")
+if(REFLECTGEN_LIBCLANG)
+    set(_reflect_libclang_arg --libclang "${REFLECTGEN_LIBCLANG}")
+endif()
+ 
+add_custom_command(
+    OUTPUT  "${REFLECTION_GENERATED}"
+    COMMAND ${Python3_EXECUTABLE} "${REFLECTGEN_SCRIPT}"
+            --out "${REFLECTION_GENERATED}"
+            --std c++20
+            -I "${CMAKE_CURRENT_SOURCE_DIR}"
+            --include-root "${CMAKE_CURRENT_SOURCE_DIR}"
+            "$<$<BOOL:$<TARGET_PROPERTY:glm,INTERFACE_INCLUDE_DIRECTORIES>>:-I$<JOIN:$<TARGET_PROPERTY:glm,INTERFACE_INCLUDE_DIRECTORIES>,;-I>>"
+            "$<$<BOOL:$<TARGET_PROPERTY:nlohmann_json,INTERFACE_INCLUDE_DIRECTORIES>>:-I$<JOIN:$<TARGET_PROPERTY:nlohmann_json,INTERFACE_INCLUDE_DIRECTORIES>,;-I>>"
+            ${_reflect_libclang_arg}
+            ${REFLECT_HEADERS}
+    DEPENDS ${REFLECT_HEADERS} "${REFLECTGEN_SCRIPT}"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    COMMENT "reflectgen: generating component reflection"
+    VERBATIM
+)
+ 
+set_source_files_properties("${REFLECTION_GENERATED}" PROPERTIES GENERATED TRUE)
+target_sources(Source PRIVATE "${REFLECTION_GENERATED}")
+
+# Includes
 file(GLOB_RECURSE ALL_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 
 set(INCLUDE_DIRS "")
@@ -109,6 +152,7 @@ endforeach()
 list(REMOVE_DUPLICATES INCLUDE_DIRS)
 
 target_include_directories(Source PUBLIC
+    ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${INCLUDE_DIRS}
 )

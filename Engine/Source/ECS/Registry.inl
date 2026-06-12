@@ -28,6 +28,28 @@ namespace Source::ECS
         return GetPool<TComponent>().Get(InEntity.Index);
     }
 
+    template<typename TComponent>
+    TComponent& Registry::GetOrAdd(Entity InEntity)
+    {
+        if (!GetPool<TComponent>().Has(InEntity.Index))
+        {
+            GetPool<TComponent>().Add(InEntity.Index);
+        }
+
+        return GetPool<TComponent>().Get(InEntity.Index);
+    }
+    
+    template<typename TComponent>
+    TComponent* Registry::TryGet(Entity InEntity)
+    {
+        if (GetPool<TComponent>().Has(InEntity.Index))
+        {
+            return &GetPool<TComponent>().Get(InEntity.Index);
+        }
+
+        return nullptr;
+    }
+
     template<typename... TComponents, typename TFunction>
     void Registry::View(TFunction&& InFunction)
     {

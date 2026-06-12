@@ -4,10 +4,10 @@
 
 namespace Source::Components
 {
-    struct TransformComponent
+    struct COMPONENT TransformComponent
     {
-        Vector3 Position { 0.0f };
-        Vector3 Rotation { 0.0f };
-        Vector3 Scale { 1.0f };
+        PROPERTY() Vector3 Position { 0.0f };
+        PROPERTY() Vector3 Rotation { 0.0f };
+        PROPERTY() Vector3 Scale { 1.0f };
     };
 }

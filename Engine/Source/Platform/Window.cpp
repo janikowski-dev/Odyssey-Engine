@@ -1,7 +1,7 @@
 #include "Platform/Window.h"
 
 #include "Core/ApplicationConfig.h"
-#include "Events/Viewport.h"
+#include "Events/GetViewport.h"
 #include "Editor/Bridge.h"
 #include "ECS/Registry.h"
 #include "ECS/Entity.h"
@@ -73,9 +73,9 @@ namespace Source::Platform
 
 	void Window::Attach(Editor::Bridge& InBridge)
 	{
-		InBridge.On<Events::ViewportRequest, Events::ViewportResponse>(Events::ViewportKey, [this](const Events::ViewportRequest&)
+		InBridge.On<Events::GetViewportRequest, Events::GetViewportResponse>(Events::GetViewportKey, [this](const Events::GetViewportRequest&)
     	{
-    	    return Events::ViewportResponse { (uint64)(uintptr_t)glfwGetWin32Window(Handle) };
+    	    return Events::GetViewportResponse { (uint64)(uintptr_t)glfwGetWin32Window(Handle) };
     	});
 	}
 

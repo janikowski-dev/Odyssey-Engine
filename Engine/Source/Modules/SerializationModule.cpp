@@ -1,17 +1,23 @@
 #include "Modules/SerializationModule.h"
 
-#include "Components/CameraComponent.h"
-#include "Components/RendererComponent.h"
-#include "Components/TransformComponent.h"
-#include "Components/SpinComponent.h"
+#include "Events/GetSchema.h"
+#include "Serialization/ReflectionHandler.h"
+#include "Serialization.generated.h"
 
 namespace Source::Modules
 {
-    SerializationModule::SerializationModule()
-    {
-    }
-
     void SerializationModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
     {
+        Serialization::BindECS(*Context.World);
+        Attach(*Context.EditorBridge);
+    }
+
+    void SerializationModule::Attach(Editor::Bridge& Bridge)
+    {
+        Bridge.On<Events::GetSchemaRequest, Events::GetSchemaResponse>(Events::GetSchemaKey, [](const Events::GetSchemaRequest&)
+        {
+            return Events::GetSchemaResponse { Serialization::GetComponentTypes() };
+        });
     }
 }
+

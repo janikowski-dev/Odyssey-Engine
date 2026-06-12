@@ -6,14 +6,12 @@
 
 namespace Source::Components
 {
-    struct RendererComponent
+    struct COMPONENT RendererComponent
     {
-        // Serializable
-        std::string ShaderId;
-        std::string MeshId;
-        Vector3 Color { 1.0f };
+        PROPERTY() std::string ShaderId;
+        PROPERTY() std::string MeshId;
+        PROPERTY() Vector3 Color { 1.0f };
 
-        // Engine
         Rendering::Shader* Shader = nullptr;
         Rendering::Mesh* Mesh = nullptr;
     };

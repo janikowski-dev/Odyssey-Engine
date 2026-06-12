@@ -11,9 +11,10 @@ namespace Source::Core
 {
 	Application::Application(const ApplicationConfig& InConfig) 
 	{
-        Modules.push_back(MakeUnique<Modules::SerializationModule>());
-        Modules.push_back(MakeUnique<Modules::MessagingModule>());
         Modules.push_back(MakeUnique<Modules::EditorModule>());
+        Modules.push_back(MakeUnique<Modules::SerializationModule>());
+
+        Modules.push_back(MakeUnique<Modules::MessagingModule>());
         Modules.push_back(MakeUnique<Modules::PlatformModule>());
         Modules.push_back(MakeUnique<Modules::ResourcesModule>());
         Modules.push_back(MakeUnique<Modules::SystemsModule>());

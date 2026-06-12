@@ -7,7 +7,7 @@ namespace OdysseyEditor.UI.ViewModels.ControlsBar;
 
 public partial class ControlsBarViewModel(IEngineMessenger messenger) : ObservableObject
 {
-    private const string ScenePath = @"C:\\Projekty\\Odyssey-Engine\\Save.odyssey";
+    private const string ScenePath = @"C:\\Projekty\\Odyssey-Engine\\Save.odyscene";
     
     [RelayCommand]
     private async Task LoadAsync()

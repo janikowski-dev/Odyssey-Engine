@@ -26,6 +26,12 @@ namespace Source::ECS
         template<typename TComponent>
         TComponent& Get(Entity InEntity);
 
+        template<typename TComponent>
+        TComponent& GetOrAdd(Entity InEntity);
+
+        template<typename TComponent>
+        TComponent* TryGet(Entity InEntity);
+
         template<typename... TComponents, typename TFunction>
         void View(TFunction&& InFunction);
 

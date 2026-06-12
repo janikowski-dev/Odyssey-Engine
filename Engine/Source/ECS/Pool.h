@@ -19,8 +19,8 @@ namespace Source::ECS
     class Pool final : public IPool
     {
     public:
-        template<typename... Args>
-        TComponent& Add(uint32 Index, Args&&... InArgs);
+        template<typename... TArgs>
+        TComponent& Add(uint32 Index, TArgs&&... InArgs);
 
         bool Has(uint32 Index) const override;
         void Remove(uint32 Index) override;

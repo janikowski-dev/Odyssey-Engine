@@ -11,8 +11,8 @@ namespace Source::ECS
     }
 
     template<typename TComponent>
-    template<typename... Args>
-    TComponent& Pool<TComponent>::Add(uint32 Index, Args&&... InArgs)
+    template<typename... TArgs>
+    TComponent& Pool<TComponent>::Add(uint32 Index, TArgs&&... InArgs)
     {
         if (Index >= Sparse.size())
         {
@@ -21,7 +21,7 @@ namespace Source::ECS
 
         Sparse[Index] = static_cast<uint32>(Components.size());
         Packed.push_back(Index);
-        Components.emplace_back(std::forward<Args>(InArgs)...);
+        Components.emplace_back(std::forward<TArgs>(InArgs)...);
         return Components.back();
     }
 

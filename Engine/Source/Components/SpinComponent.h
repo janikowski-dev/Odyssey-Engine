@@ -4,8 +4,8 @@
 
 namespace Source::Components
 {
-    struct SpinComponent
+    struct COMPONENT SpinComponent
     {
-        Vector3 Speed { 0.0f };
+        PROPERTY() Vector3 Speed { 0.0f };
     };
 }

@@ -15,9 +15,7 @@ namespace Source::Serialization
         TypeBuilder<TComponent> Register(std::string Name);
 
         const TypeInfo* Find(const std::string& Name) const;
-
         const std::unordered_map<std::string, TypeInfo>& GetTypes() const { return Types; }
-
         Json Schema() const;
 
     private:

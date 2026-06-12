@@ -27,5 +27,6 @@ public partial class MainWindowViewModel(
     {
         Console.Init();
         await Workspace.InitAsync();
+        await Inspector.InitAsync();
     }
 }

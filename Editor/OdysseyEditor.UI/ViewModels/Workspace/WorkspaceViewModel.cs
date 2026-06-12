@@ -34,15 +34,15 @@ public class WorkspaceViewModel(IEngineLauncher engine, IEngineMessenger messeng
         base.Dispose(disposing);
     }
 
-    private async Task<ViewportResponse> LaunchEngine()
+    private async Task<GetViewportResponse> LaunchEngine()
     {
         await engine.LaunchAsync();
-        return await messenger.Send<ViewportRequest, ViewportResponse>(Viewport.Key, new ViewportRequest());
+        return await messenger.Send<GetViewportRequest, GetViewportResponse>(GetViewport.Key, new GetViewportRequest());
     }
 
-    private void AttachEngine(ViewportResponse viewportResponse)
+    private void AttachEngine(GetViewportResponse response)
     {
-        _window.Attach(viewportResponse.Handle);
+        _window.Attach(response.Handle);
         _window.Resize();
     }
 

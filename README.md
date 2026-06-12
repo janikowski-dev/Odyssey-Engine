@@ -68,6 +68,7 @@ The result is a single editor window with the real, live C++ OpenGL viewport ren
 - [Ninja](https://ninja-build.org/) - `winget install Ninja-build.Ninja`
 - [just](https://github.com/casey/just) - `winget install Casey.Just`
 - .NET 10 SDK (for the editor)
+- Python 3 with `libclang` (for the reflection code generator) - `pip install libclang`
 
 CMake fetches GLFW, GLAD, GLM, and nlohmann/json automatically on first configure.
 
