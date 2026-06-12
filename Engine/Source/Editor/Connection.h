@@ -6,9 +6,7 @@
 #include <cstdint>
 #include <mutex>
 #include <queue>
-#include <string>
 #include <thread>
-#include <vector>
 
 namespace Source::Editor
 {

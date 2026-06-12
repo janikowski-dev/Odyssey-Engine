@@ -2,11 +2,6 @@
 
 #include "Core/Minimal.h"
 
-#include <string>
-
-#include <glm/glm.hpp>
-#include <nlohmann/json.hpp>
-
 namespace Source::Serialization
 {
     template <typename T> struct FieldTraits;

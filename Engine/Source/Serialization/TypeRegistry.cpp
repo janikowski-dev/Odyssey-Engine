@@ -1,4 +1,4 @@
-#include "TypeRegistry.h"
+#include "Serialization/TypeRegistry.h"
 
 namespace Source::Serialization
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ResourceLibrary.h"
+#include "Resources/ResourceLibrary.h"
 
 namespace Source::Resources
 {

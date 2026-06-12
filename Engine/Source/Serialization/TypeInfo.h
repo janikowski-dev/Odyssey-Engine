@@ -6,8 +6,6 @@
 #include "ECS/Entity.h"
 
 #include <functional>
-#include <string>
-#include <vector>
 
 namespace Source::Serialization
 {

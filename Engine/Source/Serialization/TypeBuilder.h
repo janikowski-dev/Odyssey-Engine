@@ -1,10 +1,8 @@
 #pragma once
 
-#include "FieldMeta.h"
-#include "TypeInfo.h"
-
-#include <string>
-#include <vector>
+#include "Serialization/FieldMeta.h"
+#include "Serialization/TypeInfo.h"
+#include "Core/Minimal.h"
 
 namespace Source::Serialization
 {

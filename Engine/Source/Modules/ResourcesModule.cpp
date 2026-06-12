@@ -1,4 +1,4 @@
-#include "ResourcesModule.h"
+#include "Modules/ResourcesModule.h"
 
 #include "Resources/ResourceCache.h"
 

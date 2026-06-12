@@ -1,7 +1,7 @@
 #pragma once
 
-#include "TypeBuilder.h"
-#include "FieldTraits.h"
+#include "Serialization/TypeBuilder.h"
+#include "Serialization/FieldTraits.h"
 
 #include <algorithm>
 #include <type_traits>

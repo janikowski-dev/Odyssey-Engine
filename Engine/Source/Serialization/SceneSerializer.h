@@ -2,8 +2,6 @@
 
 #include "Core/Minimal.h"
 
-#include <string>
-
 namespace Source::ECS { class Registry; }
 
 namespace Source::Serialization

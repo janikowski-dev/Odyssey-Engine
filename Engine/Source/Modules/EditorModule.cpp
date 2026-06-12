@@ -1,4 +1,4 @@
-#include "EditorModule.h"
+#include "Modules/EditorModule.h"
 
 #include "Events/CreateEntity.h"
 #include "Events/SaveScene.h"

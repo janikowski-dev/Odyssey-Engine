@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Minimal.h"
+#include "Core/Minimal.h"
 
 namespace Source::Core
 {

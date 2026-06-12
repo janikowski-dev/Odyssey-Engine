@@ -6,7 +6,6 @@
 #include <glm/glm.hpp>
 
 #include <cstdint>
-#include <vector>
 
 namespace Source::Rendering
 {

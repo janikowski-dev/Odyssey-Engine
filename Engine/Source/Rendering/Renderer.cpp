@@ -1,9 +1,8 @@
-#include "Renderer.h"
-
-#include "Shader.h"
-#include "Mesh.h"
+#include "Rendering/Renderer.h"
 
 #include "Components/CameraComponent.h"
+#include "Rendering/Shader.h"
+#include "Rendering/Mesh.h"
 
 #include <glad/gl.h>
 

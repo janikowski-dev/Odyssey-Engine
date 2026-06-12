@@ -1,7 +1,6 @@
 #pragma once
 
-#include "ResourceLibrary.h"
-
+#include "Resources/ResourceLibrary.h"
 #include "Core/Minimal.h"
 #include "Rendering/Shader.h"
 #include "Rendering/Mesh.h"

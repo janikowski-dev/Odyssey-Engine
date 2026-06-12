@@ -1,8 +1,6 @@
-#include "SceneSerializer.h"
+#include "Serialization/SceneSerializer.h"
 
 #include "ECS/Registry.h"
-
-#include <fstream>
 
 namespace Source::Serialization
 {

@@ -1,8 +1,6 @@
 #pragma once
 
-#include <optional>
-#include <string>
-#include <vector>
+#include "Core/Minimal.h"
 
 namespace Source::Serialization
 {

@@ -1,11 +1,9 @@
 #pragma once
 
+#include "Serialization/TypeBuilder.h"
+#include "Serialization/TypeInfo.h"
 #include "Core/Minimal.h"
 
-#include "TypeBuilder.h"
-#include "TypeInfo.h"
-
-#include <string>
 #include <unordered_map>
 
 namespace Source::Serialization

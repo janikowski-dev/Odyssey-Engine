@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Registry.h"
+#include "ECS/Registry.h"
 
 namespace Source::ECS
 {

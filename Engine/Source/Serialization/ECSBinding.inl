@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TypeBuilder.h"
+#include "Serialization/TypeBuilder.h"
 
 #include "ECS/Registry.h"
 #include "ECS/Entity.h"

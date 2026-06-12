@@ -1,9 +1,8 @@
 #pragma once
 
-#include "MessageBus.h"
-#include "Message.h"
-#include "Subscription.h"
-
+#include "Messaging/MessageBus.h"
+#include "Messaging/Message.h"
+#include "Messaging/Subscription.h"
 #include "Core/Minimal.h"
 
 #include <utility>

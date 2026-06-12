@@ -9,6 +9,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#include <optional>
+#include <string>
+#include <vector>
 
 // Namespace needs to be named like that, so the other classes can use these types easily
 namespace Source

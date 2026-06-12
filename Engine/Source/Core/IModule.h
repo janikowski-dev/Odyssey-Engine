@@ -1,7 +1,7 @@
 #pragma once
 
-#include "ApplicationConfig.h"
-#include "Context.h"
+#include "Core/ApplicationConfig.h"
+#include "Core/Context.h"
 
 namespace Source::Core
 {

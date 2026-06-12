@@ -1,9 +1,9 @@
 #pragma once
 
-#include "ApplicationConfig.h"
-#include "Context.h"
-#include "IModule.h"
-#include "Minimal.h"
+#include "Core/ApplicationConfig.h"
+#include "Core/Context.h"
+#include "Core/IModule.h"
+#include "Core/Minimal.h"
 
 namespace Source::Core
 {

@@ -1,16 +1,14 @@
 #pragma once
 
-#include "Entity.h"
-#include "Pool.h"
-
 #include "Core/Minimal.h"
+#include "ECS/Entity.h"
+#include "ECS/Pool.h"
 
 #include <memory>
 #include <tuple>
 #include <typeindex>
 #include <unordered_map>
 #include <utility>
-#include <vector>
 
 namespace Source::ECS
 {

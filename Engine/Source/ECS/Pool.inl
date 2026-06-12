@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Pool.h"
+#include "ECS/Pool.h"
 
 namespace Source::ECS
 {

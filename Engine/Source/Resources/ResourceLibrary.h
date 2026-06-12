@@ -3,7 +3,6 @@
 #include "Core/Minimal.h"
 
 #include <unordered_map>
-#include <string>
 
 namespace Source::Resources
 {

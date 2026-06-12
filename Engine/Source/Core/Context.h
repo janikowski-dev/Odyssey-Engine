@@ -1,13 +1,12 @@
 #pragma once
 
-#include "Minimal.h"
-
 #include "Serialization/SceneSerializer.h"
 #include "Resources/ResourceCache.h"
 #include "Messaging/MessageBus.h"
 #include "Platform/Window.h"
 #include "Editor/Bridge.h"
 #include "ECS/Registry.h"
+#include "Core/Minimal.h"
 
 namespace Source::Core
 {

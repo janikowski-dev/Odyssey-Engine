@@ -1,4 +1,4 @@
-#include "SerializationModule.h"
+#include "Modules/SerializationModule.h"
 
 #include "Serialization/SceneSerializer.h"
 #include "Components/CameraComponent.h"

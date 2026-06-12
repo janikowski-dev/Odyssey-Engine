@@ -1,6 +1,6 @@
 #pragma once
 
-#include "HandlerData.h"
+#include "Messaging/HandlerData.h"
 
 #include <deque>
 #include <functional>
@@ -8,7 +8,6 @@
 #include <mutex>
 #include <typeindex>
 #include <unordered_map>
-#include <vector>
 
 namespace Source::Messaging
 {

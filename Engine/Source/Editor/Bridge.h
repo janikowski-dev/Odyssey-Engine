@@ -1,12 +1,10 @@
 #pragma once
 
+#include "Editor/Connection.h"
 #include "Core/Minimal.h"
-
-#include "Connection.h"
 
 #include <cstdint>
 #include <functional>
-#include <string>
 #include <unordered_map>
 #include <type_traits>
 
