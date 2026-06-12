@@ -5,10 +5,10 @@
 
 namespace Source::Editor
 {
-    template<typename TIn, typename TOut, typename Fn>
-    void Bridge::On(std::string_view Method, Fn&& Function)
+    template<typename TIn, typename TOut, typename TFunction>
+    void Bridge::On(std::string_view Method, TFunction&& Function)
     {
-        Handlers[std::string(Method)] = [Fn = std::forward<Fn>(Function)](const Json& Params) -> Json
+        Handlers[std::string(Method)] = [Fn = std::forward<TFunction>(Function)](const Json& Params) -> Json
         {
             TIn Input{};
 

@@ -16,29 +16,29 @@ namespace Source::Messaging
     class MessageBus
     {
     public:
-        template<typename T>
-        [[nodiscard]] Subscription Subscribe(std::function<void(T&)> Handler, int Priority = 0);
+        template<typename TMessage>
+        [[nodiscard]] Subscription Subscribe(std::function<void(TMessage&)> Handler, int Priority = 0);
 
         void Unsubscribe(SubId Id);
 
-        template<typename T>
-        void Publish(T& InEvent);
+        template<typename TMessage>
+        void Publish(TMessage& InMessage);
 
-        template<typename T>
-        void Enqueue(T InEvent);
+        template<typename TMessage>
+        void Enqueue(TMessage InMessage);
 
         void Flush();
 
     private:
         struct QueuedMessage
         {
-            SharedPtr<void> Data;
             std::type_index TypeId;
+            SharedPtr<void> Data;
         };
 
-        mutable std::mutex Mutex;
         std::unordered_map<std::type_index, HandlerList> Handlers;
         std::deque<QueuedMessage> Queue;
+        mutable std::mutex Mutex;
         SubId NextId = 1;
     };
 }

@@ -4,58 +4,58 @@
 
 namespace Source::ECS
 {
-    template<typename T, typename... Args>
-    T& Registry::Add(Entity InEntity, Args&&... InArgs)
+    template<typename TComponent, typename... TArgs>
+    TComponent& Registry::Add(Entity InEntity, TArgs&&... InArgs)
     {
-        return GetPool<T>().Add(InEntity.Index, std::forward<Args>(InArgs)...);
+        return GetPool<TComponent>().Add(InEntity.Index, std::forward<TArgs>(InArgs)...);
     }
 
-    template<typename T>
+    template<typename TComponent>
     void Registry::Remove(Entity InEntity)
     {
-        GetPool<T>().Remove(InEntity.Index);
+        GetPool<TComponent>().Remove(InEntity.Index);
     }
 
-    template<typename T>
+    template<typename TComponent>
     bool Registry::Has(Entity InEntity)
     {
-        return GetPool<T>().Has(InEntity.Index);
+        return GetPool<TComponent>().Has(InEntity.Index);
     }
 
-    template<typename T>
-    T& Registry::Get(Entity InEntity)
+    template<typename TComponent>
+    TComponent& Registry::Get(Entity InEntity)
     {
-        return GetPool<T>().Get(InEntity.Index);
+        return GetPool<TComponent>().Get(InEntity.Index);
     }
 
-    template<typename... Ts, typename Fn>
-    void Registry::View(Fn&& InFunc)
+    template<typename... TComponents, typename TFunction>
+    void Registry::View(TFunction&& InFunction)
     {
-        using First = std::tuple_element_t<0, std::tuple<Ts...>>;
+        using First = std::tuple_element_t<0, std::tuple<TComponents...>>;
         Pool<First>& Primary = GetPool<First>();
 
         const std::vector<uint32> EntityList = Primary.Entities();
 
         for (uint32 Index : EntityList)
         {
-            if ((GetPool<Ts>().Has(Index) && ...))
+            if ((GetPool<TComponents>().Has(Index) && ...))
             {
-                InFunc(Entity{ Index, Versions[Index] }, GetPool<Ts>().Get(Index)...);
+                InFunction(Entity{ Index, Versions[Index] }, GetPool<TComponents>().Get(Index)...);
             }
         }
     }
 
-    template<typename T>
-    Pool<T>& Registry::GetPool()
+    template<typename TComponent>
+    Pool<TComponent>& Registry::GetPool()
     {
-        const std::type_index Key(typeid(T));
+        const std::type_index Key(typeid(TComponent));
         auto It = Pools.find(Key);
         
         if (It == Pools.end())
         {
-            It = Pools.emplace(Key, MakeUnique<Pool<T>>()).first;
+            It = Pools.emplace(Key, MakeUnique<Pool<TComponent>>()).first;
         }
 
-        return *static_cast<Pool<T>*>(It->second.get());
+        return *static_cast<Pool<TComponent>*>(It->second.get());
     }
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glm/glm.hpp>
+#include "Core/Minimal.h"
 
 namespace Source::Components { struct CameraComponent; }
 

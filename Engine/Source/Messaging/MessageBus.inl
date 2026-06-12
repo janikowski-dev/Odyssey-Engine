@@ -9,19 +9,19 @@
 
 namespace Source::Messaging
 {
-    template<typename T>
-    [[nodiscard]] Subscription MessageBus::Subscribe(std::function<void(T&)> Handler, int Priority)
+    template<typename TMessage>
+    [[nodiscard]] Subscription MessageBus::Subscribe(std::function<void(TMessage&)> Handler, int Priority)
     {
         std::lock_guard Lock(Mutex);
 
-        HandlerList& SpecificHandlers = Handlers[std::type_index(typeid(T))];
+        HandlerList& SpecificHandlers = Handlers[std::type_index(typeid(TMessage))];
         const SubId Id = NextId++;
 
         SpecificHandlers.Entries.push_back(HandlerEntry
         {
             [Handler = std::move(Handler)](void* Ptr)
             {
-                Handler(*static_cast<T*>(Ptr));
+                Handler(*static_cast<TMessage*>(Ptr));
             },
             Priority,
             Id
@@ -32,10 +32,10 @@ namespace Source::Messaging
         return Subscription(this, Id);
     }
 
-    template<typename T>
-    void MessageBus::Publish(T& InEvent)
+    template<typename TMessage>
+    void MessageBus::Publish(TMessage& InMessage)
     {
-        const auto Key = std::type_index(typeid(T));
+        const auto Key = std::type_index(typeid(TMessage));
 
         std::vector<HandlerEntry> Snapshot;
         {
@@ -53,11 +53,11 @@ namespace Source::Messaging
 
         for (HandlerEntry& Entry : Snapshot)
         {
-            Entry.Callback(&InEvent);
+            Entry.Callback(&InMessage);
 
-            if constexpr (IsConsumable<T>)
+            if constexpr (IsConsumable<TMessage>)
             {
-                if (InEvent.Handled)
+                if (InMessage.Handled)
                 {
                     break;
                 }
@@ -65,15 +65,15 @@ namespace Source::Messaging
         }
     }
 
-    template<typename T>
-    void MessageBus::Enqueue(T InEvent)
+    template<typename TMessage>
+    void MessageBus::Enqueue(TMessage InMessage)
     {
         std::lock_guard Lock(Mutex);
 
         Queue.push_back(QueuedMessage
         {
-            MakeShared<T>(std::move(InEvent)),
-            std::type_index(typeid(T))
+            MakeShared<TMessage>(std::move(InMessage)),
+            std::type_index(typeid(TMessage))
         });
     }
 }

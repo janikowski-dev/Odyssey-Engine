@@ -4,15 +4,15 @@
 
 namespace Source::ECS
 {
-    template<typename T>
-    bool Pool<T>::Has(uint32 Index) const
+    template<typename TComponent>
+    bool Pool<TComponent>::Has(uint32 Index) const
     {
         return Index < Sparse.size() && Sparse[Index] != INVALID_SLOT;
     }
 
-    template<typename T>
+    template<typename TComponent>
     template<typename... Args>
-    T& Pool<T>::Add(uint32 Index, Args&&... InArgs)
+    TComponent& Pool<TComponent>::Add(uint32 Index, Args&&... InArgs)
     {
         if (Index >= Sparse.size())
         {
@@ -25,16 +25,16 @@ namespace Source::ECS
         return Components.back();
     }
 
-    template<typename T>
-    void Pool<T>::Clear()
+    template<typename TComponent>
+    void Pool<TComponent>::Clear()
     {
         Sparse.clear();
         Packed.clear();
         Components.clear();
     }
 
-    template<typename T>
-    void Pool<T>::Remove(uint32 Index)
+    template<typename TComponent>
+    void Pool<TComponent>::Remove(uint32 Index)
     {
         if (!Has(Index))
         {
@@ -53,8 +53,8 @@ namespace Source::ECS
         Sparse[Index] = INVALID_SLOT;
     }
 
-    template<typename T>
-    T& Pool<T>::Get(uint32 Index)
+    template<typename TComponent>
+    TComponent& Pool<TComponent>::Get(uint32 Index)
     {
         return Components[Sparse[Index]];
     }

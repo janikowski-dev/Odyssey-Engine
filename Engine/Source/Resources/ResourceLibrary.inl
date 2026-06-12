@@ -4,15 +4,15 @@
 
 namespace Source::Resources
 {
-    template<typename T>
-    T* ResourceLibrary<T>::Add(const std::string& InId, T&& InResource)
+    template<typename TResource>
+    TResource* ResourceLibrary<TResource>::Add(const std::string& InId, TResource&& InResource)
     {
-        auto Result = Resources.insert_or_assign(InId, MakeUnique<T>(std::move(InResource)));
+        auto Result = Resources.insert_or_assign(InId, MakeUnique<TResource>(std::move(InResource)));
         return Result.first->second.get();
     }
 
-    template<typename T>
-    T* ResourceLibrary<T>::Get(const std::string& InId) const
+    template<typename TResource>
+    TResource* ResourceLibrary<TResource>::Get(const std::string& InId) const
     {
         auto It = Resources.find(InId);
 
@@ -24,26 +24,26 @@ namespace Source::Resources
         return nullptr;
     }
 
-    template<typename T>
-    bool ResourceLibrary<T>::Has(const std::string& InId) const
+    template<typename TResource>
+    bool ResourceLibrary<TResource>::Has(const std::string& InId) const
     {
         return Resources.find(InId) != Resources.end();
     }
 
-    template<typename T>
-    void ResourceLibrary<T>::Remove(const std::string& InId)
+    template<typename TResource>
+    void ResourceLibrary<TResource>::Remove(const std::string& InId)
     {
         Resources.erase(InId);
     }
 
-    template<typename T>
-    void ResourceLibrary<T>::Clear()
+    template<typename TResource>
+    void ResourceLibrary<TResource>::Clear()
     {
         Resources.clear();
     }
 
-    template<typename T>
-    std::size_t ResourceLibrary<T>::Count() const
+    template<typename TResource>
+    std::size_t ResourceLibrary<TResource>::Count() const
     {
         return Resources.size();
     }

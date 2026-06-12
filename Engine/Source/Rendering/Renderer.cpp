@@ -4,8 +4,6 @@
 #include "Rendering/Shader.h"
 #include "Rendering/Mesh.h"
 
-#include <glad/gl.h>
-
 namespace Source::Rendering
 {
     void Renderer::Begin(const Components::CameraComponent& InCamera)

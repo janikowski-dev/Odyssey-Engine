@@ -18,8 +18,8 @@ namespace Source::Editor
         bool Start(std::string Host, uint16 Port);
         void Communicate();
 
-        template<typename TIn, typename TOut, typename Fn>
-        void On(std::string_view Method, Fn&& Function);
+        template<typename TIn, typename TOut, typename TFunction>
+        void On(std::string_view Method, TFunction&& Function);
         
         template<typename TIn>
         void Send(std::string_view Method, TIn Data);

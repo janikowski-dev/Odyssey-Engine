@@ -19,25 +19,25 @@ namespace Source::ECS
         virtual void Clear() = 0;
     };
 
-    template<typename T>
+    template<typename TComponent>
     class Pool final : public IPool
     {
     public:
         template<typename... Args>
-        T& Add(uint32 Index, Args&&... InArgs);
+        TComponent& Add(uint32 Index, Args&&... InArgs);
 
         bool Has(uint32 Index) const override;
         void Remove(uint32 Index) override;
         void Clear() override;
         
-        T& Get(uint32 Index);
+        TComponent& Get(uint32 Index);
         const std::vector<uint32>& Entities() const { return Packed; }
         std::size_t Size() const { return Components.size(); }
 
     private:
+        std::vector<TComponent> Components;
         std::vector<uint32> Sparse;
         std::vector<uint32> Packed;
-        std::vector<T> Components;
     };
 }
 

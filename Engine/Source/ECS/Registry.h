@@ -20,24 +20,24 @@ namespace Source::ECS
         void Clear();
         bool IsValid(Entity InEntity) const;
 
-        template<typename T, typename... Args>
-        T& Add(Entity InEntity, Args&&... InArgs);
+        template<typename TComponent, typename... TArgs>
+        TComponent& Add(Entity InEntity, TArgs&&... InArgs);
 
-        template<typename T>
+        template<typename TComponent>
         void Remove(Entity InEntity);
 
-        template<typename T>
+        template<typename TComponent>
         bool Has(Entity InEntity);
 
-        template<typename T>
-        T& Get(Entity InEntity);
+        template<typename TComponent>
+        TComponent& Get(Entity InEntity);
 
-        template<typename... Ts, typename Fn>
-        void View(Fn&& InFunc);
+        template<typename... TComponents, typename TFunction>
+        void View(TFunction&& InFunction);
 
     private:
-        template<typename T>
-        Pool<T>& GetPool();
+        template<typename TComponent>
+        Pool<TComponent>& GetPool();
 
         std::unordered_map<std::type_index, UniquePtr<IPool>> Pools;
         std::vector<uint32> FreeList;
