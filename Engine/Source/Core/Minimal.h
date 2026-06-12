@@ -73,6 +73,16 @@ namespace Source
 
     template<typename T>
     inline constexpr bool IsConsumable = is_consumable<T>::value;
+
+    // Is Arithmetic
+    template<typename, typename = void>
+    struct is_arithmetic : std::false_type {};
+    
+    template<typename T>
+    struct is_arithmetic<T, std::enable_if_t<std::is_arithmetic_v<T>>> : std::true_type {};
+    
+    template<typename T>
+    inline constexpr bool IsArithmetic = is_arithmetic<T>::value;
 }
 
 // Namespace has to be like this so the json serializer sees these methods

@@ -31,7 +31,7 @@ namespace Source::Serialization
 
         if (!Meta.Options.empty())
         {
-            J["options"] = Meta.Options;
+            J["Options"] = Meta.Options;
         }
 
         return J;

@@ -4,7 +4,6 @@
 #include "Serialization/FieldTraits.h"
 
 #include <algorithm>
-#include <type_traits>
 
 namespace Source::Serialization
 {
@@ -36,7 +35,7 @@ namespace Source::Serialization
         {
             TField Value = FieldTraits<TField>::FromJson(J);
 
-            if constexpr (std::is_arithmetic_v<TField>)
+            if constexpr (IsArithmetic<TField>)
             {
                 if (Captured.Min)
                 {

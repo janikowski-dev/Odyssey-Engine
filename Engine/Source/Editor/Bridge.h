@@ -6,7 +6,6 @@
 #include <cstdint>
 #include <functional>
 #include <unordered_map>
-#include <type_traits>
 
 namespace Source::Editor
 {
