@@ -14,11 +14,6 @@ namespace Source::Serialization
 
         for (const auto& [Name, Info] : TypeRegistry::Get().GetTypes())
         {
-            if (!Info.Resolve)
-            {
-                continue;
-            }
-
             void* Component = Info.Resolve(Entity);
 
             if (!Component)
@@ -43,7 +38,7 @@ namespace Source::Serialization
     {
         const TypeInfo* Info = TypeRegistry::Get().Find(Type);
 
-        if (!Info || !Info->Resolve)
+        if (!Info)
         {
             return;
         }

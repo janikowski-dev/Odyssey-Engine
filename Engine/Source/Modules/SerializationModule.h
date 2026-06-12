@@ -13,6 +13,6 @@ namespace Source::Modules
         void Init(const Core::ApplicationConfig Config, Core::Context& Context) override;
 
     private:
-        void Attach(Editor::Bridge& Bridge);
+        void Attach(Editor::Bridge& Bridge, ECS::Registry& World);
     };
 }

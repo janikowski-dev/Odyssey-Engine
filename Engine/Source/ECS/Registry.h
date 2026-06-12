@@ -10,6 +10,7 @@ namespace Source::ECS
     {
     public:
         Entity Create();
+        Entity Get(uint32 Index);
         void Destroy(Entity InEntity);
         void Clear();
         bool IsValid(Entity InEntity) const;

@@ -1,4 +1,6 @@
-﻿namespace OdysseyEditor.Domain.Events;
+﻿using System.Text.Json;
+
+namespace OdysseyEditor.Domain.Events;
 
 public static class CreateEntity
 {
@@ -7,4 +9,6 @@ public static class CreateEntity
 
 public readonly record struct CreateEntityRequest;
 
-public readonly record struct CreateEntityResponse;
+public readonly record struct CreateEntityResponse(int Index, IReadOnlyList<ComponentData> Info);
+
+public readonly record struct ComponentData(string Type, IReadOnlyDictionary<string, JsonElement> Fields);

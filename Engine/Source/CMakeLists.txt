@@ -104,23 +104,26 @@ target_link_libraries(Source nlohmann_json)
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
  
 set(REFLECTGEN_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/CodeGenerator.py")
- 
-set(REFLECT_HEADERS
-    Components/CameraComponent.h
-    Components/RendererComponent.h
-    Components/SpinComponent.h
-    Components/TransformComponent.h
-)
- 
+
+file(GLOB_RECURSE ALL_HEADERS CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+
+set(REFLECT_HEADERS "")
+foreach(HEADER ${ALL_HEADERS})
+    file(STRINGS ${HEADER} HEADER_CONTENTS REGEX "COMPONENT")
+    if(HEADER_CONTENTS)
+        list(APPEND REFLECT_HEADERS ${HEADER})
+    endif()
+endforeach()
+
 set(REFLECTION_GENERATED
     "${CMAKE_CURRENT_BINARY_DIR}/Serialization.generated.cpp"
 )
- 
+
 set(_reflect_libclang_arg "")
 if(REFLECTGEN_LIBCLANG)
     set(_reflect_libclang_arg --libclang "${REFLECTGEN_LIBCLANG}")
 endif()
- 
+
 add_custom_command(
     OUTPUT  "${REFLECTION_GENERATED}"
     COMMAND ${Python3_EXECUTABLE} "${REFLECTGEN_SCRIPT}"
@@ -137,7 +140,7 @@ add_custom_command(
     COMMENT "reflectgen: generating component reflection"
     VERBATIM
 )
- 
+
 set_source_files_properties("${REFLECTION_GENERATED}" PROPERTIES GENERATED TRUE)
 target_sources(Source PRIVATE "${REFLECTION_GENERATED}")
 

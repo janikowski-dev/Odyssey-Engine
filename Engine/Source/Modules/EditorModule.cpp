@@ -8,6 +8,8 @@
 #include "Components/TransformComponent.h"
 #include "Components/RendererComponent.h"
 #include "Components/SpinComponent.h"
+#include "Serialization/ReflectionHandler.h"
+#include "Serialization.generated.h"
 
 namespace Source::Modules
 {
@@ -26,19 +28,16 @@ namespace Source::Modules
             Context.World->Add<Components::TransformComponent>(E, Components::TransformComponent{ {-2, 0, 0}, {0, 0, 0}, {1, 1, 1} });
             Context.World->Add<Components::RendererComponent>(E, Components::RendererComponent{ "lit", "cube", {0.85f, 0.30f, 0.22f}, Context.ResourceCache->Shaders.Get("lit"), Context.ResourceCache->Meshes.Get("cube") });
             Context.World->Add<Components::SpinComponent>(E, Components::SpinComponent{ {0.0f, 0.8f, 0.0f} });
-            return Events::CreateEntityResponse();
+            return Events::CreateEntityResponse { E.Index, Serialization::GetComponents(E) };
         });
 
         Context.EditorBridge->On<Events::SaveSceneRequest, Events::SaveSceneResponse>(Events::SaveSceneKey, [&Context](const Events::SaveSceneRequest& Request)
         {
-            // Context.SceneSerializer->SaveToFile(*Context.World, Request.Path);
             return Events::SaveSceneResponse();
         });
 
         Context.EditorBridge->On<Events::LoadSceneRequest, Events::LoadSceneResponse>(Events::LoadSceneKey, [&Context](const Events::LoadSceneRequest& Request)
         {
-            // Context.SceneSerializer->LoadFromFile(Request.Path, *Context.World);
-
             Context.World->View<Components::RendererComponent>(
                 [&Context](ECS::Entity, Components::RendererComponent& R)
                 {

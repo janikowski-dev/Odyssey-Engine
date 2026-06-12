@@ -159,8 +159,9 @@ public sealed class EngineService(IOptions<EngineConfig> config) : IEngineLaunch
                 t.TrySetException(new TimeoutException($"Request '{method}' timed out!"));
             }
         });
-        
-        return (await tcs.Task.ConfigureAwait(false)).Deserialize<TResponse>();
+
+        JsonElement responseJson = await tcs.Task.ConfigureAwait(false);
+        return responseJson.Deserialize<TResponse>();
     }
 
     private bool TryRead(out JsonElement element)

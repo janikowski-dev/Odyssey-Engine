@@ -12,5 +12,9 @@ namespace Source::Events
 
     struct CreateEntityResponse
     {
+        uint32 Index;
+        Json Info;
     };
+
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(CreateEntityResponse, Index, Info);
 }

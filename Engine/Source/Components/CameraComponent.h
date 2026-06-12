@@ -6,7 +6,7 @@ namespace Source::Components
 {
     struct COMPONENT CameraComponent
     {
-        PROPERTY() Vector3 Position { 0.0f, 2.0f, 0.0f };
+        PROPERTY() Vector3 Position { 0.0f, 0.0f, 0.0f };
         PROPERTY() Vector3 Target { 0.0f, 0.0f, 0.0f };
         PROPERTY() Vector3 Up { 0.0f, 1.0f, 0.0f };
 

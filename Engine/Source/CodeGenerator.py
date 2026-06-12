@@ -382,7 +382,7 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--std", default="c++20", help="C++ standard (default: c++20).")
     ap.add_argument("--clang-arg", action="append", default=[], dest="clang_args", help="Raw extra argument forwarded to clang. Repeatable.")
     ap.add_argument("--namespace", default="Source::Serialization", help="Namespace for the generated function.")
-    ap.add_argument("--function", default="BindECS", help="Name of the generated registration function.")
+    ap.add_argument("--function", default="Init", help="Name of the generated registration function.")
     ap.add_argument("--registry-type", default="Source::ECS::Registry", help="Fully-qualified ECS registry type for the function parameter.")
     ap.add_argument("--libclang", help="Path to libclang shared library.")
     ap.add_argument("--werror", action="store_true", help="Treat parse diagnostics as fatal.")

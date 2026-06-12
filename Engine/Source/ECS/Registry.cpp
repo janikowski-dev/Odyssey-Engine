@@ -20,6 +20,16 @@ namespace Source::ECS
         return Entity{ Index, Versions[Index] };
     }
 
+    Entity Registry::Get(uint32 Index)
+    {
+        if (Index >= Versions.size())
+        {
+            return NULL_ENTITY;
+        }
+
+        return Entity{ Index, Versions[Index] };
+    }
+
     void Registry::Destroy(Entity InEntity)
     {
         if (!IsValid(InEntity))
