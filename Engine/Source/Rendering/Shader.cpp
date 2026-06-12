@@ -2,9 +2,6 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-#include <iostream>
-#include <utility>
-
 namespace Source::Rendering
 {
     GLuint Shader::Compile(GLenum Stage, const char* Source)
@@ -21,7 +18,7 @@ namespace Source::Rendering
         {
             GLchar Log[1024];
             glGetShaderInfoLog(Id, sizeof(Log), nullptr, Log);
-            std::cerr << "[Shader] compile failed: " << Log << "\n";
+            DebugError << "[Shader] compile failed: " << Log << "\n";
         }
 
         return Id;
@@ -90,7 +87,7 @@ namespace Source::Rendering
         glUniformMatrix4fv(glGetUniformLocation(Program, Name), 1, GL_FALSE, glm::value_ptr(Value));
     }
 
-    void Shader::SetVec3(const char* Name, const glm::vec3& Value) const
+    void Shader::SetVec3(const char* Name, const Vector3& Value) const
     {
         glUniform3fv(glGetUniformLocation(Program, Name), 1, glm::value_ptr(Value));
     }

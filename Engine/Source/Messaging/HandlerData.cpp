@@ -1,7 +1,5 @@
 #include "Messaging/HandlerData.h"
 
-#include <algorithm>
-
 namespace Source::Messaging
 {
     void HandlerList::Sort()

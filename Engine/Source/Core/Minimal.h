@@ -7,11 +7,20 @@
 #include <cstdint>
 #include <nlohmann/json.hpp>
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include <optional>
+#include <algorithm>
 #include <string>
 #include <vector>
+#include <functional>
+#include <tuple>
+#include <typeindex>
+#include <unordered_map>
+#include <atomic>
+#include <mutex>
+#include <deque>
+#include <queue>
+#include <thread>
 
 // Namespace needs to be named like that, so the other classes can use these types easily
 namespace Source
@@ -39,12 +48,18 @@ namespace Source
     using Json = nlohmann::json;
 
     // Logs
-    inline std::ostream& Debug = std::cout;
+    inline std::ostream& DebugLog = std::cout;
+    inline std::ostream& DebugError = std::cout;
 
     // Time
     using Duration = std::chrono::duration<float>;
     using Clock = std::chrono::steady_clock;
     using Time = std::chrono::steady_clock::time_point;
+
+    // Maths
+    using Vector2 = glm::vec2;
+    using Vector3 = glm::vec3;
+    using Vector4 = glm::vec4;
     
     // Is Empty
     template<typename T, typename = void>
@@ -83,20 +98,4 @@ namespace Source
     
     template<typename T>
     inline constexpr bool IsArithmetic = is_arithmetic<T>::value;
-}
-
-// Namespace has to be like this so the json serializer sees these methods
-namespace glm
-{
-    inline void to_json(Source::Json& J, const glm::vec3& V)
-    {
-        J = Source::Json::array({ V.x, V.y, V.z });
-    }
-
-    inline void from_json(const Source::Json& J, glm::vec3& V)
-    {
-        V.x = J.at(0).get<float>();
-        V.y = J.at(1).get<float>();
-        V.z = J.at(2).get<float>();
-    }
 }

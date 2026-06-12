@@ -1,8 +1,11 @@
 #include "Rendering/Renderer.h"
 
+#include "Components/TransformComponent.h"
 #include "Components/CameraComponent.h"
 #include "Rendering/Shader.h"
 #include "Rendering/Mesh.h"
+
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Source::Rendering
 {
@@ -12,12 +15,20 @@ namespace Source::Rendering
         CacheCamera(InCamera);
     }
 
-    void Renderer::DrawMesh(const glm::mat4& InModel, const Mesh& InMesh, const Shader& InShader, const glm::vec3& InColor)
+    void Renderer::DrawMesh(const Components::TransformComponent& InModel, const Mesh& InMesh, const Shader& InShader, const Vector3& InColor)
     {
+        glm::mat4 Matrix(1.0f);
+
+        Matrix = glm::translate(Matrix, InModel.Position);
+        Matrix = glm::rotate(Matrix, InModel.Rotation.x, Vector3(1, 0, 0));
+        Matrix = glm::rotate(Matrix, InModel.Rotation.y, Vector3(0, 1, 0));
+        Matrix = glm::rotate(Matrix, InModel.Rotation.z, Vector3(0, 0, 1));
+        Matrix = glm::scale(Matrix, InModel.Scale);
+
         InShader.Use();
         InShader.SetMat4("uView", View);
         InShader.SetMat4("uProj", Projection);
-        InShader.SetMat4("uModel", InModel);
+        InShader.SetMat4("uModel", Matrix);
         InShader.SetVec3("uColor", InColor);
         InMesh.Draw();
     }
@@ -36,7 +47,7 @@ namespace Source::Rendering
 
     void Renderer::CacheCamera(const Components::CameraComponent &InCamera)
     {
-        Projection = InCamera.Projection();
-        View = InCamera.View();
+        Projection = glm::perspective(glm::radians(InCamera.FovDegrees), InCamera.Aspect, InCamera.Near, InCamera.Far);
+        View = glm::lookAt(InCamera.Position, InCamera.Target, InCamera.Up);
     }
 }

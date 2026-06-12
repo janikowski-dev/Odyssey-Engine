@@ -39,16 +39,16 @@ namespace Source::Serialization
         return Out;
     }
 
-    void SetComponent(ECS::Entity entity, const std::string& type, const Json& fields)
+    void SetComponent(ECS::Entity Entity, const std::string& Type, const Json& Fields)
     {
-        const TypeInfo* Info = TypeRegistry::Get().Find(type);
+        const TypeInfo* Info = TypeRegistry::Get().Find(Type);
 
         if (!Info || !Info->Resolve)
         {
             return;
         }
 
-        void* Component = Info->Resolve(entity);
+        void* Component = Info->Resolve(Entity);
         
         if (!Component)
         {
@@ -57,9 +57,9 @@ namespace Source::Serialization
 
         for (const auto& Field : Info->Fields)
         {
-            auto It = fields.find(Field.Name);
+            auto It = Fields.find(Field.Name);
 
-            if (It != fields.end())
+            if (It != Fields.end())
             {
                 Field.Set(Component, *It);
             }

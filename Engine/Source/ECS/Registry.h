@@ -4,12 +4,6 @@
 #include "ECS/Entity.h"
 #include "ECS/Pool.h"
 
-#include <memory>
-#include <tuple>
-#include <typeindex>
-#include <unordered_map>
-#include <utility>
-
 namespace Source::ECS
 {
     class Registry

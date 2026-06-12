@@ -2,12 +2,6 @@
 
 #include "Core/Minimal.h"
 
-#include <atomic>
-#include <cstdint>
-#include <mutex>
-#include <queue>
-#include <thread>
-
 namespace Source::Editor
 {
     class Connection

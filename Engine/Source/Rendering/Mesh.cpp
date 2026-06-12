@@ -1,7 +1,5 @@
 #include "Rendering/Mesh.h"
 
-#include <utility>
-
 namespace Source::Rendering
 {
     Mesh::Mesh(const std::vector<Vertex>& Vertices, const std::vector<uint32>& Indices) : IndexCount(static_cast<GLsizei>(Indices.size()))

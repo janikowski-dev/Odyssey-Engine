@@ -3,9 +3,6 @@
 #include "Messaging/MessageBus.h"
 #include "Messaging/Message.h"
 #include "Messaging/Subscription.h"
-#include "Core/Minimal.h"
-
-#include <utility>
 
 namespace Source::Messaging
 {

@@ -31,14 +31,13 @@ namespace Source::Modules
 
         Context.EditorBridge->On<Events::SaveSceneRequest, Events::SaveSceneResponse>(Events::SaveSceneKey, [&Context](const Events::SaveSceneRequest& Request)
         {
-            Context.SceneSerializer->SaveToFile(*Context.World, Request.Path);
-            Debug << "Saving";
+            // Context.SceneSerializer->SaveToFile(*Context.World, Request.Path);
             return Events::SaveSceneResponse();
         });
 
         Context.EditorBridge->On<Events::LoadSceneRequest, Events::LoadSceneResponse>(Events::LoadSceneKey, [&Context](const Events::LoadSceneRequest& Request)
         {
-            Context.SceneSerializer->LoadFromFile(Request.Path, *Context.World);
+            // Context.SceneSerializer->LoadFromFile(Request.Path, *Context.World);
 
             Context.World->View<Components::RendererComponent>(
                 [&Context](ECS::Entity, Components::RendererComponent& R)

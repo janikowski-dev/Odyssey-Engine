@@ -3,8 +3,6 @@
 #include "Serialization/TypeBuilder.h"
 #include "Serialization/FieldTraits.h"
 
-#include <algorithm>
-
 namespace Source::Serialization
 {
     template <typename TComponent>

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Editor/Bridge.h"
-#include "Core/Minimal.h"
 
 namespace Source::Editor
 {

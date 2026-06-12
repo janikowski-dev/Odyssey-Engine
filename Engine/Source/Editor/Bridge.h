@@ -3,10 +3,6 @@
 #include "Editor/Connection.h"
 #include "Core/Minimal.h"
 
-#include <cstdint>
-#include <functional>
-#include <unordered_map>
-
 namespace Source::Editor
 {
     class Bridge

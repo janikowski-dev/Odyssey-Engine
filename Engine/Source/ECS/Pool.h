@@ -2,10 +2,6 @@
 
 #include "Core/Minimal.h"
 
-#include <cassert>
-#include <cstdint>
-#include <utility>
-
 namespace Source::ECS
 {
     inline constexpr uint32 INVALID_SLOT = ~0u;

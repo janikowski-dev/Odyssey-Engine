@@ -10,11 +10,7 @@
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
 #include <GLFW/glfw3native.h>
-
-#include <iostream>
-#include <assert.h>
 
 namespace Source::Platform
 {
@@ -92,7 +88,7 @@ namespace Source::Platform
 			return true;
 		}
 
-		std::cerr << "Failed window creation!\n";
+		DebugError << "Failed window creation!\n";
 		return false;
 	}
 }

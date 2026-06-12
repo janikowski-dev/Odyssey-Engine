@@ -2,8 +2,6 @@
 
 #include "Core/Minimal.h"
 
-#include <cstdint>
-
 namespace Source::ECS
 {
     struct Entity

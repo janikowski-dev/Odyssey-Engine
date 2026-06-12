@@ -2,7 +2,7 @@
 
 #include "Core/Minimal.h"
 
-namespace Source::Components { struct CameraComponent; }
+namespace Source::Components { struct CameraComponent; struct TransformComponent; }
 
 namespace Source::Rendering
 {
@@ -13,7 +13,7 @@ namespace Source::Rendering
     {
     public:
         void Begin(const Components::CameraComponent& InCamera);
-        void DrawMesh(const glm::mat4& InModel, const Mesh& InMesh, const Shader& InShader, const glm::vec3& InColor);
+        void DrawMesh(const Components::TransformComponent& InModel, const Mesh& InMesh, const Shader& InShader, const Vector3& InColor);
         void End();
 
     private:

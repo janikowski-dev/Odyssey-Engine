@@ -4,8 +4,6 @@
 #include "Serialization/TypeInfo.h"
 #include "Core/Minimal.h"
 
-#include <unordered_map>
-
 namespace Source::Serialization
 {
     class TypeRegistry

@@ -2,8 +2,6 @@
 
 #include "Core/Minimal.h"
 
-#include <unordered_map>
-
 namespace Source::Resources
 {
     template<typename TResource>

@@ -1,11 +1,8 @@
 #pragma once
 
-#include "FieldMeta.h"
-
+#include "Serialization/FieldMeta.h"
 #include "Core/Minimal.h"
 #include "ECS/Entity.h"
-
-#include <functional>
 
 namespace Source::Serialization
 {

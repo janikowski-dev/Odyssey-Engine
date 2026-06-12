@@ -2,9 +2,6 @@
 
 #include "Core/Minimal.h"
 
-#include <cstdint>
-#include <functional>
-
 namespace Source::Messaging
 {
     using SubId = uint64;

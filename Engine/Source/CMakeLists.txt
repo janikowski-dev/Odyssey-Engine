@@ -58,9 +58,6 @@ set(SOURCES
     Serialization/TypeRegistry.h
     Serialization/TypeRegistry.inl
 
-    Serialization/SceneSerializer.cpp
-    Serialization/SceneSerializer.h
-
     Messaging/MessageBus.cpp
     Messaging/MessageBus.h
     Messaging/MessageBus.inl

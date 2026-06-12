@@ -69,24 +69,24 @@ namespace Source::Serialization
         static std::string FromJson(const Json& J) { return J.get<std::string>(); }
     };
     
-    template <> struct FieldTraits<glm::vec2>
+    template <> struct FieldTraits<Vector2>
     {
         static constexpr const char* TypeName = "vec2";
-        static Json ToJson(const glm::vec2& V) { return Json::array({ V.x, V.y }); }
-        static glm::vec2 FromJson(const Json& J) { return { J.at(0).get<float>(), J.at(1).get<float>() }; }
+        static Json ToJson(const Vector2& V) { return Json::array({ V.x, V.y }); }
+        static Vector2 FromJson(const Json& J) { return { J.at(0).get<float>(), J.at(1).get<float>() }; }
     };
     
-    template <> struct FieldTraits<glm::vec3>
+    template <> struct FieldTraits<Vector3>
     {
         static constexpr const char* TypeName = "vec3";
-        static Json ToJson(const glm::vec3& V) { return Json::array({ V.x, V.y, V.z }); }
-        static glm::vec3 FromJson(const Json& J) { return { J.at(0).get<float>(), J.at(1).get<float>(), J.at(2).get<float>() }; }
+        static Json ToJson(const Vector3& V) { return Json::array({ V.x, V.y, V.z }); }
+        static Vector3 FromJson(const Json& J) { return { J.at(0).get<float>(), J.at(1).get<float>(), J.at(2).get<float>() }; }
     };
     
-    template <> struct FieldTraits<glm::vec4>
+    template <> struct FieldTraits<Vector4>
     {
         static constexpr const char* TypeName = "vec4";
-        static Json ToJson(const glm::vec4& V) { return Json::array({ V.x, V.y, V.z, V.w }); }
-        static glm::vec4 FromJson(const Json& J) { return { J.at(0).get<float>(), J.at(1).get<float>(), J.at(2).get<float>(), J.at(3).get<float>() }; }
+        static Json ToJson(const Vector4& V) { return Json::array({ V.x, V.y, V.z, V.w }); }
+        static Vector4 FromJson(const Json& J) { return { J.at(0).get<float>(), J.at(1).get<float>(), J.at(2).get<float>(), J.at(3).get<float>() }; }
     };
 }

@@ -2,16 +2,13 @@
 
 #include "Core/Minimal.h"
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
 namespace Source::Components
 {
     struct CameraComponent
     {
-        glm::vec3 Position { 0.0f, 2.0f, 0.0f };
-        glm::vec3 Target { 0.0f, 0.0f, 0.0f };
-        glm::vec3 Up { 0.0f, 1.0f, 0.0f };
+        Vector3 Position { 0.0f, 2.0f, 0.0f };
+        Vector3 Target { 0.0f, 0.0f, 0.0f };
+        Vector3 Up { 0.0f, 1.0f, 0.0f };
 
         float FovDegrees = 60.0f;
         float Aspect = 16.0f / 9.0f;
@@ -19,10 +16,5 @@ namespace Source::Components
         float Far = 100.0f;
 
         int32 Priority;
-
-        glm::mat4 View() const { return glm::lookAt(Position, Target, Up); }
-        glm::mat4 Projection() const { return glm::perspective(glm::radians(FovDegrees), Aspect, Near, Far); }
     };
-    
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(CameraComponent, Position, Target, Up)
 }

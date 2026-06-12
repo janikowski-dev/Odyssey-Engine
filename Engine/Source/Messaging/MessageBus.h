@@ -1,13 +1,7 @@
 #pragma once
 
 #include "Messaging/HandlerData.h"
-
-#include <deque>
-#include <functional>
-#include <memory>
-#include <mutex>
-#include <typeindex>
-#include <unordered_map>
+#include "Core/Minimal.h"
 
 namespace Source::Messaging
 {

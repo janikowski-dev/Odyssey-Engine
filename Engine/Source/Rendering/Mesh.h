@@ -3,16 +3,13 @@
 #include "Core/Minimal.h"
 
 #include <glad/gl.h>
-#include <glm/glm.hpp>
-
-#include <cstdint>
 
 namespace Source::Rendering
 {
     struct Vertex
     {
-        glm::vec3 Position;
-        glm::vec3 Normal;
+        Vector3 Position;
+        Vector3 Normal;
     };
 
     class Mesh

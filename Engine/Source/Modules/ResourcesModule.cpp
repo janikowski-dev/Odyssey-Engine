@@ -42,7 +42,7 @@ namespace Source::Modules
 
     Rendering::Mesh MakeCube()
     {
-        const glm::vec3 P[8] = {
+        const Vector3 P[8] = {
             {-0.5f,-0.5f,-0.5f}, { 0.5f,-0.5f,-0.5f}, { 0.5f, 0.5f,-0.5f}, {-0.5f, 0.5f,-0.5f},
             {-0.5f,-0.5f, 0.5f}, { 0.5f,-0.5f, 0.5f}, { 0.5f, 0.5f, 0.5f}, {-0.5f, 0.5f, 0.5f},
         };
@@ -50,7 +50,7 @@ namespace Source::Modules
         struct Face
         {
             int A, B, C, D;
-            glm::vec3 N;
+            Vector3 N;
         };
 
         const Face Faces[6] = {
