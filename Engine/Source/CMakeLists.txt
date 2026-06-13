@@ -28,12 +28,14 @@ set(SOURCES
     ECS/Registry.h
     ECS/Registry.inl
 
-    Events/CreateEntity.h
+    Events/CreateCameraEntity.h
+    Events/CreateExampleEntity.h
     Events/GetSchema.h
     Events/GetViewport.h
     Events/LoadScene.h
     Events/Ping.h
     Events/SaveScene.h
+    Events/SelectEntity.h
 
     Platform/Window.cpp
     Platform/Window.h

@@ -1,35 +1,78 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using OdysseyEditor.Application.Interfaces;
 using OdysseyEditor.Domain.Events;
 using OdysseyEditor.Domain.Interfaces;
 using OdysseyEditor.UI.Factories;
+using OdysseyEditor.UI.ViewModels.Messages;
 
 namespace OdysseyEditor.UI.ViewModels.Inspector;
 
-public class InspectorViewModel(IEngineMessenger engineMessenger, IPropertyFieldFactory factory) : ObservableObject
+public class InspectorViewModel(
+    IEngineMessenger engineMessenger,
+    IPropertyFieldFactory fieldFactory,
+    ILogService logService,
+    IMessenger messenger
+) : ObservableObject, IRecipient<SelectedEntityMessage>
 {
     public ObservableCollection<ComponentInspector> Components { get; } = [];
 
     public async Task InitAsync()
     {
-        await GetSchema();
-        await CreateAndModifyEntity();
+        InitMessaging();
+        await InitFactory();
+        await CreateEntity1();
+        await CreateEntity2();
     }
 
-    private async Task GetSchema()
+    private void InitMessaging()
     {
-        await factory.InitAsync();
+        messenger.RegisterAll(this);
     }
 
-    private async Task CreateAndModifyEntity()
+    private async Task InitFactory()
     {
-        CreateEntityResponse response = await engineMessenger.Send<CreateEntityRequest, CreateEntityResponse>(CreateEntity.Key, new CreateEntityRequest());
-        
-        Components.Clear();
-        
-        foreach (ComponentData component in response.Data)
+        await fieldFactory.InitAsync();
+    }
+
+    public async void Receive(SelectedEntityMessage message)
+    {
+        try
         {
-            Components.Add(new ComponentInspector(component.Name, component.Fields.Select(field => factory.Create(response.Index, component.Name, field.Key, field.Value))));
+            SelectEntityResponse response = await engineMessenger.Send<SelectEntityRequest, SelectEntityResponse>(SelectEntity.Key, new SelectEntityRequest(message.Index));
+
+            Components.Clear();
+
+            foreach (ComponentData component in response.Data)
+            {
+                Components.Add(new ComponentInspector(component.Name, component.Fields.Select(field => fieldFactory.Create(message.Index, component.Name, field.Key, field.Value))));
+            }
         }
+        catch (Exception caughtException)
+        {
+            logService.LogError(caughtException.Message);
+        }
+    }
+
+    // These methods are temporary.
+    private async Task CreateEntity1()
+    {
+        CreateCameraEntityResponse response = await engineMessenger.Send<CreateCameraEntityRequest, CreateCameraEntityResponse>(CreateCameraEntity.Key, new CreateCameraEntityRequest());
+
+        messenger.Send(new AddedEntityMessage
+        {
+            Index = response.Index
+        });
+    }
+
+    private async Task CreateEntity2()
+    {
+        CreateExampleEntityResponse response = await engineMessenger.Send<CreateExampleEntityRequest, CreateExampleEntityResponse>(CreateExampleEntity.Key, new CreateExampleEntityRequest());
+
+        messenger.Send(new AddedEntityMessage
+        {
+            Index = response.Index
+        });
     }
 }

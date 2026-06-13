@@ -19,6 +19,7 @@
 #include <atomic>
 #include <mutex>
 #include <deque>
+#include <unordered_set>
 #include <queue>
 #include <thread>
 

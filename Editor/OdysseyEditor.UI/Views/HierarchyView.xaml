@@ -9,35 +9,16 @@
              d:DataContext="{d:DesignInstance Type=hierarchy:HierarchyViewModel, IsDesignTimeCreatable=False}">
 
     <Border Background="{StaticResource InspectorBgBrush}">
-        <StackPanel HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    MaxWidth="220">
-
-            <Border Width="56" Height="56" CornerRadius="28"
-                    Background="#22FFFFFF"
-                    HorizontalAlignment="Center"
-                    Margin="0,0,0,16">
-                <TextBlock Text="&#xE946;"
-                           FontFamily="Segoe MDL2 Assets"
-                           FontSize="24"
-                           Foreground="#CCFFFFFF"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"/>
-            </Border>
-
-            <TextBlock Text="Hierarchy"
-                       Foreground="#EEEEEE"
-                       FontSize="16"
-                       FontWeight="SemiBold"
-                       HorizontalAlignment="Center"/>
-
-            <TextBlock Text="This is placeholder until actual functionality is ready."
-                       Foreground="#88FFFFFF"
-                       FontSize="12"
-                       TextAlignment="Center"
-                       TextWrapping="Wrap"
-                       Margin="0,6,0,0"/>
-        </StackPanel>
+        <ListBox ItemsSource="{Binding Entities}"
+                 SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
+                 Background="Transparent"
+                 BorderThickness="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding StringFormat='Entity {0}'}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Border>
 
 </UserControl>

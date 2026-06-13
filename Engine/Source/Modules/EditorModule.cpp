@@ -1,6 +1,8 @@
 #include "Modules/EditorModule.h"
 
-#include "Events/CreateEntity.h"
+#include "Events/CreateCameraEntity.h"
+#include "Events/SelectEntity.h"
+#include "Events/CreateExampleEntity.h"
 #include "Events/SaveScene.h"
 #include "Events/LoadScene.h"
 #include "Events/Ping.h"
@@ -22,13 +24,25 @@ namespace Source::Modules
             return Events::PingResponse();
         });
 
-        Context.EditorBridge->On<Events::CreateEntiryRequest, Events::CreateEntityResponse>(Events::CreateEntityKey, [&Context](const Events::CreateEntiryRequest&)
+        Context.EditorBridge->On<Events::CreateExampleEntityRequest, Events::CreateExampleEntityResponse>(Events::CreateExampleEntityKey, [&Context](const Events::CreateExampleEntityRequest&)
         {
             ECS::Entity E = Context.World->Create();
             Context.World->Add<Components::TransformComponent>(E, Components::TransformComponent{ {-2, 0, 0}, {0, 0, 0}, {1, 1, 1} });
             Context.World->Add<Components::RendererComponent>(E, Components::RendererComponent{ "lit", "cube", {0.85f, 0.30f, 0.22f}, Context.ResourceCache->Shaders.Get("lit"), Context.ResourceCache->Meshes.Get("cube") });
             Context.World->Add<Components::SpinComponent>(E, Components::SpinComponent{ {0.0f, 0.8f, 0.0f} });
-            return Events::CreateEntityResponse { E.Index, Serialization::GetComponents(E) };
+            return Events::CreateExampleEntityResponse { E.Index };
+        });
+
+        Context.EditorBridge->On<Events::CreateCameraEntityRequest, Events::CreateCameraEntityResponse>(Events::CreateCameraEntityKey, [&Context](const Events::CreateCameraEntityRequest&)
+        {
+            ECS::Entity E = Context.World->Create();
+            Context.World->Add<Components::CameraComponent>(E, Components::CameraComponent{ {4, 3, 6} });
+            return Events::CreateCameraEntityResponse { E.Index };
+        });
+
+        Context.EditorBridge->On<Events::SelectEntityRequest, Events::SelectEntityResponse>(Events::SelectEntityKey, [&Context](const Events::SelectEntityRequest& Request)
+        {
+            return Events::SelectEntityResponse { Serialization::GetComponents(Context.World->Get(Request.Index)) };
         });
 
         Context.EditorBridge->On<Events::SaveSceneRequest, Events::SaveSceneResponse>(Events::SaveSceneKey, [&Context](const Events::SaveSceneRequest& Request)
