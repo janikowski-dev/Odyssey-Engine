@@ -27,6 +27,7 @@ public sealed class EngineService(IOptions<EngineConfig> config) : IEngineLaunch
 
     public async Task LaunchAsync()
     {
+        KillEngine();
         StartEngine();
         await ConnectToEngine();
     }
@@ -69,17 +70,31 @@ public sealed class EngineService(IOptions<EngineConfig> config) : IEngineLaunch
             FailAll(caughtException);
         }
     }
+    
+    private void KillEngine()
+    {
+        string processName = Path.GetFileNameWithoutExtension(config.Value.EnginePath);
+    
+        foreach (Process process in Process.GetProcessesByName(processName))
+        {
+            process.Kill();
+            process.WaitForExit();
+            process.Dispose();
+        }
+    }
 
     private void StartEngine()
     {
+        string enginePath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, config.Value.EnginePath));
+        
         _process = new Process
         {
             StartInfo = new ProcessStartInfo
             {
-                WorkingDirectory = Path.GetDirectoryName(config.Value.EnginePath) ?? ".",
                 Arguments = $"-host {config.Value.Host} -port {config.Value.Port} -hide",
-                FileName = config.Value.EnginePath,
-                UseShellExecute = false
+                WorkingDirectory = Path.GetDirectoryName(enginePath),
+                UseShellExecute = false,
+                FileName = enginePath
             }
         };
 

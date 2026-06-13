@@ -7,4 +7,8 @@ public static class GetSchema
 
 public readonly record struct GetSchemaRequest;
 
-public readonly record struct GetSchemaResponse(object Schema);
+public readonly record struct GetSchemaResponse(IReadOnlyList<ComponentInfo> Schema);
+
+public record ComponentInfo(string Name, IReadOnlyList<FieldInfo> Fields);
+
+public record FieldInfo(string Name, string Type);

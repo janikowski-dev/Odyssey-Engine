@@ -5,30 +5,25 @@
                     xmlns:workspace="clr-namespace:OdysseyEditor.UI.ViewModels.Workspace"
                     xmlns:controlsBar="clr-namespace:OdysseyEditor.UI.ViewModels.ControlsBar"
                     xmlns:inspector="clr-namespace:OdysseyEditor.UI.ViewModels.Inspector"
-                    xmlns:workspace1="clr-namespace:OdysseyEditor.UI.ViewModels.Workspace"
-                    xmlns:views="clr-namespace:OdysseyEditor.UI.Views"
-                    xmlns:controlsBar1="clr-namespace:OdysseyEditor.UI.ViewModels.ControlsBar"
-                    xmlns:hierarchy1="clr-namespace:OdysseyEditor.UI.ViewModels.Hierarchy"
-                    xmlns:inspector1="clr-namespace:OdysseyEditor.UI.ViewModels.Inspector"
-                    xmlns:console1="clr-namespace:OdysseyEditor.UI.ViewModels.Console">
+                    xmlns:views="clr-namespace:OdysseyEditor.UI.Views">
 
-    <DataTemplate DataType="{x:Type workspace1:WorkspaceViewModel}">
+    <DataTemplate DataType="{x:Type workspace:WorkspaceViewModel}">
         <views:WorkspaceView/>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type controlsBar1:ControlsBarViewModel}">
+    <DataTemplate DataType="{x:Type controlsBar:ControlsBarViewModel}">
         <views:ControlsBarView/>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type hierarchy1:HierarchyViewModel}">
+    <DataTemplate DataType="{x:Type hierarchy:HierarchyViewModel}">
         <views:HierarchyView/>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type inspector1:InspectorViewModel}">
+    <DataTemplate DataType="{x:Type inspector:InspectorViewModel}">
         <views:InspectorView/>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type console1:ConsoleViewModel}">
+    <DataTemplate DataType="{x:Type console:ConsoleViewModel}">
         <views:ConsoleView/>
     </DataTemplate>
 

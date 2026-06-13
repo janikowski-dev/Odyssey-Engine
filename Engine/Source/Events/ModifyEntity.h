@@ -8,7 +8,7 @@ namespace Source::Events
 
     struct ModifyEntityRequest
     {
-        std::string Type;
+        std::string Component;
         uint32 Index;
         Json Fields;
     };
@@ -17,5 +17,5 @@ namespace Source::Events
     {
     };
 
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ModifyEntityRequest, Type, Index, Fields);
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ModifyEntityRequest, Component, Index, Fields);
 }

@@ -1,15 +1,15 @@
-﻿using System.Text.Json;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using OdysseyEditor.Domain.Events;
 using OdysseyEditor.Domain.Interfaces;
+using OdysseyEditor.UI.Factories;
 
 namespace OdysseyEditor.UI.ViewModels.Inspector;
 
-public class InspectorViewModel(IEngineMessenger messenger) : ObservableObject
+public class InspectorViewModel(IEngineMessenger engineMessenger, IPropertyFieldFactory factory) : ObservableObject
 {
-    private const string ModifiedComponentName = "TransformComponent";
-    private const string ModifiedFieldName = "Position";
-    
+    public ObservableCollection<ComponentInspector> Components { get; } = [];
+
     public async Task InitAsync()
     {
         await GetSchema();
@@ -18,23 +18,18 @@ public class InspectorViewModel(IEngineMessenger messenger) : ObservableObject
 
     private async Task GetSchema()
     {
-        await messenger.Send<GetSchemaRequest, GetSchemaResponse>(Domain.Events.GetSchema.Key, new GetSchemaRequest());
+        await factory.InitAsync();
     }
 
     private async Task CreateAndModifyEntity()
     {
-        CreateEntityResponse response = await messenger.Send<CreateEntityRequest, CreateEntityResponse>(CreateEntity.Key, new CreateEntityRequest());
+        CreateEntityResponse response = await engineMessenger.Send<CreateEntityRequest, CreateEntityResponse>(CreateEntity.Key, new CreateEntityRequest());
         
-        ComponentData transform = response.Info.First(data => data.Type == ModifiedComponentName);
-        Dictionary<string, JsonElement> fields = new(transform.Fields);
-        float[] newPosition = [0f, 0f, 0f];
-        fields[ModifiedFieldName] = JsonSerializer.SerializeToElement(newPosition);
-
-        await messenger.Send<ModifyEntityRequest, ModifyEntityResponse>(ModifyEntity.Key, new ModifyEntityRequest
+        Components.Clear();
+        
+        foreach (ComponentData component in response.Data)
         {
-            Type = ModifiedComponentName,
-            Fields = fields,
-            Index = response.Index,
-        });
+            Components.Add(new ComponentInspector(component.Name, component.Fields.Select(field => factory.Create(response.Index, component.Name, field.Key, field.Value))));
+        }
     }
 }

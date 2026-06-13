@@ -7,36 +7,40 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=inspector:InspectorViewModel, IsDesignTimeCreatable=False}">
 
-    <Border Background="{StaticResource InspectorBgBrush}">
-        <StackPanel HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    MaxWidth="220">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ItemsControl ItemsSource="{Binding Components}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type inspector:ComponentInspector}">
+                    <Expander IsExpanded="True" Margin="0,4">
+                        <Expander.Header>
+                            <TextBlock Text="{Binding Type}" FontWeight="SemiBold" />
+                        </Expander.Header>
 
-            <Border Width="56" Height="56" CornerRadius="28"
-                    Background="#22FFFFFF"
-                    HorizontalAlignment="Center"
-                    Margin="0,0,0,16">
-                <TextBlock Text="&#xE946;"
-                           FontFamily="Segoe MDL2 Assets"
-                           FontSize="24"
-                           Foreground="#CCFFFFFF"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"/>
-            </Border>
+                        <ItemsControl ItemsSource="{Binding Properties}" Margin="8,4,0,4">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,3">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Inspector"
-                       Foreground="#EEEEEE"
-                       FontSize="16"
-                       FontWeight="SemiBold"
-                       HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="0"
+                                                   Text="{Binding Name}"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="Gray" />
 
-            <TextBlock Text="This is placeholder until actual functionality is ready."
-                       Foreground="#88FFFFFF"
-                       FontSize="12"
-                       TextAlignment="Center"
-                       TextWrapping="Wrap"
-                       Margin="0,6,0,0"/>
-        </StackPanel>
-    </Border>
-    
+                                        <ContentPresenter Grid.Column="1"
+                                                          Content="{Binding}"
+                                                          ContentTemplateSelector="{StaticResource PropertyFieldSelector}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Expander>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
+
 </UserControl>

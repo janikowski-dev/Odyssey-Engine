@@ -28,7 +28,7 @@ namespace Source::Serialization
                 Fields[Field.Name] = Field.Get(Component);
             }
 
-            Out.push_back({ { "Type", Name }, { "Fields", std::move(Fields) } });
+            Out.push_back({ { "Name", Name }, { "Fields", std::move(Fields) } });
         }
 
         return Out;

@@ -6,7 +6,7 @@ using OdysseyEditor.UI.Utility;
 
 namespace OdysseyEditor.UI.ViewModels.Workspace;
 
-public class WorkspaceViewModel(IEngineLauncher engine, IEngineMessenger messenger) : HwndHost
+public class WorkspaceViewModel(IEngineLauncher engineLauncher, IEngineMessenger engineMessenger) : HwndHost
 {
     private readonly NativeWindowHost _window = new();
 
@@ -36,8 +36,8 @@ public class WorkspaceViewModel(IEngineLauncher engine, IEngineMessenger messeng
 
     private async Task<GetViewportResponse> LaunchEngine()
     {
-        await engine.LaunchAsync();
-        return await messenger.Send<GetViewportRequest, GetViewportResponse>(GetViewport.Key, new GetViewportRequest());
+        await engineLauncher.LaunchAsync();
+        return await engineMessenger.Send<GetViewportRequest, GetViewportResponse>(GetViewport.Key, new GetViewportRequest());
     }
 
     private void AttachEngine(GetViewportResponse response)

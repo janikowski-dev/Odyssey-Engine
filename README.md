@@ -74,8 +74,7 @@ CMake fetches GLFW, GLAD, GLM, and nlohmann/json automatically on first configur
 
 ## Setup
 
-1. Point the editor at the built engine binary in `Editor/OdysseyEditor.UI/appsettings.json` (`EnginePath`, `Port`).
-2. Set the path to your `VsDevCmd.bat` in `justconfig.json`.
+Set the path to your `VsDevCmd.bat` in `justconfig.json`.
 
 ## Build & run
 
@@ -89,6 +88,18 @@ Clean engine build artifacts:
 
 ```sh
 just clean-engine
+```
+
+Build the editor:
+
+```sh
+just build-editor
+```
+
+Run the editor:
+
+```sh
+just run-editor
 ```
 
 Then run the editor from your .NET tooling. It will launch the engine, connect, and embed the viewport.

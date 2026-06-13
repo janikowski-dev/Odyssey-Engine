@@ -17,7 +17,8 @@ namespace Source::Modules
     {
         Bridge.On<Events::ModifyEntityRequest, Events::ModifyEntityResponse>(Events::ModifyEntityKey, [&World](const Events::ModifyEntityRequest& Request)
         {
-            Serialization::SetComponent(World.Get(Request.Index), Request.Type, Request.Fields);
+            Serialization::SetComponent(World.Get(Request.Index), Request.Component, Request.Fields);
+            DebugLog << Request.Fields.dump();
             return Events::ModifyEntityResponse();
         });
 

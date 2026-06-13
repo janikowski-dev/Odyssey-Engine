@@ -7,6 +7,7 @@ using OdysseyEditor.Application.Services;
 using OdysseyEditor.Domain.Data;
 using OdysseyEditor.Domain.Interfaces;
 using OdysseyEditor.Domain.Services;
+using OdysseyEditor.UI.Factories;
 using OdysseyEditor.UI.ViewModels.Console;
 using OdysseyEditor.UI.ViewModels.ControlsBar;
 using OdysseyEditor.UI.ViewModels.Hierarchy;
@@ -66,6 +67,7 @@ public partial class App
 
     private static void ConfigureViews(IServiceCollection services)
     {
+        services.AddSingleton<IPropertyFieldFactory, PropertyFieldFactory>();
         services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
         services.AddSingleton<WorkspaceViewModel>();
         services.AddSingleton<ControlsBarViewModel>();

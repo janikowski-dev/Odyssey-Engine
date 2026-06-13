@@ -9,6 +9,6 @@ public static class CreateEntity
 
 public readonly record struct CreateEntityRequest;
 
-public readonly record struct CreateEntityResponse(int Index, IReadOnlyList<ComponentData> Info);
+public readonly record struct CreateEntityResponse(int Index, IReadOnlyList<ComponentData> Data);
 
-public readonly record struct ComponentData(string Type, IReadOnlyDictionary<string, JsonElement> Fields);
+public readonly record struct ComponentData(string Name, IReadOnlyDictionary<string, JsonElement> Fields);
