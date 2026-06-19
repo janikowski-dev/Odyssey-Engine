@@ -8,17 +8,23 @@
              d:DesignHeight="600" d:DesignWidth="250"
              d:DataContext="{d:DesignInstance Type=hierarchy:HierarchyViewModel, IsDesignTimeCreatable=False}">
 
-    <Border Background="{StaticResource InspectorBgBrush}">
-        <ListBox ItemsSource="{Binding Entities}"
-                 SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
-                 Background="Transparent"
-                 BorderThickness="0">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding StringFormat='Entity {0}'}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+    <Border Style="{StaticResource PanelBorderStyle}">
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top"
+                       Text="Hierarchy"
+                       Margin="10,8"
+                       FontWeight="SemiBold"/>
+
+            <ListBox ItemsSource="{Binding Entities}"
+                     SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
+                     BorderThickness="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding StringFormat='Entity {0}'}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
     </Border>
 
 </UserControl>

@@ -8,8 +8,7 @@
              xmlns:models="clr-namespace:OdysseyEditor.Application.Models;assembly=OdysseyEditor.Application"
              xmlns:behaviors="clr-namespace:OdysseyEditor.UI.Behaviors"
              mc:Ignorable="d"
-             Focusable="True"
-             d:DataContext="{d:DesignInstance Type=console:ConsoleViewModel, IsDesignTimeCreatable=False}">
+             Focusable="True">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -17,55 +16,51 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <!-- HEADER -->
         <Border Grid.Row="0"
-                BorderBrush="{StaticResource ConsoleBorderBrush}"
-                BorderThickness="0,1,0,0"
-                Background="{StaticResource ConsoleHeaderBackgroundBrush}"
-                Padding="6,4">
-            
+                Background="{StaticResource PanelBackgroundBrush}"
+                BorderBrush="{StaticResource BorderBrushDark}"
+                BorderThickness="0,1,0,1"
+                Padding="8,6">
+
             <DockPanel>
-                
+
                 <Button DockPanel.Dock="Right"
                         Command="{Binding ToggleCommand}"
-                        Style="{StaticResource ConsoleToggleButtonStyle}"
                         ToolTip="Toggle Console">
-                    <TextBlock Style="{StaticResource ConsoleToggleArrowStyle}"
-                               Text="{Binding IsExpanded, Converter={StaticResource BoolToArrowConverter}}"/>
+                    <TextBlock Text="{Binding IsExpanded,
+                        Converter={StaticResource BoolToArrowConverter}}"/>
                 </Button>
-                
+
                 <TextBlock Text="{Binding HeaderText}"
-                           Foreground="{StaticResource ConsoleForegroundBrush}"
                            FontSize="12"
                            VerticalAlignment="Center"
                            TextTrimming="CharacterEllipsis"/>
             </DockPanel>
         </Border>
 
+        <!-- BODY -->
         <Border Grid.Row="1"
                 Height="200"
-                BorderBrush="{StaticResource ConsoleBorderBrush}"
                 BorderThickness="0,1,0,0"
-                Background="{StaticResource ConsoleContentBackgroundBrush}"
+                BorderBrush="{StaticResource BorderBrushDark}"
                 Visibility="{Binding IsExpanded, Converter={StaticResource BoolToVisibilityConverter}}">
-            
+
             <ListBox ItemsSource="{Binding Messages}"
-                     Background="Transparent"
-                     BorderThickness="0"
                      FontSize="12"
+                     FontFamily="Consolas"
                      HorizontalContentAlignment="Stretch"
                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
                      ScrollViewer.VerticalScrollBarVisibility="Auto"
-                     VirtualizingPanel.IsVirtualizing="True"
-                     ItemContainerStyle="{StaticResource ConsoleListBoxItemStyle}">
+                     VirtualizingPanel.IsVirtualizing="True">
 
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type models:LogEntry}">
-                        <TextBlock Foreground="{Binding Level, Converter={StaticResource LogLevelToColorConverter}}"
-                                   TextWrapping="NoWrap">
+                        <TextBlock TextWrapping="NoWrap">
                             <Run Text="["/>
-                            <Run Text="{Binding FormattedTimestamp, Mode=OneWay}"/>
+                            <Run Text="{Binding FormattedTimestamp}"/>
                             <Run Text="] "/>
-                            <Run Text="{Binding Message, Mode=OneWay}"/>
+                            <Run Text="{Binding Message}"/>
                         </TextBlock>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -77,5 +72,4 @@
             </ListBox>
         </Border>
     </Grid>
-
 </UserControl>

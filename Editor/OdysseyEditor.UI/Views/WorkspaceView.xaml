@@ -7,14 +7,11 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="900"
              d:DataContext="{d:DesignInstance Type=workspace:WorkspaceViewModel, IsDesignTimeCreatable=False}">
-
-    <Grid Background="{StaticResource WorkspaceBgBrush}">
-
-        <TextBlock Text="Editor is not open."
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Foreground="{StaticResource WorkspaceMutedBrush}"/>
-
-    </Grid>
+    
+    <Border Style="{StaticResource PanelBorderStyle}">
+        <Grid>
+            <TextBlock Text="Editor is not open." HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+    </Border>
 
 </UserControl>

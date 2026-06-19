@@ -7,40 +7,59 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=inspector:InspectorViewModel, IsDesignTimeCreatable=False}">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <ItemsControl ItemsSource="{Binding Components}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type inspector:ComponentInspector}">
-                    <Expander IsExpanded="True" Margin="0,4">
-                        <Expander.Header>
-                            <TextBlock Text="{Binding Type}" FontWeight="SemiBold" />
-                        </Expander.Header>
+    <Border Style="{StaticResource PanelBorderStyle}">
+        <DockPanel>
+            <Border DockPanel.Dock="Top"
+                    Background="{StaticResource ControlBackgroundBrush}"
+                    BorderBrush="{StaticResource BorderBrushDark}"
+                    BorderThickness="0,0,0,1"
+                    Padding="10,6">
 
-                        <ItemsControl ItemsSource="{Binding Properties}" Margin="8,4,0,4">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Margin="0,3">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="120" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
+                <TextBlock Text="Inspector"
+                           FontWeight="SemiBold"/>
+            </Border>
+            
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Components}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type inspector:ComponentInspector}">
 
-                                        <TextBlock Grid.Column="0"
-                                                   Text="{Binding Name}"
-                                                   VerticalAlignment="Center"
-                                                   Foreground="Gray" />
+                            <Expander IsExpanded="True"
+                                      Margin="0,0,0,6">
 
-                                        <ContentPresenter Grid.Column="1"
-                                                          Content="{Binding}"
-                                                          ContentTemplateSelector="{StaticResource PropertyFieldSelector}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </Expander>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </ScrollViewer>
+                                <Expander.Header>
+                                    <TextBlock Text="{Binding Type}"
+                                               FontWeight="SemiBold"
+                                               Foreground="{StaticResource ForegroundBrush}"/>
+                                </Expander.Header>
 
+                                <ItemsControl ItemsSource="{Binding Properties}"
+                                              Margin="8,6,0,6">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,3">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{Binding Name}"
+                                                           VerticalAlignment="Center"
+                                                           Foreground="{StaticResource ForegroundSecondaryBrush}"/>
+
+                                                <ContentPresenter Grid.Column="1"
+                                                                  Content="{Binding}"
+                                                                  ContentTemplateSelector="{StaticResource PropertyFieldSelector}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Expander>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </DockPanel>
+    </Border>
 </UserControl>

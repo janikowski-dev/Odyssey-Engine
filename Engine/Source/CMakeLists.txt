@@ -31,6 +31,7 @@ set(SOURCES
     Events/CreateCameraEntity.h
     Events/CreateExampleEntity.h
     Events/GetSchema.h
+    Events/GetTelemetry.h
     Events/GetViewport.h
     Events/LoadScene.h
     Events/Ping.h
@@ -76,8 +77,6 @@ set(SOURCES
     Modules/PlatformModule.h
     Modules/ResourcesModule.cpp
     Modules/ResourcesModule.h
-    Modules/SerializationModule.cpp
-    Modules/SerializationModule.h
     Modules/SystemsModule.cpp
     Modules/SystemsModule.h
 

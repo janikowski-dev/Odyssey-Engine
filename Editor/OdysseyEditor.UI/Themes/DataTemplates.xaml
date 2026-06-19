@@ -3,16 +3,11 @@
                     xmlns:hierarchy="clr-namespace:OdysseyEditor.UI.ViewModels.Hierarchy"
                     xmlns:console="clr-namespace:OdysseyEditor.UI.ViewModels.Console"
                     xmlns:workspace="clr-namespace:OdysseyEditor.UI.ViewModels.Workspace"
-                    xmlns:controlsBar="clr-namespace:OdysseyEditor.UI.ViewModels.ControlsBar"
                     xmlns:inspector="clr-namespace:OdysseyEditor.UI.ViewModels.Inspector"
                     xmlns:views="clr-namespace:OdysseyEditor.UI.Views">
 
     <DataTemplate DataType="{x:Type workspace:WorkspaceViewModel}">
         <views:WorkspaceView/>
-    </DataTemplate>
-
-    <DataTemplate DataType="{x:Type controlsBar:ControlsBarViewModel}">
-        <views:ControlsBarView/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type hierarchy:HierarchyViewModel}">

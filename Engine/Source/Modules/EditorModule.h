@@ -9,5 +9,8 @@ namespace Source::Modules
     public:
         void Init(const Core::ApplicationConfig Config, Core::Context& Context) override;
         void Tick(const Core::Context& Context) override;
+
+    private:
+        void InitBridge(const Core::ApplicationConfig Config, Core::Context& Context);
     };
 }

@@ -30,7 +30,7 @@ namespace Source::Messaging
     }
 
     template<typename TMessage>
-    void MessageBus::Publish(TMessage& InMessage)
+    void MessageBus::Publish(TMessage InMessage)
     {
         const auto Key = std::type_index(typeid(TMessage));
 
@@ -69,8 +69,8 @@ namespace Source::Messaging
 
         Queue.push_back(QueuedMessage
         {
-            MakeShared<TMessage>(std::move(InMessage)),
-            std::type_index(typeid(TMessage))
+            std::type_index(typeid(TMessage)),
+            MakeShared<TMessage>(std::move(InMessage))
         });
     }
 }

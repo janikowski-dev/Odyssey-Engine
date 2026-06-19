@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:selectors="clr-namespace:OdysseyEditor.UI.Selectors"
-                    xmlns:inspector="clr-namespace:OdysseyEditor.UI.ViewModels.Inspector"
                     xmlns:propertyFields="clr-namespace:OdysseyEditor.UI.ViewModels.Inspector.PropertyFields">
     
     <selectors:PropertyFieldTemplateSelector x:Key="PropertyFieldSelector">
@@ -26,31 +25,73 @@
 
         <selectors:PropertyFieldTemplateSelector.Vector2Template>
             <DataTemplate DataType="propertyFields:Vector2PropertyField">
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0"
+                             Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,4,0"/>
+
+                    <TextBox Grid.Column="1"
+                             Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="4,0,0,0"/>
+                </Grid>
             </DataTemplate>
         </selectors:PropertyFieldTemplateSelector.Vector2Template>
 
         <selectors:PropertyFieldTemplateSelector.Vector3Template>
             <DataTemplate DataType="propertyFields:Vector3PropertyField">
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox Text="{Binding Z, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0"
+                             Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,4,0"/>
+
+                    <TextBox Grid.Column="1"
+                             Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="2,0,2,0"/>
+
+                    <TextBox Grid.Column="2"
+                             Text="{Binding Z, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="4,0,0,0"/>
+                </Grid>
             </DataTemplate>
         </selectors:PropertyFieldTemplateSelector.Vector3Template>
 
         <selectors:PropertyFieldTemplateSelector.Vector4Template>
             <DataTemplate DataType="propertyFields:Vector4PropertyField">
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox Text="{Binding Z, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox Text="{Binding W, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0"
+                             Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,4,0"/>
+
+                    <TextBox Grid.Column="1"
+                             Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="2,0,2,0"/>
+
+                    <TextBox Grid.Column="2"
+                             Text="{Binding Z, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="2,0,2,0"/>
+
+                    <TextBox Grid.Column="3"
+                             Text="{Binding W, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="4,0,0,0"/>
+                </Grid>
             </DataTemplate>
         </selectors:PropertyFieldTemplateSelector.Vector4Template>
 

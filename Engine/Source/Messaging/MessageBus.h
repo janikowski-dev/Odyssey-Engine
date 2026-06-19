@@ -16,7 +16,7 @@ namespace Source::Messaging
         void Unsubscribe(SubId Id);
 
         template<typename TMessage>
-        void Publish(TMessage& InMessage);
+        void Publish(TMessage InMessage);
 
         template<typename TMessage>
         void Enqueue(TMessage InMessage);
