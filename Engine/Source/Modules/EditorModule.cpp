@@ -88,6 +88,6 @@ namespace Source::Modules
             return Events::LoadSceneResponse();
         });
 
-        Context.EditorBridge->Start(Config.Host, Config.EditorPort);
+        Context.EditorBridge->Start(Config.EditorConfig.Host, Config.EditorConfig.EditorPort);
     }
 }

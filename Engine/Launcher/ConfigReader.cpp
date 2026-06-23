@@ -1,6 +1,17 @@
-#include "CLIParser.h"
+#include "ConfigReader.h"
 
-Source::Core::ApplicationConfig CLIParser::Parse(int Argc, char **Argv)
+#include "Core/Minimal.h"
+
+#include <fstream>
+
+Source::Core::ApplicationConfig ConfigReader::Read(int Argc, char **Argv)
+{
+    Source::Core::ApplicationConfig Config = ParseCliArguments(Argc, Argv);
+    ReadSettingsJson(Config);
+    return Config;
+}
+
+Source::Core::ApplicationConfig ConfigReader::ParseCliArguments(int Argc, char **Argv)
 {
     Source::Core::ApplicationConfig Config;
 
@@ -25,12 +36,12 @@ Source::Core::ApplicationConfig CLIParser::Parse(int Argc, char **Argv)
 
         if (Arg == "-host" && I + 1 < Argc)
         {
-            Config.Host = Argv[++I];
+            Config.EditorConfig.Host = Argv[++I];
         }
 
         if (Arg == "-port" && I + 1 < Argc)
         {
-            Config.EditorPort = std::stoi(Argv[++I]);
+            Config.EditorConfig.EditorPort = std::stoi(Argv[++I]);
         }
 
         if (Arg == "-width" && I + 1 < Argc)
@@ -50,4 +61,28 @@ Source::Core::ApplicationConfig CLIParser::Parse(int Argc, char **Argv)
     }
 
     return Config;
+}
+
+void ConfigReader::ReadSettingsJson(Source::Core::ApplicationConfig& Config)
+{
+    std::ifstream File("Settings.json");
+
+    if (!File)
+    {
+        return;
+    }
+
+    Json SettingsJson;
+    File >> SettingsJson;
+
+    if (SettingsJson.contains("height"))
+    {
+        Config.WindowConfig.Height = SettingsJson["height"].get<uint32>();
+    }
+
+
+    if (SettingsJson.contains("width"))
+    {
+        Config.WindowConfig.Width = SettingsJson["width"].get<uint32>();
+    }
 }

@@ -18,6 +18,7 @@ namespace Source::Platform
 		void Create(Editor::Bridge& InBridge);
 		void Destroy();
 		void Refresh() const;
+		bool ShouldClose() const;
 
     private:
         void Init() const;

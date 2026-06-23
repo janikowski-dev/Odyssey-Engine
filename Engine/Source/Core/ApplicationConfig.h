@@ -24,12 +24,17 @@ namespace Source::Core
         std::string ProjectFilePath;
 	};
 
+    struct EditorConfig
+    {
+        std::string Host;
+        int EditorPort;
+    };
+
     struct ApplicationConfig
     {
         EngineConfig EngineConfig;
         WindowConfig WindowConfig;
+        EditorConfig EditorConfig;
         LaunchType LaunchType;
-        std::string Host;
-        int EditorPort;
     };
 }

@@ -23,84 +23,80 @@
 #include <queue>
 #include <thread>
 
-// Namespace needs to be named like that, so the other classes can use these types easily
-namespace Source
+// Pointers
+template<typename T> using SharedPtr = std::shared_ptr<T>;
+template<typename T> using UniquePtr = std::unique_ptr<T>;
+template<typename T> using WeakPtr = std::weak_ptr<T>;
+
+template<typename T, typename... Args>
+SharedPtr<T> MakeShared(Args&&... InArgs) { return std::make_shared<T>(std::forward<Args>(InArgs)...); }
+template<typename T, typename... Args>
+UniquePtr<T> MakeUnique(Args&&... InArgs) { return std::make_unique<T>(std::forward<Args>(InArgs)...); }
+
+// Numbers
+using uint8 = std::uint8_t;
+using uint16 = std::uint16_t;
+using uint32 = std::uint32_t;
+using uint64 = std::uint64_t;
+using int32 = std::int32_t;
+using int64 = std::int64_t;
+
+// Json
+using Json = nlohmann::json;
+
+// Logs
+inline std::ostream& DebugLog = std::cout;
+inline std::ostream& DebugError = std::cout;
+
+// Time
+using Duration = std::chrono::duration<float>;
+using Clock = std::chrono::steady_clock;
+using Time = std::chrono::steady_clock::time_point;
+
+// Maths
+using Vector2 = glm::vec2;
+using Vector3 = glm::vec3;
+using Vector4 = glm::vec4;
+
+// Is Empty
+template<typename T, typename = void>
+struct is_empty_type : std::false_type
 {
-    // Pointers
-    template<typename T> using SharedPtr = std::shared_ptr<T>;
-    template<typename T> using UniquePtr = std::unique_ptr<T>;
-    template<typename T> using WeakPtr = std::weak_ptr<T>;
+};
 
-    template<typename T, typename... Args>
-    SharedPtr<T> MakeShared(Args&&... InArgs) { return std::make_shared<T>(std::forward<Args>(InArgs)...); }
+template<typename T>
+struct is_empty_type<T, std::void_t<>> : std::bool_constant<std::is_empty_v<T>>
+{
+};
 
-    template<typename T, typename... Args>
-    UniquePtr<T> MakeUnique(Args&&... InArgs) { return std::make_unique<T>(std::forward<Args>(InArgs)...); }
+template<typename T>
+inline constexpr bool IsEmpty = is_empty_type<T>::value;
 
-    // Numbers
-    using uint8 = std::uint8_t;
-    using uint16 = std::uint16_t;
-    using uint32 = std::uint32_t;
-    using uint64 = std::uint64_t;
-    using int32 = std::int32_t;
-    using int64 = std::int64_t;
+// Is Consumable
+template<typename, typename = void>
+struct is_consumable : std::false_type
+{
+};
 
-    // Json
-    using Json = nlohmann::json;
+template<typename T>
+struct is_consumable<T, std::void_t<decltype(std::declval<T&>().Handled = true)>> : std::true_type
+{
+};
 
-    // Logs
-    inline std::ostream& DebugLog = std::cout;
-    inline std::ostream& DebugError = std::cout;
+template<typename T>
+inline constexpr bool IsConsumable = is_consumable<T>::value;
 
-    // Time
-    using Duration = std::chrono::duration<float>;
-    using Clock = std::chrono::steady_clock;
-    using Time = std::chrono::steady_clock::time_point;
+// Is Arithmetic
+template<typename, typename = void>
+struct is_arithmetic : std::false_type {};
 
-    // Maths
-    using Vector2 = glm::vec2;
-    using Vector3 = glm::vec3;
-    using Vector4 = glm::vec4;
-    
-    // Is Empty
-    template<typename T, typename = void>
-    struct is_empty_type : std::false_type
-    {
-    };
-    
-    template<typename T>
-    struct is_empty_type<T, std::void_t<>> : std::bool_constant<std::is_empty_v<T>>
-    {
-    };
-    
-    template<typename T>
-    inline constexpr bool IsEmpty = is_empty_type<T>::value;
+template<typename T>
+struct is_arithmetic<T, std::enable_if_t<std::is_arithmetic_v<T>>> : std::true_type {};
 
-    // Is Consumable
-    template<typename, typename = void>
-    struct is_consumable : std::false_type
-    {
-    };
+template<typename T>
+inline constexpr bool IsArithmetic = is_arithmetic<T>::value;
 
-    template<typename T>
-    struct is_consumable<T, std::void_t<decltype(std::declval<T&>().Handled = true)>> : std::true_type
-    {
-    };
-
-    template<typename T>
-    inline constexpr bool IsConsumable = is_consumable<T>::value;
-
-    // Is Arithmetic
-    template<typename, typename = void>
-    struct is_arithmetic : std::false_type {};
-    
-    template<typename T>
-    struct is_arithmetic<T, std::enable_if_t<std::is_arithmetic_v<T>>> : std::true_type {};
-    
-    template<typename T>
-    inline constexpr bool IsArithmetic = is_arithmetic<T>::value;
-}
-
+// Components serialization
 #if defined(REFLECTION_CODEGEN)
     #define COMPONENT      __attribute__((annotate("component")))
     #define PROPERTY(...)  __attribute__((annotate("property:" #__VA_ARGS__)))

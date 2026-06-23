@@ -8,7 +8,6 @@ set(SOURCES
     Core/Application.h
     Core/Context.h
     Core/ExternalAPI.h
-    Core/IModuleRegistrar.h
     Core/IModule.h
     Core/Minimal.h
 

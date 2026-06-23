@@ -48,8 +48,13 @@ namespace Source::Platform
     	glfwPollEvents();
 	}
 
-	void Window::Init() const
+	bool Window::ShouldClose() const
 	{
+		return glfwWindowShouldClose(Handle);
+	}
+
+    void Window::Init() const
+    {
         glfwInit();
 		glfwWindowHint(GLFW_VISIBLE, Config->RenderWindow ? GL_TRUE : GL_FALSE);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);

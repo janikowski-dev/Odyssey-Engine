@@ -15,6 +15,11 @@ namespace Source::Core
 		void Run();
 
 	private:
+		void CreateInternalModules(const ApplicationConfig& InConfig);
+		void CreateExternalModules(const ApplicationConfig& InConfig);
+		void InitAllModules(const ApplicationConfig& InConfig);
+
+	private:
 		std::vector<UniquePtr<IModule>> Modules;
 		Context Context;
 	};

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Core/IModuleRegistrar.h"
+#include "Core/IModule.h"
+#include "Core/Minimal.h"
 
 #if defined(_WIN32)
   #define ODYSSEY_EXPORT __declspec(dllexport)
@@ -8,5 +9,5 @@
 
 extern "C"
 {
-    typedef void (*RegisterGameModulesFn)(Source::Core::IModuleRegistrar* registrar);
+    typedef std::vector<UniquePtr<Source::Core::IModule>> (*CreateGameModulesFn)();
 }
