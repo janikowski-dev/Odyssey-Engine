@@ -1,26 +1,41 @@
 #include "Modules/EditorModule.h"
 
 #include "Events/GetViewport.h"
-#include "Events/CreateCameraEntity.h"
 #include "Events/SelectEntity.h"
-#include "Events/CreateExampleEntity.h"
 #include "Events/SaveScene.h"
 #include "Events/LoadScene.h"
 #include "Events/Ping.h"
 #include "Events/ModifyEntity.h"
 #include "Events/GetSchema.h"
+#include "Events/AddedEntity.h"
 #include "Components/CameraComponent.h"
 #include "Components/TransformComponent.h"
 #include "Components/RendererComponent.h"
-#include "Components/SpinComponent.h"
+#include "Messages/AddedEntityMessage.h"
 #include "Serialization/ReflectionHandler.h"
 
 namespace Source::Modules
 {
     void EditorModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
     {
-        Context.EditorBridge = MakeUnique<Editor::Bridge>();
+        InitBridge(Config, Context);
+        InitIncomingEvents(Config, Context);
+        InitOutgoingEvents(Config, Context);
+    }
 
+    void EditorModule::Tick(const Core::Context& Context)
+    {
+        Context.EditorBridge->Communicate();
+    }
+
+    void EditorModule::InitBridge(const Core::ApplicationConfig Config, Core::Context& Context)
+    {
+        Context.EditorBridge = MakeUnique<Editor::Bridge>();
+        Context.EditorBridge->Start(Config.EditorConfig.Host, Config.EditorConfig.EditorPort);
+    }
+
+    void EditorModule::InitIncomingEvents(const Core::ApplicationConfig Config, Core::Context& Context)
+    {
 		Context.EditorBridge->On<Events::GetViewportRequest, Events::GetViewportResponse>(Events::GetViewportKey, [&Context](const Events::GetViewportRequest&)
     	{
     	    return Events::GetViewportResponse { Context.Window->GetHandle() };
@@ -47,22 +62,6 @@ namespace Source::Modules
             return Events::PingResponse();
         });
 
-        Context.EditorBridge->On<Events::CreateExampleEntityRequest, Events::CreateExampleEntityResponse>(Events::CreateExampleEntityKey, [&Context](const Events::CreateExampleEntityRequest&)
-        {
-            ECS::Entity E = Context.World->Create();
-            Context.World->Add<Components::TransformComponent>(E, Components::TransformComponent{ {-2.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f} });
-            Context.World->Add<Components::RendererComponent>(E, Components::RendererComponent{ "lit", "cube", {0.85f, 0.30f, 0.22f}, Context.ResourceCache->Shaders.Get("lit"), Context.ResourceCache->Meshes.Get("cube") });
-            Context.World->Add<Components::SpinComponent>(E, Components::SpinComponent{ {0.0f, 0.8f, 0.0f} });
-            return Events::CreateExampleEntityResponse { E.Index };
-        });
-
-        Context.EditorBridge->On<Events::CreateCameraEntityRequest, Events::CreateCameraEntityResponse>(Events::CreateCameraEntityKey, [&Context](const Events::CreateCameraEntityRequest&)
-        {
-            ECS::Entity E = Context.World->Create();
-            Context.World->Add<Components::CameraComponent>(E, Components::CameraComponent{ {4.0f, 3.0f, 6.0f} });
-            return Events::CreateCameraEntityResponse { E.Index };
-        });
-
         Context.EditorBridge->On<Events::SaveSceneRequest, Events::SaveSceneResponse>(Events::SaveSceneKey, [&Context](const Events::SaveSceneRequest& Request)
         {
             return Events::SaveSceneResponse();
@@ -80,12 +79,13 @@ namespace Source::Modules
 
             return Events::LoadSceneResponse();
         });
-
-        Context.EditorBridge->Start(Config.EditorConfig.Host, Config.EditorConfig.EditorPort);
     }
 
-    void EditorModule::Tick(const Core::Context& Context)
+    void EditorModule::InitOutgoingEvents(const Core::ApplicationConfig Config, Core::Context& Context)
     {
-        Context.EditorBridge->Communicate();
+        AddedEntitySubscribtion = Context.MessageBus->Subscribe<Messages::AddedEntityMessage>([&Context](const Messages::AddedEntityMessage& M)
+        {
+            Context.EditorBridge->Send(Events::AddedEntityKey, Events::AddedEntity { M.Index });
+        });
     }
 }

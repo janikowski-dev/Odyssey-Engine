@@ -17,6 +17,7 @@ namespace Source::ECS
             FreeList.pop_back();
         }
 
+        OnEntityAdded(Index);
         return Entity{ Index, Versions[Index] };
     }
 

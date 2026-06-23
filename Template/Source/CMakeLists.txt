@@ -12,8 +12,8 @@ endif()
 
 # Sources
 set(SOURCES
-    Example/ExampleModule.h
-    Example/ExampleComponent.h
+    Example/SpinModule.h
+    Example/SpinComponent.h
 )
 
 # Properties parsing

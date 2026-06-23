@@ -13,7 +13,6 @@ set(SOURCES
 
     Components/CameraComponent.h
     Components/RendererComponent.h
-    Components/SpinComponent.h
     Components/TransformComponent.h
 
     Editor/Connection.cpp
@@ -29,8 +28,6 @@ set(SOURCES
     ECS/Registry.h
     ECS/Registry.inl
 
-    Events/CreateCameraEntity.h
-    Events/CreateExampleEntity.h
     Events/GetSchema.h
     Events/GetTelemetry.h
     Events/GetViewport.h
@@ -49,6 +46,8 @@ set(SOURCES
     Rendering/Shader.cpp
     Rendering/Shader.h
 
+    Runtime/Runtimer.h
+
     Serialization/ECSBinding.h
     Serialization/ECSBinding.inl
     Serialization/FieldMeta.h
@@ -61,6 +60,8 @@ set(SOURCES
     Serialization/TypeRegistry.cpp
     Serialization/TypeRegistry.h
     Serialization/TypeRegistry.inl
+
+    Messages/AddedEntityMessage.h
 
     Messaging/MessageBus.cpp
     Messaging/MessageBus.h
@@ -80,8 +81,12 @@ set(SOURCES
     Modules/PlatformModule.h
     Modules/ResourcesModule.cpp
     Modules/ResourcesModule.h
-    Modules/SystemsModule.cpp
-    Modules/SystemsModule.h
+    Modules/RenderingModule.cpp
+    Modules/RenderingModule.h
+    Modules/RuntimeModule.cpp
+    Modules/RuntimeModule.h
+    Modules/WorldModule.cpp
+    Modules/WorldModule.h
 
     Resources/ResourceCache.h
     Resources/ResourceLibrary.h

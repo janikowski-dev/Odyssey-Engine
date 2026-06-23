@@ -39,7 +39,11 @@ namespace Source::ECS
     private:
         template<typename TComponent>
         Pool<TComponent>& GetPool();
+        
+    public:
+        Event<uint32> OnEntityAdded;
 
+    private:
         std::unordered_map<std::type_index, UniquePtr<IPool>> Pools;
         std::vector<uint32> FreeList;
         std::vector<uint32> Versions;

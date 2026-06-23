@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Messaging/Subscription.h"
 #include "Core/IModule.h"
 
 namespace Source::Modules
@@ -9,5 +10,13 @@ namespace Source::Modules
     public:
         void Init(const Core::ApplicationConfig Config, Core::Context& Context) override;
         void Tick(const Core::Context& Context) override;
+
+    private:
+        void InitBridge(const Core::ApplicationConfig Config, Core::Context& Context);
+        void InitIncomingEvents(const Core::ApplicationConfig Config, Core::Context& Context);
+        void InitOutgoingEvents(const Core::ApplicationConfig Config, Core::Context& Context);
+
+    private:
+        Messaging::Subscription AddedEntitySubscribtion;
     };
 }

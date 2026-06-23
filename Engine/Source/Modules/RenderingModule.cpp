@@ -1,63 +1,26 @@
-#include "Modules/SystemsModule.h"
+#include "Modules/RenderingModule.h"
 
 #include "Messaging/MessageBus.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/Mesh.h"
 #include "ECS/Registry.h"
+#include "Messages/AddedEntityMessage.h"
 #include "Components/RendererComponent.h"
 #include "Components/TransformComponent.h"
 #include "Components/CameraComponent.h"
-#include "Components/SpinComponent.h"
 
 namespace Source::Modules
 {
-    SystemsModule::SystemsModule() = default;
-    SystemsModule::~SystemsModule() = default;
+    RenderingModule::RenderingModule() = default;
+    RenderingModule::~RenderingModule() = default;
 
-    void SystemsModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
-    {
-        InitRendering();
-        InitTime();
-        InitSystems(Config, Context);
-    }
-
-    void SystemsModule::Tick(const Core::Context& Context)
-    {
-        HandleTime();
-        UpdateSystems(Context);
-    }
-
-    void SystemsModule::InitRendering()
+    void RenderingModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
     {
         RendererBackend = MakeUnique<Rendering::Renderer>();
     }
 
-    void SystemsModule::InitTime()
+    void RenderingModule::Tick(const Core::Context& Context)
     {
-        LastTime = Clock::now();
-    }
-
-    void SystemsModule::InitSystems(const Core::ApplicationConfig Config, Core::Context& Context)
-    {
-        Context.World = MakeUnique<ECS::Registry>();
-    }
-
-    void SystemsModule::HandleTime()
-    {
-        CurrentTime = Clock::now();
-        DeltaTime = Duration(CurrentTime - LastTime).count();
-        LastTime = CurrentTime;
-    }
-
-    void SystemsModule::UpdateSystems(const Core::Context& Context)
-    {
-        Context.World->View<Components::TransformComponent, Components::SpinComponent>(
-            [this](ECS::Entity, Components::TransformComponent& T, Components::SpinComponent& S)
-            {
-                T.Rotation += S.Speed * DeltaTime;
-            }
-        );
-
         Components::CameraComponent* ActiveCamera = nullptr;
 
         Context.World->View<Components::CameraComponent>(

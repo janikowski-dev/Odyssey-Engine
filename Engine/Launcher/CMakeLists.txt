@@ -20,9 +20,9 @@ add_compile_definitions(
 
 target_link_libraries(Launcher Source)
 
-set_target_properties(Launcher PROPERTIES
-    WIN32_EXECUTABLE TRUE
-)
+#set_target_properties(Launcher PROPERTIES
+#    WIN32_EXECUTABLE TRUE
+#)
 
 target_link_options(Launcher PRIVATE "/ENTRY:mainCRTStartup")
 

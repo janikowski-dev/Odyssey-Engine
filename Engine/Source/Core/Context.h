@@ -2,6 +2,7 @@
 
 #include "Resources/ResourceCache.h"
 #include "Messaging/MessageBus.h"
+#include "Runtime/Runtimer.h"
 #include "Platform/Window.h"
 #include "Editor/Bridge.h"
 #include "ECS/Registry.h"
@@ -14,6 +15,7 @@ namespace Source::Core
 		UniquePtr<Resources::ResourceCache> ResourceCache;
 		UniquePtr<Messaging::MessageBus> MessageBus;
 		UniquePtr<Editor::Bridge> EditorBridge;
+		UniquePtr<Runtime::Runtimer> Runtimer;
 		UniquePtr<Platform::Window> Window;
 		UniquePtr<ECS::Registry> World;
     };

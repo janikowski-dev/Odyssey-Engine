@@ -3,9 +3,11 @@
 #include "Modules/EditorModule.h"
 #include "Modules/MessagingModule.h"
 #include "Modules/PlatformModule.h"
-#include "Modules/SystemsModule.h"
+#include "Modules/RenderingModule.h"
 #include "Modules/ResourcesModule.h"
+#include "Modules/RuntimeModule.h"
 #include "Modules/PersistanceModule.h"
+#include "Modules/WorldModule.h"
 
 #include "Modules.generated.h"
 
@@ -15,14 +17,19 @@ namespace Source::Core
 	{
         CreateInternalModules(InConfig);
         CreateExternalModules(this);
-        InitAllModules(InConfig);
+        InitInternalModules(InConfig);
 	}
 
 	void Application::Run()
 	{
     	while (!Context.Window->ShouldClose())
     	{
-            for (auto& Module : Modules)
+            for (auto& Module : InternalModules)
+            {
+                Module->Tick(Context);
+            }
+
+            for (auto& Module : ExternalModules)
             {
                 Module->Tick(Context);
             }
@@ -31,27 +38,34 @@ namespace Source::Core
 
     void Application::RegisterModule(UniquePtr<IModule> Module)
     {
-        Modules.push_back(std::move(Module));
+        ExternalModules.push_back(std::move(Module));
     }
 
     void Application::CreateInternalModules(const ApplicationConfig& InConfig)
 	{
-        Modules.push_back(MakeUnique<Modules::SystemsModule>());
-        Modules.push_back(MakeUnique<Modules::PersistanceModule>());
+        InternalModules.push_back(MakeUnique<Modules::WorldModule>());
+        InternalModules.push_back(MakeUnique<Modules::RuntimeModule>());
+        InternalModules.push_back(MakeUnique<Modules::MessagingModule>());
+        InternalModules.push_back(MakeUnique<Modules::RenderingModule>());
+        InternalModules.push_back(MakeUnique<Modules::PersistanceModule>());
+        InternalModules.push_back(MakeUnique<Modules::PlatformModule>());
+        InternalModules.push_back(MakeUnique<Modules::ResourcesModule>());
 
         if (InConfig.LaunchType == LaunchType::Editor)
         {
-            Modules.push_back(MakeUnique<Modules::EditorModule>());
+            InternalModules.push_back(MakeUnique<Modules::EditorModule>());
         }
-
-        Modules.push_back(MakeUnique<Modules::MessagingModule>());
-        Modules.push_back(MakeUnique<Modules::PlatformModule>());
-        Modules.push_back(MakeUnique<Modules::ResourcesModule>());
 	}
 
-    void Application::InitAllModules(const ApplicationConfig& InConfig)
+    void Application::InitInternalModules(const ApplicationConfig& InConfig)
     {
-		for (auto& Module : Modules)
+		for (auto& Module : InternalModules)
+        {
+            Module->Init(InConfig, Context);
+        }
+        
+        // Temporary
+		for (auto& Module : ExternalModules)
         {
             Module->Init(InConfig, Context);
         }

@@ -97,6 +97,30 @@ struct is_arithmetic<T, std::enable_if_t<std::is_arithmetic_v<T>>> : std::true_t
 template<typename T>
 inline constexpr bool IsArithmetic = is_arithmetic<T>::value;
 
+template<typename... TArgs>
+class Event
+{
+public:
+    using Handler = std::function<void(TArgs...)>;
+
+    Event& operator+=(Handler InHandler)
+    {
+        Handlers.push_back(std::move(InHandler));
+        return *this;
+    }
+    
+    void operator()(TArgs... Args) const
+    {
+        for (const Handler& H : Handlers)
+        {
+            H(Args...);
+        }
+    }
+
+private:
+    std::vector<Handler> Handlers;
+};
+
 // Components serialization
 #if defined(REFLECTION_CODEGEN)
     #define EXTERNAL_MODULE __attribute__((annotate("external_module")))

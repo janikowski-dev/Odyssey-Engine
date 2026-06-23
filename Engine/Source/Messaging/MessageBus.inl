@@ -25,7 +25,6 @@ namespace Source::Messaging
         });
         
         SpecificHandlers.IsDirty = true;
-
         return Subscription(this, Id);
     }
 

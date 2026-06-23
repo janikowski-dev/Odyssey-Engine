@@ -4,8 +4,8 @@
 
 namespace Game::Example
 {
-    struct COMPONENT ExampleComponent
+    struct COMPONENT SpinComponent
     {
-        PROPERTY() Vector3 Color { 1.0f };
+        PROPERTY() Vector3 Speed { 0.0f };
     };
 }
