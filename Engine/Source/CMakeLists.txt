@@ -74,6 +74,8 @@ set(SOURCES
     Modules/EditorModule.h
     Modules/MessagingModule.cpp
     Modules/MessagingModule.h
+    Modules/PersistanceModule.cpp
+    Modules/PersistanceModule.h
     Modules/PlatformModule.cpp
     Modules/PlatformModule.h
     Modules/ResourcesModule.cpp

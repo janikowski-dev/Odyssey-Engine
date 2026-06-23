@@ -1,5 +1,6 @@
 #include "Modules/EditorModule.h"
 
+#include "Events/GetViewport.h"
 #include "Events/CreateCameraEntity.h"
 #include "Events/SelectEntity.h"
 #include "Events/CreateExampleEntity.h"
@@ -14,24 +15,16 @@
 #include "Components/SpinComponent.h"
 #include "Serialization/ReflectionHandler.h"
 
-#include "Serialization.generated.h"
-
 namespace Source::Modules
 {
     void EditorModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
     {
-        Serialization::Init(*Context.World);
-        InitBridge(Config, Context);
-    }
-
-    void EditorModule::Tick(const Core::Context& Context)
-    {
-        Context.EditorBridge->Communicate();
-    }
-
-    void EditorModule::InitBridge(const Core::ApplicationConfig Config, Core::Context &Context)
-    {
         Context.EditorBridge = MakeUnique<Editor::Bridge>();
+
+		Context.EditorBridge->On<Events::GetViewportRequest, Events::GetViewportResponse>(Events::GetViewportKey, [&Context](const Events::GetViewportRequest&)
+    	{
+    	    return Events::GetViewportResponse { Context.Window->GetHandle() };
+    	});
         
         Context.EditorBridge->On<Events::ModifyEntityRequest, Events::ModifyEntityResponse>(Events::ModifyEntityKey, [&Context](const Events::ModifyEntityRequest& Request)
         {
@@ -89,5 +82,10 @@ namespace Source::Modules
         });
 
         Context.EditorBridge->Start(Config.EditorConfig.Host, Config.EditorConfig.EditorPort);
+    }
+
+    void EditorModule::Tick(const Core::Context& Context)
+    {
+        Context.EditorBridge->Communicate();
     }
 }

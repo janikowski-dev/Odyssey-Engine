@@ -7,7 +7,7 @@ namespace Source::Modules
     void PlatformModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
     {
         Context.Window = MakeUnique<Platform::Window>(Config.WindowConfig);
-        Context.Window->Create(*Context.EditorBridge);
+        Context.Window->Create();
     }
 
     void PlatformModule::Tick(const Core::Context& Context)

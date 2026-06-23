@@ -1,7 +1,6 @@
 #include "Platform/Window.h"
 
 #include "Core/ApplicationConfig.h"
-#include "Events/GetViewport.h"
 #include "Editor/Bridge.h"
 #include "ECS/Registry.h"
 #include "ECS/Entity.h"
@@ -11,6 +10,7 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
+#include "Window.h"
 
 namespace Source::Platform
 {
@@ -23,7 +23,7 @@ namespace Source::Platform
 		Destroy();
 	}
 
-	void Window::Create(Editor::Bridge& InBridge)
+	void Window::Create()
 	{
 		Init();
 
@@ -32,7 +32,6 @@ namespace Source::Platform
 			return;
 		}
 
-		Attach(InBridge);
 		Setup();
 	}
 
@@ -53,6 +52,11 @@ namespace Source::Platform
 		return glfwWindowShouldClose(Handle);
 	}
 
+    uint64 Window::GetHandle() const
+    {
+		return (uint64)(uintptr_t)glfwGetWin32Window(Handle);
+    }
+	
     void Window::Init() const
     {
         glfwInit();
@@ -74,14 +78,6 @@ namespace Source::Platform
 	GLFWwindow* Window::TryGet() const
 	{
 		return glfwCreateWindow(Config->Width, Config->Height, "Window", nullptr, nullptr);
-	}
-
-	void Window::Attach(Editor::Bridge& InBridge)
-	{
-		InBridge.On<Events::GetViewportRequest, Events::GetViewportResponse>(Events::GetViewportKey, [this](const Events::GetViewportRequest&)
-    	{
-    	    return Events::GetViewportResponse { (uint64)(uintptr_t)glfwGetWin32Window(Handle) };
-    	});
 	}
 
 	bool Window::TryCache(GLFWwindow* NewHandle)

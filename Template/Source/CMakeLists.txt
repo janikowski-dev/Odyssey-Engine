@@ -61,3 +61,12 @@ target_include_directories(Source PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${INCLUDE_DIRS}
 )
+
+# Settings
+set(CONFIG_FILE "${CMAKE_CURRENT_SOURCE_DIR}/../Settings.json")
+
+add_custom_command(TARGET Game POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CONFIG_FILE}
+        $<TARGET_FILE_DIR:Launcher>/Settings.json
+)

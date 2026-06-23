@@ -75,14 +75,23 @@ void ConfigReader::ReadSettingsJson(Source::Core::ApplicationConfig& Config)
     Json SettingsJson;
     File >> SettingsJson;
 
-    if (SettingsJson.contains("height"))
+    if (SettingsJson.contains("Height"))
     {
-        Config.WindowConfig.Height = SettingsJson["height"].get<uint32>();
+        Config.WindowConfig.Height = SettingsJson["Height"].get<uint32>();
     }
 
-
-    if (SettingsJson.contains("width"))
+    if (SettingsJson.contains("Width"))
     {
-        Config.WindowConfig.Width = SettingsJson["width"].get<uint32>();
+        Config.WindowConfig.Width = SettingsJson["Width"].get<uint32>();
+    }
+
+    if (SettingsJson.contains("VSync"))
+    {
+        Config.WindowConfig.UseVSync = SettingsJson["VSync"].get<uint32>() != 0;
+    }
+
+    if (SettingsJson.contains("Mode"))
+    {
+        Config.LaunchType = SettingsJson["Mode"].get<uint32>() != 0 ? Source::Core::LaunchType::Game : Source::Core::LaunchType::Editor;
     }
 }

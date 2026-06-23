@@ -5,6 +5,7 @@
 #include "Modules/PlatformModule.h"
 #include "Modules/SystemsModule.h"
 #include "Modules/ResourcesModule.h"
+#include "Modules/PersistanceModule.h"
 
 #include "Modules.generated.h"
 
@@ -36,6 +37,7 @@ namespace Source::Core
     void Application::CreateInternalModules(const ApplicationConfig& InConfig)
 	{
         Modules.push_back(MakeUnique<Modules::SystemsModule>());
+        Modules.push_back(MakeUnique<Modules::PersistanceModule>());
 
         if (InConfig.LaunchType == LaunchType::Editor)
         {
