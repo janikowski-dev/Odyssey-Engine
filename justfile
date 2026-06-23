@@ -1,5 +1,8 @@
 set shell := ["powershell.exe", "-NoLogo", "-NoProfile", "-Command"]
 
+build-engine:
+    powershell -ExecutionPolicy Bypass -File Commands/BuildEngine.ps1
+
 run-editor project_path:
     powershell -ExecutionPolicy Bypass -File Commands/RunEditor.ps1 {{project_path}}
 

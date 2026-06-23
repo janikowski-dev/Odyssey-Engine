@@ -78,6 +78,12 @@ Set the path to your `VsDevCmd.bat` in `justconfig.json`.
 
 ## Build & run
 
+Build engine:
+
+```sh
+just build-engine
+```
+
 Create new project:
 
 ```sh
@@ -95,15 +101,3 @@ Run the editor:
 ```sh
 just run-editor {parent_directory}/{project_name}
 ```
-
-Then run the editor from your .NET tooling. It will launch the engine, connect, and embed the viewport.
-
-The engine can also run standalone via the launcher, which accepts:
-
-| Flag | Effect |
-|------|--------|
-| `-game` / `-editor` | launch mode |
-| `-hide` | run without showing its own window (used when embedded) |
-| `-port <n>` | editor bridge port |
-| `-width` / `-height <n>` | window size |
-| `-vsync <0\|1>` | toggle vsync |
