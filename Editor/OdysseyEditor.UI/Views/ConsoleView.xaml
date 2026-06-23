@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:console="clr-namespace:OdysseyEditor.UI.ViewModels.Console"
              xmlns:models="clr-namespace:OdysseyEditor.Application.Models;assembly=OdysseyEditor.Application"
              xmlns:behaviors="clr-namespace:OdysseyEditor.UI.Behaviors"
              mc:Ignorable="d"

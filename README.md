@@ -78,28 +78,22 @@ Set the path to your `VsDevCmd.bat` in `justconfig.json`.
 
 ## Build & run
 
-Build the engine:
+Create new project:
 
 ```sh
-just build-engine
+just new-project {parent_directory} {project_name}
 ```
 
-Clean engine build artifacts:
+Build project:
 
 ```sh
-just clean-engine
-```
-
-Build the editor:
-
-```sh
-just build-editor
+just build-project {parent_directory}/{project_name}
 ```
 
 Run the editor:
 
 ```sh
-just run-editor
+just run-editor {parent_directory}/{project_name}
 ```
 
 Then run the editor from your .NET tooling. It will launch the engine, connect, and embed the viewport.

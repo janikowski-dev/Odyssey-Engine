@@ -1,1 +1,0 @@
-dotnet build Editor/OdysseyEditor.sln

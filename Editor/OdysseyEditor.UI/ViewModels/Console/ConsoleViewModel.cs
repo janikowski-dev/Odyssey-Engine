@@ -1,16 +1,13 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using OdysseyEditor.Application.Interfaces;
 using OdysseyEditor.Application.Models;
-using OdysseyEditor.Domain.Events;
-using OdysseyEditor.Domain.Interfaces;
 
 namespace OdysseyEditor.UI.ViewModels.Console;
 
-public partial class ConsoleViewModel(ILogService logService, IEngineMessenger engineMessenger) : ObservableObject
+public partial class ConsoleViewModel(ILogService logService) : ObservableObject
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HeaderText))]

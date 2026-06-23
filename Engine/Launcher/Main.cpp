@@ -1,4 +1,5 @@
 #include "Core/Application.h"
+
 #include "ConfigReader.h"
 
 int main(int Argc, char** Argv)

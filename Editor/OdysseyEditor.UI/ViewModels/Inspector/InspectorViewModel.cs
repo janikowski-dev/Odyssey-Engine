@@ -22,8 +22,6 @@ public class InspectorViewModel(
     {
         InitMessaging();
         await InitFactory();
-        await CreateEntity1();
-        await CreateEntity2();
     }
 
     private void InitMessaging()
@@ -53,26 +51,5 @@ public class InspectorViewModel(
         {
             logService.LogError(caughtException.Message);
         }
-    }
-
-    // These methods are temporary.
-    private async Task CreateEntity1()
-    {
-        CreateCameraEntityResponse response = await engineMessenger.Send<CreateCameraEntityRequest, CreateCameraEntityResponse>(CreateCameraEntity.Key, new CreateCameraEntityRequest());
-
-        messenger.Send(new AddedEntityMessage
-        {
-            Index = response.Index
-        });
-    }
-
-    private async Task CreateEntity2()
-    {
-        CreateExampleEntityResponse response = await engineMessenger.Send<CreateExampleEntityRequest, CreateExampleEntityResponse>(CreateExampleEntity.Key, new CreateExampleEntityRequest());
-
-        messenger.Send(new AddedEntityMessage
-        {
-            Index = response.Index
-        });
     }
 }

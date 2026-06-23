@@ -22,6 +22,7 @@
 #include <unordered_set>
 #include <queue>
 #include <thread>
+#include <fstream>
 
 // Pointers
 template<typename T> using SharedPtr = std::shared_ptr<T>;

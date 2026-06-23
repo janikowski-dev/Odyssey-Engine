@@ -2,19 +2,16 @@
 
 #include "Core/Minimal.h"
 
-#include <fstream>
-
 Source::Core::ApplicationConfig ConfigReader::Read(int Argc, char **Argv)
 {
-    Source::Core::ApplicationConfig Config = ParseCliArguments(Argc, Argv);
+    Source::Core::ApplicationConfig Config = Source::Core::ApplicationConfig();
     ReadSettingsJson(Config);
+    ParseCliArguments(Config, Argc, Argv);
     return Config;
 }
 
-Source::Core::ApplicationConfig ConfigReader::ParseCliArguments(int Argc, char **Argv)
+void ConfigReader::ParseCliArguments(Source::Core::ApplicationConfig& Config, int Argc, char **Argv)
 {
-    Source::Core::ApplicationConfig Config{};
-
     for (int I = 0; I < Argc; I++)
     {
         std::string Arg = Argv[I];
@@ -59,8 +56,6 @@ Source::Core::ApplicationConfig ConfigReader::ParseCliArguments(int Argc, char *
             Config.WindowConfig.UseVSync = std::stoi(Argv[++I]) != 0;
         }
     }
-
-    return Config;
 }
 
 void ConfigReader::ReadSettingsJson(Source::Core::ApplicationConfig& Config)

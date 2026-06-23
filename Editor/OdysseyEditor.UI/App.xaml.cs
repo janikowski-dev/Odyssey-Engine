@@ -28,7 +28,7 @@ public partial class App
         Start(Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
             {
-                ReadConfiguration(context, services);
+                ReadConfiguration(context, services, eventArgs);
                 ConfigureApplication(services);
                 ConfigureEngine(services);
                 ConfigureViews(services);
@@ -46,9 +46,14 @@ public partial class App
         base.OnExit(eventArgs);
     }
 
-    private static void ReadConfiguration(HostBuilderContext context, IServiceCollection services)
+    private static void ReadConfiguration(HostBuilderContext context, IServiceCollection services, StartupEventArgs eventArgs)
     {
         services.Configure<EngineConfig>(context.Configuration.GetSection("Engine"));
+
+        if (eventArgs.Args.Length == 1)
+        {
+            services.Configure<EngineConfig>(config => config.EnginePath = $"{eventArgs.Args[0]}/Build/Launcher/Launcher.exe");
+        }
     }
 
     private static void ConfigureApplication(IServiceCollection services)

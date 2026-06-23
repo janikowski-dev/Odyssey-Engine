@@ -1,13 +1,10 @@
 set shell := ["powershell.exe", "-NoLogo", "-NoProfile", "-Command"]
 
-build-engine:
-    powershell -ExecutionPolicy Bypass -File Commands/BuildEngine.ps1
+run-editor project_path:
+    powershell -ExecutionPolicy Bypass -File Commands/RunEditor.ps1 {{project_path}}
 
-clean-engine:
-    powershell -ExecutionPolicy Bypass -File Commands/CleanEngine.ps1
+new-project parent name:
+    powershell -ExecutionPolicy Bypass -File Commands/NewProject.ps1 {{parent}} {{name}}
 
-build-editor:
-    powershell -ExecutionPolicy Bypass -File Commands/BuildEditor.ps1
-
-run-editor:
-    powershell -ExecutionPolicy Bypass -File Commands/RunEditor.ps1
+build-project project_path:
+    powershell -ExecutionPolicy Bypass -File Commands/BuildProject.ps1 "{{project_path}}"

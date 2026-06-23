@@ -7,4 +7,4 @@ public static class GetTelemetry
 
 public readonly record struct GetTelemetryRequest;
 
-public readonly record struct GetTelemetryResponse(float FPS);
+public readonly record struct GetTelemetryResponse(float Fps);

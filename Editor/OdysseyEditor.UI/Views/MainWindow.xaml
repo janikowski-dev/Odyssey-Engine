@@ -23,8 +23,6 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ContentControl Grid.Row="0" Content="{Binding ControlsBar}"/>
-
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250" MinWidth="150" MaxWidth="400"/>

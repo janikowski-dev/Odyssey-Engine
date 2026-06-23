@@ -91,7 +91,7 @@ public sealed class EngineService(IOptions<EngineConfig> config) : IEngineLaunch
         {
             StartInfo = new ProcessStartInfo
             {
-                Arguments = $"-host {config.Value.Host} -port {config.Value.Port} -hide",
+                Arguments = $"-host {config.Value.Host} -port {config.Value.Port} -hide -editor",
                 WorkingDirectory = Path.GetDirectoryName(enginePath),
                 UseShellExecute = false,
                 FileName = enginePath
