@@ -9,7 +9,7 @@ A custom 3D game engine in C++23 with a separate C#/WPF editor. The editor commu
 
 ## Overview
 
-![Overview](Assets/Overview.png)
+![Overview](Assets/Overview.gif)
 
 ### Engine (C++23)
 
@@ -17,7 +17,7 @@ A standalone runtime that owns the window, the renderer, and the world.
 
 - **Rendering** - OpenGL 4.6 core profile via GLAD, windowing through GLFW, math via GLM. A simple forward renderer draws meshes with a per-object model matrix and flat color.
 - **ECS** - a sparse-set entity-component registry. Entities are an index + version pair; components live in packed pools for cache-friendly iteration. The registry exposes `Create`, `Destroy`, `Add`, `Remove`, `Has`, `Get`, and a templated `View<...>` for system queries.
-- **Components & systems** - `Transform`, `MeshRenderer`, and `Spin` components, driven by a `RenderSystem` and a `SpinSystem`. Systems iterate the world each frame through the registry's view API.
+- **Components & systems** - components, driven by systems. Systems iterate the world each frame through the registry's view API.
 - **Messaging** - a thread-safe `EventBus` supporting immediate publish, deferred enqueue/flush, prioritized handlers, and scoped subscriptions.
 - **Editor bridge** - a TCP server that speaks a small RPC + event protocol. Requests carry an `id`, `method`, and `params`; the engine answers with typed JSON. Outbound and inbound event types are registered through a `JsonProxy` so payloads serialize automatically.
 
@@ -25,11 +25,11 @@ A standalone runtime that owns the window, the renderer, and the world.
 
 A native WPF desktop application built on a clean, layered architecture.
 
-- **Domain / Application / UI** - strict separation of concerns. The Application layer holds framework-agnostic services and interfaces; the UI layer is WPF + MVVM.
-- **MVVM** - view models built on `CommunityToolkit.Mvvm`, wired together with `Microsoft.Extensions.Hosting` dependency injection.
-- **Panels** - a Hierarchy, an Inspector, a Console, a Controls bar, and a Workspace that hosts the embedded engine.
-- **Services** - a logging service with leveled output piped to the in-editor console, and an undo/redo service backed by a command stack.
-- **Engine connection** - an async TCP client with length-prefixed JSON framing, request/response correlation via `TaskCompletionSource`, background read loop, and connection retry.
+- **Domain / Application / UI**
+- **MVVM**
+- **Panels**
+- **Services**
+- **Engine connection**
 
 ### How the embedding works
 
