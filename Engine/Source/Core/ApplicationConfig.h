@@ -13,7 +13,7 @@ namespace Source::Core
 		bool RenderWindow = true;
 	};
 
-    enum LaunchType
+    enum class LaunchType
     {
         Editor,
         Game
@@ -26,8 +26,8 @@ namespace Source::Core
 
     struct EditorConfig
     {
-        std::string Host;
-        int EditorPort;
+        std::string Host = "";
+        int EditorPort = 0;
     };
 
     struct ApplicationConfig
@@ -35,6 +35,6 @@ namespace Source::Core
         EngineConfig EngineConfig;
         WindowConfig WindowConfig;
         EditorConfig EditorConfig;
-        LaunchType LaunchType;
+        LaunchType LaunchType = LaunchType::Editor;
     };
 }

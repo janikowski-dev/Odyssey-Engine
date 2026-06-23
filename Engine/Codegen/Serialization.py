@@ -323,13 +323,13 @@ def emit(components: list[Component], *, namespace: str, function: str,
     src.append('#include "ECS/Registry.h"')
     src.append("")
 
-    for inc in internal_includes:
+    for inc in external_includes:
         src.append(f'#include "{inc}"')
 
     if internal_includes and external_includes:
         src.append("")
 
-    for inc in external_includes:
+    for inc in internal_includes:
         src.append(f'#include "{inc}"')
 
     src.append("")
