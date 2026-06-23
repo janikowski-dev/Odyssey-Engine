@@ -19,7 +19,7 @@ A standalone runtime that owns the window, the renderer, and the world.
 - **ECS** - a sparse-set entity-component registry. Entities are an index + version pair; components live in packed pools for cache-friendly iteration. The registry exposes `Create`, `Destroy`, `Add`, `Remove`, `Has`, `Get`, and a templated `View<...>` for system queries.
 - **Components & systems** - components, driven by systems. Systems iterate the world each frame through the registry's view API.
 - **Messaging** - a thread-safe `EventBus` supporting immediate publish, deferred enqueue/flush, prioritized handlers, and scoped subscriptions.
-- **Editor bridge** - a TCP server that speaks a small RPC + event protocol. Requests carry an `id`, `method`, and `params`; the engine answers with typed JSON. Outbound and inbound event types are registered through a `JsonProxy` so payloads serialize automatically.
+- **Editor bridge** - a TCP server that speaks a small RPC + event protocol. Requests carry an `id`, `method`, and `params`; the engine answers with typed JSON.
 
 ### Editor (C#, .NET 10)
 
