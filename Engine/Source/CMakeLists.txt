@@ -9,6 +9,7 @@ set(SOURCES
     Core/Context.h
     Core/ExternalAPI.h
     Core/IModule.h
+    Core/IModuleRegistrar.h
     Core/Minimal.h
 
     Components/CameraComponent.h

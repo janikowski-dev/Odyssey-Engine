@@ -28,6 +28,11 @@ namespace Source::Core
     	}
 	}
 
+    void Application::RegisterModule(UniquePtr<IModule> Module)
+    {
+        Modules.push_back(std::move(Module));
+    }
+
     void Application::CreateInternalModules(const ApplicationConfig& InConfig)
 	{
         Modules.push_back(MakeUnique<Modules::SystemsModule>());
@@ -44,32 +49,25 @@ namespace Source::Core
 
 	void Application::CreateExternalModules(const ApplicationConfig& InConfig)
 	{
-        using CreateGameModulesFn = std::vector<UniquePtr<IModule>>(*)();
+        using RegisterExternalModulesFn = void(*)(Source::Core::IModuleRegistrar*);
 
-        std::vector<UniquePtr<IModule>> ExternalModules;
+        HMODULE Dll = LoadLibraryA("Game.dll");
 
-            HMODULE Dll = LoadLibraryA("Game.dll");
+        if (!Dll)
+        {
+            return;
+        }
 
-            if (!Dll)
-            {
-                return;
-            }
+        auto RegisterFunction = reinterpret_cast<RegisterExternalModulesFn>(GetProcAddress(Dll, "RegisterGameModules"));
 
-            auto CreateModulesFunction = reinterpret_cast<CreateGameModulesFn>(GetProcAddress(Dll, "CreateGameModules"));
-
-            if (CreateModulesFunction)
-            {
-                ExternalModules = CreateModulesFunction();
-
-                for (auto& Module : ExternalModules)
-                {
-                    Modules.push_back(std::move(Module));
-                }
-            }
-            else
-            {
-                FreeLibrary(Dll);
-            }
+        if (RegisterFunction)
+        {
+            RegisterFunction(this);
+        }
+        else
+        {
+            FreeLibrary(Dll);
+        }
 	}
 
     void Application::InitAllModules(const ApplicationConfig& InConfig)
