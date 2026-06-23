@@ -6,14 +6,14 @@
 #include "Modules/SystemsModule.h"
 #include "Modules/ResourcesModule.h"
 
-#include <Windows.h>
+#include "Modules.generated.h"
 
 namespace Source::Core
 {
 	Application::Application(const ApplicationConfig& InConfig) 
 	{
         CreateInternalModules(InConfig);
-        CreateExternalModules(InConfig);
+        CreateExternalModules(this);
         InitAllModules(InConfig);
 	}
 
@@ -45,29 +45,6 @@ namespace Source::Core
         Modules.push_back(MakeUnique<Modules::MessagingModule>());
         Modules.push_back(MakeUnique<Modules::PlatformModule>());
         Modules.push_back(MakeUnique<Modules::ResourcesModule>());
-	}
-
-	void Application::CreateExternalModules(const ApplicationConfig& InConfig)
-	{
-        using RegisterExternalModulesFn = void(*)(Source::Core::IModuleRegistrar*);
-
-        HMODULE Dll = LoadLibraryA("Game.dll");
-
-        if (!Dll)
-        {
-            return;
-        }
-
-        auto RegisterFunction = reinterpret_cast<RegisterExternalModulesFn>(GetProcAddress(Dll, "RegisterGameModules"));
-
-        if (RegisterFunction)
-        {
-            RegisterFunction(this);
-        }
-        else
-        {
-            FreeLibrary(Dll);
-        }
 	}
 
     void Application::InitAllModules(const ApplicationConfig& InConfig)

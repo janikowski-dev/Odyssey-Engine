@@ -7,7 +7,6 @@ set(SOURCES
     Core/Application.cpp
     Core/Application.h
     Core/Context.h
-    Core/ExternalAPI.h
     Core/IModule.h
     Core/IModuleRegistrar.h
     Core/Minimal.h
@@ -105,10 +104,8 @@ target_link_libraries(Source glad)
 target_link_libraries(Source glm)
 target_link_libraries(Source nlohmann_json)
 
-# Code generation
+# Code generation - general
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
- 
-set(REFLECTGEN_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/CodeGenerator.py")
 
 file(GLOB_RECURSE ENGINE_HEADERS CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 
@@ -117,42 +114,80 @@ get_property(EXTRA_REFLECT_HEADERS GLOBAL PROPERTY ODYSSEY_EXTRA_REFLECT_HEADERS
 set(ALL_HEADERS ${ENGINE_HEADERS} ${EXTRA_REFLECT_HEADERS})
 list(REMOVE_DUPLICATES ALL_HEADERS)
 
-set(REFLECT_HEADERS "")
-foreach(HEADER ${ALL_HEADERS})
-    file(STRINGS ${HEADER} HEADER_CONTENTS REGEX "COMPONENT")
-    if(HEADER_CONTENTS)
-        list(APPEND REFLECT_HEADERS ${HEADER})
-    endif()
-endforeach()
-
-set(REFLECTION_GENERATED
-    "${CMAKE_CURRENT_BINARY_DIR}/Serialization.generated.cpp"
-)
-
 set(_reflect_libclang_arg "")
 if(REFLECTGEN_LIBCLANG)
     set(_reflect_libclang_arg --libclang "${REFLECTGEN_LIBCLANG}")
 endif()
 
+# Code generation - serialization
+set(REFLECTGEN_COMPONENTS_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/../Codegen/Serialization.py")
+
+set(REFLECT_COMPONENT_HEADERS "")
+foreach(HEADER ${ALL_HEADERS})
+    file(STRINGS ${HEADER} HEADER_CONTENTS REGEX "COMPONENT")
+    if(HEADER_CONTENTS)
+        list(APPEND REFLECT_COMPONENT_HEADERS ${HEADER})
+    endif()
+endforeach()
+
+set(REFLECTION_COMPONENTS_GENERATED
+    "${CMAKE_CURRENT_BINARY_DIR}/Serialization.generated.cpp"
+)
+
 add_custom_command(
-    OUTPUT  "${REFLECTION_GENERATED}"
-    COMMAND ${Python3_EXECUTABLE} "${REFLECTGEN_SCRIPT}"
-            --out "${REFLECTION_GENERATED}"
+    OUTPUT  "${REFLECTION_COMPONENTS_GENERATED}"
+    COMMAND ${Python3_EXECUTABLE} "${REFLECTGEN_COMPONENTS_SCRIPT}"
+            --out "${REFLECTION_COMPONENTS_GENERATED}"
             --std c++20
             -I "${CMAKE_CURRENT_SOURCE_DIR}"
             --include-root "${CMAKE_CURRENT_SOURCE_DIR}"
             "$<$<BOOL:$<TARGET_PROPERTY:glm,INTERFACE_INCLUDE_DIRECTORIES>>:-I$<JOIN:$<TARGET_PROPERTY:glm,INTERFACE_INCLUDE_DIRECTORIES>,;-I>>"
             "$<$<BOOL:$<TARGET_PROPERTY:nlohmann_json,INTERFACE_INCLUDE_DIRECTORIES>>:-I$<JOIN:$<TARGET_PROPERTY:nlohmann_json,INTERFACE_INCLUDE_DIRECTORIES>,;-I>>"
             ${_reflect_libclang_arg}
-            ${REFLECT_HEADERS}
-    DEPENDS ${REFLECT_HEADERS} "${REFLECTGEN_SCRIPT}"
+            ${REFLECT_COMPONENT_HEADERS}
+    DEPENDS ${REFLECT_COMPONENT_HEADERS} "${REFLECTGEN_COMPONENTS_SCRIPT}"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     COMMENT "reflectgen: generating component reflection"
     VERBATIM
 )
 
-set_source_files_properties("${REFLECTION_GENERATED}" PROPERTIES GENERATED TRUE)
-target_sources(Source PRIVATE "${REFLECTION_GENERATED}")
+set_source_files_properties("${REFLECTION_COMPONENTS_GENERATED}" PROPERTIES GENERATED TRUE)
+target_sources(Source PRIVATE "${REFLECTION_COMPONENTS_GENERATED}")
+
+# Code generation - external modules
+set(REFLECTGEN_MODULES_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/../Codegen/Modules.py")
+
+set(REFLECT_MODULE_HEADERS "")
+foreach(HEADER ${ALL_HEADERS})
+    file(STRINGS ${HEADER} HEADER_CONTENTS REGEX "MODULE")
+    if(HEADER_CONTENTS)
+        list(APPEND REFLECT_MODULE_HEADERS ${HEADER})
+    endif()
+endforeach()
+
+set(REFLECTION_MODULES_GENERATED
+    "${CMAKE_CURRENT_BINARY_DIR}/Modules.generated.cpp"
+)
+
+add_custom_command(
+    OUTPUT  "${REFLECTION_MODULES_GENERATED}"
+    COMMAND ${Python3_EXECUTABLE} "${REFLECTGEN_MODULES_SCRIPT}"
+            --out "${REFLECTION_MODULES_GENERATED}"
+            --std c++20
+            -I "${CMAKE_CURRENT_SOURCE_DIR}"
+            --include-root "${CMAKE_CURRENT_SOURCE_DIR}"
+            "$<$<BOOL:$<TARGET_PROPERTY:glm,INTERFACE_INCLUDE_DIRECTORIES>>:-I$<JOIN:$<TARGET_PROPERTY:glm,INTERFACE_INCLUDE_DIRECTORIES>,;-I>>"
+            "$<$<BOOL:$<TARGET_PROPERTY:nlohmann_json,INTERFACE_INCLUDE_DIRECTORIES>>:-I$<JOIN:$<TARGET_PROPERTY:nlohmann_json,INTERFACE_INCLUDE_DIRECTORIES>,;-I>>"
+            ${_reflect_libclang_arg}
+            ${REFLECT_MODULE_HEADERS}
+    DEPENDS ${REFLECT_MODULE_HEADERS} "${REFLECTGEN_MODULES_SCRIPT}"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    COMMENT "reflectgen: generating component reflection"
+    VERBATIM
+)
+
+set_source_files_properties("${REFLECTION_MODULES_GENERATED}" PROPERTIES GENERATED TRUE)
+target_sources(Source PRIVATE "${REFLECTION_MODULES_GENERATED}")
 
 # Includes
 file(GLOB_RECURSE ALL_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)

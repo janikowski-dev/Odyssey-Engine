@@ -18,7 +18,6 @@ namespace Source::Core
 
 	private:
 		void CreateInternalModules(const ApplicationConfig& InConfig);
-		void CreateExternalModules(const ApplicationConfig& InConfig);
 		void InitAllModules(const ApplicationConfig& InConfig);
 
 	private:

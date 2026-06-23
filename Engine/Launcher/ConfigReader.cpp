@@ -6,7 +6,8 @@
 
 Source::Core::ApplicationConfig ConfigReader::Read(int Argc, char **Argv)
 {
-    Source::Core::ApplicationConfig Config = ParseCliArguments(Argc, Argv);
+    Source::Core::ApplicationConfig Config = Source::Core::ApplicationConfig();
+    // Source::Core::ApplicationConfig Config = ParseCliArguments(Argc, Argv);
     ReadSettingsJson(Config);
     return Config;
 }

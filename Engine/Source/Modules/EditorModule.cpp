@@ -13,8 +13,8 @@
 #include "Components/RendererComponent.h"
 #include "Components/SpinComponent.h"
 #include "Serialization/ReflectionHandler.h"
+
 #include "Serialization.generated.h"
-#include "EditorModule.h"
 
 namespace Source::Modules
 {

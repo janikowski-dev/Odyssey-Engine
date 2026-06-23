@@ -300,12 +300,11 @@ def emit(components: list[Component], *, namespace: str, function: str,
         "",
     ]
 
-    src = [
-        "// This file has been generated using reflection."
-    ]
+    src = []
     for w in warnings:
-        src.append(f"// warning: {w}")
-    src.append("")
+        src.append(f"// Warning: {w}")
+    if len(warnings) > 0:
+        src.append("")
     src.append(f'#include "{header_name}"')
     src.append("")
     src.append('#include "Serialization/TypeRegistry.h"')

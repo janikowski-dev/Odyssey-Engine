@@ -98,9 +98,11 @@ inline constexpr bool IsArithmetic = is_arithmetic<T>::value;
 
 // Components serialization
 #if defined(REFLECTION_CODEGEN)
+    #define EXTERNAL_MODULE __attribute__((annotate("external_module")))
     #define COMPONENT      __attribute__((annotate("component")))
     #define PROPERTY(...)  __attribute__((annotate("property:" #__VA_ARGS__)))
 #else
+    #define EXTERNAL_MODULE
     #define COMPONENT
     #define PROPERTY(...)
 #endif
