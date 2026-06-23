@@ -282,7 +282,16 @@ def _meta_initializer(meta: FieldMeta) -> Optional[str]:
 def emit(components: list[Component], *, namespace: str, function: str,
          registry_type: str, header_name: str, warnings: list[str]) -> tuple[str, str]:
 
-    includes = sorted({c.source_include for c in components})
+    all_includes = sorted({c.source_include for c in components})
+
+    external_includes = []
+    internal_includes = []
+
+    for inc in all_includes:
+        if re.match(r"^[A-Za-z]:/", inc.replace("\\", "/")):
+            external_includes.append(inc)
+        else:
+            internal_includes.append(inc)
 
     guard = re.sub(r"\W", "_", header_name).upper() + "_"
     hdr = [
@@ -313,8 +322,16 @@ def emit(components: list[Component], *, namespace: str, function: str,
     src.append('#include "Serialization/ECSBinding.h"')
     src.append('#include "ECS/Registry.h"')
     src.append("")
-    for inc in includes:
+
+    for inc in internal_includes:
         src.append(f'#include "{inc}"')
+
+    if internal_includes and external_includes:
+        src.append("")
+
+    for inc in external_includes:
+        src.append(f'#include "{inc}"')
+
     src.append("")
     src.append(f"namespace {namespace}")
     src.append("{")
