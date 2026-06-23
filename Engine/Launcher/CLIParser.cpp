@@ -1,53 +1,53 @@
 #include "CLIParser.h"
 
-Source::Core::ApplicationConfig CLIParser::Parse(int argc, char **argv)
+Source::Core::ApplicationConfig CLIParser::Parse(int Argc, char **Argv)
 {
-    Source::Core::ApplicationConfig config;
+    Source::Core::ApplicationConfig Config;
 
-    for (int i = 0; i < argc; i++)
+    for (int I = 0; I < Argc; I++)
     {
-        std::string arg = argv[i];
+        std::string Arg = Argv[I];
 
-        if (arg == "-game")
+        if (Arg == "-game")
         {
-            config.LaunchType = Source::Core::LaunchType::Game;
+            Config.LaunchType = Source::Core::LaunchType::Game;
         }
 
-        if (arg == "-editor")
+        if (Arg == "-editor")
         {
-            config.LaunchType = Source::Core::LaunchType::Editor;
+            Config.LaunchType = Source::Core::LaunchType::Editor;
         }
 
-        if (arg == "-hide")
+        if (Arg == "-hide")
         {
-            config.WindowConfig.RenderWindow = false;
+            Config.WindowConfig.RenderWindow = false;
         }
 
-        if (arg == "-host" && i + 1 < argc)
+        if (Arg == "-host" && I + 1 < Argc)
         {
-            config.Host = argv[++i];
+            Config.Host = Argv[++I];
         }
 
-        if (arg == "-port" && i + 1 < argc)
+        if (Arg == "-port" && I + 1 < Argc)
         {
-            config.EditorPort = std::stoi(argv[++i]);
+            Config.EditorPort = std::stoi(Argv[++I]);
         }
 
-        if (arg == "-width" && i + 1 < argc)
+        if (Arg == "-width" && I + 1 < Argc)
         {
-            config.WindowConfig.Width = std::stoi(argv[++i]);
+            Config.WindowConfig.Width = std::stoi(Argv[++I]);
         }
 
-        if (arg == "-height" && i + 1 < argc)
+        if (Arg == "-height" && I + 1 < Argc)
         {
-            config.WindowConfig.Height = std::stoi(argv[++i]);
+            Config.WindowConfig.Height = std::stoi(Argv[++I]);
         }
 
-        if (arg == "-vsync" && i + 1 < argc)
+        if (Arg == "-vsync" && I + 1 < Argc)
         {
-            config.WindowConfig.UseVSync = std::stoi(argv[++i]) != 0;
+            Config.WindowConfig.UseVSync = std::stoi(Argv[++I]) != 0;
         }
     }
 
-    return config;
+    return Config;
 }

@@ -80,6 +80,16 @@ namespace Source::Modules
         Context.World->View<Components::TransformComponent, Components::RendererComponent>(
             [this, ActiveCamera](ECS::Entity, Components::TransformComponent& T, Components::RendererComponent& R)
             {
+                if (!R.Mesh)
+                {
+                    return;
+                }
+
+                if (!R.Shader)
+                {
+                    return;
+                }
+                
                 RendererBackend->DrawMesh(T, *R.Mesh, *R.Shader, R.Color);
             }
         );

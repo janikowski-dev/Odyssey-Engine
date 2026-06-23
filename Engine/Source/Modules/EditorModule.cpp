@@ -57,9 +57,9 @@ namespace Source::Modules
         Context.EditorBridge->On<Events::CreateExampleEntityRequest, Events::CreateExampleEntityResponse>(Events::CreateExampleEntityKey, [&Context](const Events::CreateExampleEntityRequest&)
         {
             ECS::Entity E = Context.World->Create();
-            Context.World->Add<Components::SpinComponent>(E, Components::SpinComponent{ {0.0f, 0.8f, 0.0f} });
-            Context.World->Add<Components::RendererComponent>(E, Components::RendererComponent{ "lit", "cube", {0.85f, 0.30f, 0.22f}, Context.ResourceCache->Shaders.Get("lit"), Context.ResourceCache->Meshes.Get("cube") });
             Context.World->Add<Components::TransformComponent>(E, Components::TransformComponent{ {-2.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f} });
+            Context.World->Add<Components::RendererComponent>(E, Components::RendererComponent{ "lit", "cube", {0.85f, 0.30f, 0.22f}, Context.ResourceCache->Shaders.Get("lit"), Context.ResourceCache->Meshes.Get("cube") });
+            Context.World->Add<Components::SpinComponent>(E, Components::SpinComponent{ {0.0f, 0.8f, 0.0f} });
             return Events::CreateExampleEntityResponse { E.Index };
         });
 

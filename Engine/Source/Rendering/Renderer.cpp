@@ -15,6 +15,18 @@ namespace Source::Rendering
         CacheCamera(InCamera);
     }
 
+    void Renderer::Begin()
+    {
+        glEnable(GL_DEPTH_TEST);
+        glClearColor(0.10f, 0.11f, 0.13f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
+    void Renderer::End()
+    {
+        glUseProgram(0);
+    }
+
     void Renderer::DrawMesh(const Components::TransformComponent& InModel, const Mesh& InMesh, const Shader& InShader, const Vector3& InColor)
     {
         glm::mat4 Matrix(1.0f);
@@ -31,18 +43,6 @@ namespace Source::Rendering
         InShader.SetMat4("uModel", Matrix);
         InShader.SetVec3("uColor", InColor);
         InMesh.Draw();
-    }
-
-    void Renderer::End()
-    {
-        glUseProgram(0);
-    }
-
-    void Renderer::Begin()
-    {
-        glEnable(GL_DEPTH_TEST);
-        glClearColor(0.10f, 0.11f, 0.13f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
     void Renderer::CacheCamera(const Components::CameraComponent &InCamera)

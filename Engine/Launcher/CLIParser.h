@@ -5,5 +5,5 @@
 class CLIParser
 {
 public:
-    static Source::Core::ApplicationConfig Parse(int argc, char** argv);
+    static Source::Core::ApplicationConfig Parse(int Argc, char** Argv);
 };

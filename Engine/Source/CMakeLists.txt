@@ -7,6 +7,8 @@ set(SOURCES
     Core/Application.cpp
     Core/Application.h
     Core/Context.h
+    Core/ExternalAPI.h
+    Core/IModuleRegistrar.h
     Core/IModule.h
     Core/Minimal.h
 
@@ -85,6 +87,8 @@ set(SOURCES
     Resources/ResourceLibrary.inl
 )
 
+include(Dependencies.cmake)
+
 add_library(Source STATIC)
 
 target_sources(Source PRIVATE ${SOURCES})
@@ -106,7 +110,12 @@ find_package(Python3 REQUIRED COMPONENTS Interpreter)
  
 set(REFLECTGEN_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/CodeGenerator.py")
 
-file(GLOB_RECURSE ALL_HEADERS CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+file(GLOB_RECURSE ENGINE_HEADERS CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+
+get_property(EXTRA_REFLECT_HEADERS GLOBAL PROPERTY ODYSSEY_EXTRA_REFLECT_HEADERS)
+
+set(ALL_HEADERS ${ENGINE_HEADERS} ${EXTRA_REFLECT_HEADERS})
+list(REMOVE_DUPLICATES ALL_HEADERS)
 
 set(REFLECT_HEADERS "")
 foreach(HEADER ${ALL_HEADERS})
@@ -153,6 +162,10 @@ foreach(HEADER ${ALL_HEADERS})
     get_filename_component(DIR ${HEADER} DIRECTORY)
     list(APPEND INCLUDE_DIRS ${DIR})
 endforeach()
+
+get_property(EXTRA_INCLUDE_DIRS GLOBAL PROPERTY ODYSSEY_EXTRA_INCLUDE_DIRS)
+list(APPEND INCLUDE_DIRS ${EXTRA_INCLUDE_DIRS})
+
 list(REMOVE_DUPLICATES INCLUDE_DIRS)
 
 target_include_directories(Source PUBLIC
