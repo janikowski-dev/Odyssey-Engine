@@ -12,7 +12,7 @@ namespace Source::Serialization
     public:
         explicit TypeBuilder(TypeInfo& InInfo) : Info(InInfo) {}
 
-        TypeBuilder& Bind(ComponentResolver Resolve, ComponentEmplacer Emplace);
+        TypeBuilder& Bind(ComponentResolver Resolve, ComponentEmplacer Emplace, ComponentRemover Remove);
 
         template <typename TField>
         TypeBuilder& Field(TField TComponent::* Member, std::string Name, FieldMeta Meta = {});

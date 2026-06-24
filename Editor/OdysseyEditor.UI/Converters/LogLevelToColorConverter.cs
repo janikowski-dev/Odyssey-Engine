@@ -14,7 +14,6 @@ public class LogLevelToColorConverter : IValueConverter
             LogLevel.Error => new SolidColorBrush(Color.FromRgb(0xFF, 0x6B, 0x6B)),
             LogLevel.Warning => new SolidColorBrush(Color.FromRgb(0xFF, 0xD9, 0x3D)),
             LogLevel.Info => new SolidColorBrush(Color.FromRgb(0xAB, 0xB2, 0xBF)),
-            LogLevel.Success => new SolidColorBrush(Color.FromRgb(0x61, 0xAF, 0xEF)),
             _ => new SolidColorBrush(Colors.White)
         };
     }

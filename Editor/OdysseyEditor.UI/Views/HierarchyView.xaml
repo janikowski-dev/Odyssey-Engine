@@ -22,6 +22,31 @@
             <ListBox ItemsSource="{Binding Entities}"
                      SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
                      BorderThickness="0">
+
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add Entity" Command="{Binding CreateEntityCommand}" />
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+                
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Tag"
+                                Value="{Binding DataContext, RelativeSource={RelativeSource AncestorType=ListBox}}" />
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu DataContext="{Binding PlacementTarget.(FrameworkElement.Tag), RelativeSource={RelativeSource Self}}"
+                                             d:DataContext="{d:DesignInstance Type=hierarchy:HierarchyViewModel}">
+                                    <MenuItem Header="Delete Entity"
+                                              Command="{Binding DestroyEntityCommand}"
+                                              CommandParameter="{Binding PlacementTarget.(FrameworkElement.DataContext),
+                                              RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding StringFormat='Entity {0}'}" />

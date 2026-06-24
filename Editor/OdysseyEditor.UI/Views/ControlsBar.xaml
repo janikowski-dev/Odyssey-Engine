@@ -7,11 +7,42 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=controlsBar:ControlsBarViewModel, IsDesignTimeCreatable=False}">
 
-    <StackPanel Orientation="Horizontal">
-        <Button Content="Play" Command="{Binding PlayCommand}" ToolTip="Begin Play" />
-        <Button Content="Stop" Command="{Binding StopCommand}" ToolTip="End Play" />
-        <Button Content="Save" Command="{Binding SaveCommand}" ToolTip="Save Scene" />
-        <Button Content="Load" Command="{Binding LoadCommand}" ToolTip="Load Scene" />
-    </StackPanel>
-    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+            <Button Style="{StaticResource IconButtonStyle}" Command="{Binding SaveCommand}" ToolTip="Save Scene">
+                <Path Data="M 2,1 H 11 L 14,4 V 14 H 2 Z M 5,1 V 5 H 10 V 1 M 4,9 H 12 V 14 H 4 Z"
+                      Stroke="{StaticResource ForegroundBrush}"
+                      StrokeThickness="1.3"
+                      Fill="Transparent"
+                      Stretch="Uniform" Width="15" Height="15"/>
+            </Button>
+            <Button Style="{StaticResource IconButtonStyle}" Command="{Binding LoadCommand}" ToolTip="Load Scene">
+                <Path Data="M 1,3 H 6 L 8,5 H 15 V 13 H 1 Z"
+                      Stroke="{StaticResource ForegroundBrush}"
+                      StrokeThickness="1.3"
+                      Fill="Transparent"
+                      Stretch="Uniform" Width="15" Height="13"/>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Style="{StaticResource IconButtonStyle}" Command="{Binding PlayCommand}" ToolTip="Begin Play">
+                <Path Data="M 0,0 L 12,7 L 0,14 Z"
+                      Fill="{StaticResource ForegroundBrush}"
+                      Stretch="Uniform" Width="12" Height="12"/>
+            </Button>
+            <Button Style="{StaticResource IconButtonStyle}" Command="{Binding StopCommand}" ToolTip="End Play">
+                <Path Data="M 0,0 H 12 V 12 H 0 Z"
+                      Fill="{StaticResource ForegroundBrush}"
+                      Stretch="Uniform" Width="11" Height="11"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+
 </UserControl>

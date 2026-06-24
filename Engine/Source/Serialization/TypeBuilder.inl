@@ -6,10 +6,11 @@
 namespace Source::Serialization
 {
     template <typename TComponent>
-    TypeBuilder<TComponent>& TypeBuilder<TComponent>::Bind(ComponentResolver Resolve, ComponentEmplacer Emplace)
+    TypeBuilder<TComponent>& TypeBuilder<TComponent>::Bind(ComponentResolver Resolve, ComponentEmplacer Emplace, ComponentRemover Remove)
     {
         Info.Resolve = std::move(Resolve);
         Info.Emplace = std::move(Emplace);
+        Info.Remove = std::move(Remove);
         return *this;
     }
 

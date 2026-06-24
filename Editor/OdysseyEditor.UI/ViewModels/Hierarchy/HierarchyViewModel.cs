@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using OdysseyEditor.Domain.Events;
 using OdysseyEditor.Domain.Interfaces;
@@ -18,7 +19,7 @@ public partial class HierarchyViewModel(IMessenger messenger, IEngineMessenger e
     {
         InitEngineMessaging();
         InitMessaging();
-        await GetExistingEntities();
+        await InitEntities();
     }
 
     public void Receive(AddedEntityMessage message) => Entities.Add(message.Index);
@@ -35,8 +36,25 @@ public partial class HierarchyViewModel(IMessenger messenger, IEngineMessenger e
 
     private void InitEngineMessaging()
     {
-        engineMessenger.On<DestroyedEntity>(DestroyedEntity.Key, addedEntity => System.Windows.Application.Current.Dispatcher.Invoke(() => Entities.Remove(addedEntity.Index)));
-        engineMessenger.On<CreatedEntity>(CreatedEntity.Key, addedEntity => System.Windows.Application.Current.Dispatcher.Invoke(() => Entities.Add(addedEntity.Index)));
+        engineMessenger.On<DestroyedEntity>(DestroyedEntity.Key, entity => System.Windows.Application.Current.Dispatcher.Invoke(() =>
+        {
+            if (!Entities.Contains(entity.Index))
+            {
+                return;
+            }
+            
+            Entities.Remove(entity.Index);
+        }));
+        
+        engineMessenger.On<CreatedEntity>(CreatedEntity.Key, entity => System.Windows.Application.Current.Dispatcher.Invoke(() =>
+        {
+            if (Entities.Contains(entity.Index))
+            {
+                return;
+            }
+            
+            Entities.Add(entity.Index);
+        }));
     }
 
     private void InitMessaging()
@@ -44,13 +62,30 @@ public partial class HierarchyViewModel(IMessenger messenger, IEngineMessenger e
         messenger.RegisterAll(this);
     }
 
-    private async Task GetExistingEntities()
+    private async Task InitEntities()
     {
         GetEntitiesResponse response = await engineMessenger.Send<GetEntitiesRequest, GetEntitiesResponse>(GetEntities.Key, new GetEntitiesRequest());
 
         foreach (int index in response.Indexes)
         {
+            if (Entities.Contains(index))
+            {
+                continue;
+            }
+            
             Entities.Add(index);
         }
+    }
+
+    [RelayCommand]
+    private async Task CreateEntityAsync()
+    {
+        await engineMessenger.Send<CreateEntityRequest, CreateEntityResponse>(CreateEntity.Key, new CreateEntityRequest());
+    }
+
+    [RelayCommand]
+    private async Task DestroyEntityAsync(int index)
+    {
+        await engineMessenger.Send<DestroyEntityRequest, DestroyEntityResponse>(DestroyEntity.Key, new DestroyEntityRequest(index));
     }
 }

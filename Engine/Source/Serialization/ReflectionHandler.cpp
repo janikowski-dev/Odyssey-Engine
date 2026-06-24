@@ -46,7 +46,7 @@ namespace Source::Serialization
         }
 
         void* Component = Info->Emplace(Entity);
-        
+
         if (!Component)
         {
             return;
@@ -61,5 +61,17 @@ namespace Source::Serialization
                 Field.Set(Component, *It);
             }
         }
+    }
+
+    void RemoveComponent(ECS::Entity Entity, const std::string &Type)
+    {
+        const TypeInfo* Info = TypeRegistry::Get().Find(Type);
+
+        if (!Info)
+        {
+            return;
+        }
+
+        Info->Remove(Entity);
     }
 }

@@ -7,7 +7,6 @@ public interface ILogService
     event EventHandler<LogEntry> EntryAdded;
     
     void LogInfo(string message);
-    void LogSuccess(string message);
     void LogError(string message);
     void LogWarning(string message);
 }

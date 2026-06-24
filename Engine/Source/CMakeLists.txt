@@ -29,6 +29,7 @@ set(SOURCES
     ECS/Registry.inl
 
     Events/CreatedEntity.h
+    Events/CreateEntity.h
     Events/DestroyedEntity.h
     Events/GetSchema.h
     Events/GetEntities.h
@@ -36,6 +37,7 @@ set(SOURCES
     Events/LoadScene.h
     Events/Ping.h
     Events/SaveScene.h
+    Events/RemoveComponent.h
     Events/SelectEntity.h
     Events/Play.h
     Events/Stop.h

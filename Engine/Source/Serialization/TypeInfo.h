@@ -17,12 +17,14 @@ namespace Source::Serialization
 
     using ComponentResolver = std::function<void*(ECS::Entity)>;
     using ComponentEmplacer = std::function<void*(ECS::Entity)>;
+    using ComponentRemover  = std::function<void(ECS::Entity)>;
 
     struct TypeInfo
     {
         std::vector<FieldInfo> Fields;
         ComponentResolver Resolve;
         ComponentEmplacer Emplace;
+        ComponentRemover Remove;
         std::string Name;
     };
 }

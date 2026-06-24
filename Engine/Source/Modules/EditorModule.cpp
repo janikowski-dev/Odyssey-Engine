@@ -11,7 +11,10 @@
 #include "Events/GetSchema.h"
 #include "Events/GetEntities.h"
 #include "Events/CreatedEntity.h"
+#include "Events/CreateEntity.h"
+#include "Events/DestroyEntity.h"
 #include "Events/DestroyedEntity.h"
+#include "Events/RemoveComponent.h"
 #include "Serialization/SceneSerializer.h"
 #include "Serialization/ReflectionHandler.h"
 
@@ -64,6 +67,12 @@ namespace Source::Modules
             return Events::SaveSceneResponse();
         });
 
+        Context.EditorBridge->On<Events::RemoveComponentRequest, Events::RemoveComponentResponse>(Events::RemoveComponentKey, [&Context](const Events::RemoveComponentRequest& Request)
+        {
+            Serialization::RemoveComponent(Context.World->Get(Request.Index), Request.Component);
+            return Events::RemoveComponentResponse();
+        });
+
         Context.EditorBridge->On<Events::LoadSceneRequest, Events::LoadSceneResponse>(Events::LoadSceneKey, [&Context](const Events::LoadSceneRequest& Request)
         {
             Serialization::LoadScene(*Context.World);
@@ -73,6 +82,18 @@ namespace Source::Modules
 		Context.EditorBridge->On<Events::GetViewportRequest, Events::GetViewportResponse>(Events::GetViewportKey, [&Context](const Events::GetViewportRequest&)
     	{
     	    return Events::GetViewportResponse { Context.Window->GetHandle() };
+    	});
+
+		Context.EditorBridge->On<Events::CreateEntityRequest, Events::CreateEntityResponse>(Events::CreateEntityKey, [&Context](const Events::CreateEntityRequest&)
+    	{
+            Context.World->Create();
+    	    return Events::CreateEntityResponse();
+    	});
+
+		Context.EditorBridge->On<Events::DestroyEntityRequest, Events::DestroyEntityResponse>(Events::DestroyEntityKey, [&Context](const Events::DestroyEntityRequest& Request)
+    	{
+            Context.World->Destroy(Context.World->Get(Request.Index));
+    	    return Events::DestroyEntityResponse();
     	});
 
 		Context.EditorBridge->On<Events::PlayRequest, Events::PlayResponse>(Events::PlayKey, [&Context](const Events::PlayRequest&)

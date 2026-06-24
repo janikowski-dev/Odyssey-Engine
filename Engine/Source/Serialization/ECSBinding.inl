@@ -11,7 +11,8 @@ namespace Source::Serialization
     {
         Builder.Bind(
             [&Registry](ECS::Entity E) -> void* { return Registry.template TryGet<TComponent>(E); },
-            [&Registry](ECS::Entity E) -> void* { return &Registry.template GetOrAdd<TComponent>(E); }
+            [&Registry](ECS::Entity E) -> void* { return &Registry.template GetOrAdd<TComponent>(E); },
+            [&Registry](ECS::Entity E) -> void  { Registry.template Remove<TComponent>(E); }
         );
     }
 };
