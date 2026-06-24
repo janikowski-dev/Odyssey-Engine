@@ -6,8 +6,9 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:models="clr-namespace:OdysseyEditor.Application.Models;assembly=OdysseyEditor.Application"
              xmlns:behaviors="clr-namespace:OdysseyEditor.UI.Behaviors"
+             xmlns:console="clr-namespace:OdysseyEditor.UI.ViewModels.Console"
              mc:Ignorable="d"
-             Focusable="True">
+             d:DataContext="{d:DesignInstance Type=console:ConsoleViewModel, IsDesignTimeCreatable=False}">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -15,7 +16,6 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- HEADER -->
         <Border Grid.Row="0"
                 Background="{StaticResource PanelBackgroundBrush}"
                 BorderBrush="{StaticResource BorderBrushDark}"
@@ -24,11 +24,8 @@
 
             <DockPanel>
 
-                <Button DockPanel.Dock="Right"
-                        Command="{Binding ToggleCommand}"
-                        ToolTip="Toggle Console">
-                    <TextBlock Text="{Binding IsExpanded,
-                        Converter={StaticResource BoolToArrowConverter}}"/>
+                <Button DockPanel.Dock="Right" Command="{Binding ToggleCommand}" ToolTip="Toggle Console">
+                    <TextBlock Text="{Binding IsExpanded, Converter={StaticResource BoolToArrowConverter}}"/>
                 </Button>
 
                 <TextBlock Text="{Binding HeaderText}"
@@ -38,7 +35,6 @@
             </DockPanel>
         </Border>
 
-        <!-- BODY -->
         <Border Grid.Row="1"
                 Height="200"
                 BorderThickness="0,1,0,0"

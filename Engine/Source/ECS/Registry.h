@@ -41,7 +41,8 @@ namespace Source::ECS
         Pool<TComponent>& GetPool();
         
     public:
-        Event<uint32> OnEntityAdded;
+        Event<uint32> OnEntityDestroyed;
+        Event<uint32> OnEntityCreated;
 
     private:
         std::unordered_map<std::type_index, UniquePtr<IPool>> Pools;

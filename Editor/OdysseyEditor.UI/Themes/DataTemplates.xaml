@@ -4,6 +4,7 @@
                     xmlns:console="clr-namespace:OdysseyEditor.UI.ViewModels.Console"
                     xmlns:workspace="clr-namespace:OdysseyEditor.UI.ViewModels.Workspace"
                     xmlns:inspector="clr-namespace:OdysseyEditor.UI.ViewModels.Inspector"
+                    xmlns:controlsBar="clr-namespace:OdysseyEditor.UI.ViewModels.ControlsBar"
                     xmlns:views="clr-namespace:OdysseyEditor.UI.Views">
 
     <DataTemplate DataType="{x:Type workspace:WorkspaceViewModel}">
@@ -20,6 +21,10 @@
 
     <DataTemplate DataType="{x:Type console:ConsoleViewModel}">
         <views:ConsoleView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type controlsBar:ControlsBarViewModel}">
+        <views:ControlsBar/>
     </DataTemplate>
 
 </ResourceDictionary>

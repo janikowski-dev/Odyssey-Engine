@@ -14,15 +14,15 @@ namespace Source::Core
 
 		void Run();
 
-		virtual void RegisterModule(UniquePtr<IModule> Module) override;
+		void RegisterModule(UniquePtr<IModule> Module) override;
 
 	private:
 		void CreateInternalModules(const ApplicationConfig& InConfig);
-		void InitInternalModules(const ApplicationConfig& InConfig);
+		void InitAllModules(const ApplicationConfig& InConfig);
 
 	private:
-		std::vector<UniquePtr<IModule>> ExternalModules;
-		std::vector<UniquePtr<IModule>> InternalModules;
+		std::vector<UniquePtr<IModule>> Modules;
+		ApplicationConfig Config;
 		Context Context;
 	};
 }

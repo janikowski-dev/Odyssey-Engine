@@ -43,7 +43,12 @@ public class PropertyFieldFactory(IEngineMessenger engineMessenger, ILogService 
     public async Task InitAsync()
     {
         GetSchemaResponse response = await engineMessenger.Send<GetSchemaRequest, GetSchemaResponse>(GetSchema.Key, new GetSchemaRequest());
-            
+
+        if (response == default)
+        {
+            return;
+        }
+        
         foreach (ComponentInfo component in response.Schema)
         {
             Schema[component.Name] = component.Fields.ToDictionary(field => field.Name, field => field.Type);

@@ -1,0 +1,15 @@
+<UserControl x:Class="OdysseyEditor.UI.Views.ControlsBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controlsBar="clr-namespace:OdysseyEditor.UI.ViewModels.ControlsBar"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=controlsBar:ControlsBarViewModel, IsDesignTimeCreatable=False}">
+
+    <StackPanel Orientation="Horizontal">
+        <Button Content="Play" Command="{Binding PlayCommand}" ToolTip="Begin Play" />
+        <Button Content="Stop" Command="{Binding StopCommand}" ToolTip="End Play" />
+    </StackPanel>
+    
+</UserControl>

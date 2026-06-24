@@ -1,0 +1,16 @@
+#pragma once
+
+#include "Core/Minimal.h"
+
+namespace Source::Events
+{
+    inline constexpr std::string_view PlayKey = "play";
+
+    struct PlayRequest
+    {
+    };
+
+    struct PlayResponse
+    {
+    };
+}

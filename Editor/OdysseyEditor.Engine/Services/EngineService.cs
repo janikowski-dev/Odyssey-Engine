@@ -34,7 +34,16 @@ public sealed class EngineService(IOptions<EngineConfig> config) : IEngineLaunch
 
     public async Task<TResponse> Send<TRequest, TResponse>(string method, TRequest request)
     {
-        return (await RequestAsync<TRequest, TResponse>(method, request, DefaultTimeout))!;
+        try
+        {
+            return (await RequestAsync<TRequest, TResponse>(method, request, DefaultTimeout))!;
+        }
+        catch (Exception caughtException)
+        {
+            FailAll(caughtException);
+            await LaunchAsync();
+            return default!;
+        }
     }
 
     public void On<TEvent>(string method, Action<TEvent> callback)
@@ -243,11 +252,18 @@ public sealed class EngineService(IOptions<EngineConfig> config) : IEngineLaunch
             snapshot = handlers.ToArray();
         }
 
-        foreach (object handler in snapshot)
+        try
         {
-            Type eventType = handler.GetType().GetGenericArguments()[0];
-            object? payload = data.Deserialize(eventType);
-            handler.GetType().GetMethod("Invoke")!.Invoke(handler, [payload]);
+            foreach (object handler in snapshot)
+            {
+                Type eventType = handler.GetType().GetGenericArguments()[0];
+                object? payload = data.Deserialize(eventType);
+                handler.GetType().GetMethod("Invoke")!.Invoke(handler, [payload]);
+            }
+        }
+        catch
+        {
+            // If you throw in your own handler lambda, it's between you and your god, sorry.
         }
     }
 
@@ -260,9 +276,9 @@ public sealed class EngineService(IOptions<EngineConfig> config) : IEngineLaunch
         {
             int n = _stream.Read(buffer, got, count - got);
             
-            if (n <= 0)
+            if (n == 0)
             {
-                continue;
+                throw new IOException("Engine closed the connection.");
             }
             
             got += n;

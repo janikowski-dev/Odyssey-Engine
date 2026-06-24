@@ -6,12 +6,16 @@
 #include "Events/LoadScene.h"
 #include "Events/Ping.h"
 #include "Events/ModifyEntity.h"
+#include "Events/Play.h"
+#include "Events/Stop.h"
 #include "Events/GetSchema.h"
-#include "Events/AddedEntity.h"
+#include "Events/CreatedEntity.h"
+#include "Events/DestroyedEntity.h"
 #include "Components/CameraComponent.h"
 #include "Components/TransformComponent.h"
 #include "Components/RendererComponent.h"
-#include "Messages/AddedEntityMessage.h"
+#include "Messages/CreatedEntityMessage.h"
+#include "Messages/DestroyedEntityMessage.h"
 #include "Serialization/ReflectionHandler.h"
 
 namespace Source::Modules
@@ -39,6 +43,18 @@ namespace Source::Modules
 		Context.EditorBridge->On<Events::GetViewportRequest, Events::GetViewportResponse>(Events::GetViewportKey, [&Context](const Events::GetViewportRequest&)
     	{
     	    return Events::GetViewportResponse { Context.Window->GetHandle() };
+    	});
+
+		Context.EditorBridge->On<Events::PlayRequest, Events::PlayResponse>(Events::PlayKey, [&Context](const Events::PlayRequest&)
+    	{
+            Context.Runtime->ShouldBePlaying = true;
+    	    return Events::PlayResponse();
+    	});
+
+		Context.EditorBridge->On<Events::StopRequest, Events::StopResponse>(Events::StopKey, [&Context](const Events::StopRequest&)
+    	{
+            Context.Runtime->ShouldBePlaying = false;
+    	    return Events::StopResponse();
     	});
         
         Context.EditorBridge->On<Events::ModifyEntityRequest, Events::ModifyEntityResponse>(Events::ModifyEntityKey, [&Context](const Events::ModifyEntityRequest& Request)
@@ -83,9 +99,14 @@ namespace Source::Modules
 
     void EditorModule::InitOutgoingEvents(const Core::ApplicationConfig Config, Core::Context& Context)
     {
-        AddedEntitySubscribtion = Context.MessageBus->Subscribe<Messages::AddedEntityMessage>([&Context](const Messages::AddedEntityMessage& M)
+        DestroyedEntitySubscribtion = Context.MessageBus->Subscribe<Messages::DestroyedEntityMessage>([&Context](const Messages::DestroyedEntityMessage& M)
         {
-            Context.EditorBridge->Send(Events::AddedEntityKey, Events::AddedEntity { M.Index });
+            Context.EditorBridge->Send(Events::DestroyedEntityKey, Events::DestroyedEntity { M.Index });
+        });
+
+        CreatedEntitySubscribtion = Context.MessageBus->Subscribe<Messages::CreatedEntityMessage>([&Context](const Messages::CreatedEntityMessage& M)
+        {
+            Context.EditorBridge->Send(Events::CreatedEntityKey, Events::CreatedEntity { M.Index });
         });
     }
 }

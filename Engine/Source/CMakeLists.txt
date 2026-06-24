@@ -28,13 +28,16 @@ set(SOURCES
     ECS/Registry.h
     ECS/Registry.inl
 
+    Events/CreatedEntity.h
+    Events/DestroyedEntity.h
     Events/GetSchema.h
-    Events/GetTelemetry.h
     Events/GetViewport.h
     Events/LoadScene.h
     Events/Ping.h
     Events/SaveScene.h
     Events/SelectEntity.h
+    Events/Play.h
+    Events/Stop.h
 
     Platform/Window.cpp
     Platform/Window.h
@@ -45,8 +48,6 @@ set(SOURCES
     Rendering/Renderer.h
     Rendering/Shader.cpp
     Rendering/Shader.h
-
-    Runtime/Runtimer.h
 
     Serialization/ECSBinding.h
     Serialization/ECSBinding.inl
@@ -61,7 +62,8 @@ set(SOURCES
     Serialization/TypeRegistry.h
     Serialization/TypeRegistry.inl
 
-    Messages/AddedEntityMessage.h
+    Messages/CreatedEntityMessage.h
+    Messages/DestroyedEntityMessage.h
 
     Messaging/MessageBus.cpp
     Messaging/MessageBus.h
@@ -85,6 +87,8 @@ set(SOURCES
     Modules/RenderingModule.h
     Modules/RuntimeModule.cpp
     Modules/RuntimeModule.h
+    Modules/TimeModule.cpp
+    Modules/TimeModule.h
     Modules/WorldModule.cpp
     Modules/WorldModule.h
 

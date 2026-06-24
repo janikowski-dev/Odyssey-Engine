@@ -4,7 +4,7 @@
 
 namespace Source::Messages
 {
-    struct AddedEntityMessage
+    struct CreatedEntityMessage
     {
         uint32 Index;
     };

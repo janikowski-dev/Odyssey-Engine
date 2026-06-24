@@ -90,14 +90,8 @@ Create new project:
 just new-project {parent_directory} {project_name}
 ```
 
-Build project:
+Build project and run editor:
 
 ```sh
-just build-project {parent_directory}/{project_name}
-```
-
-Run the editor:
-
-```sh
-just run-editor {parent_directory}/{project_name}
+just build-and-run {parent_directory}/{project_name}
 ```

@@ -4,7 +4,7 @@
 #include "Rendering/Renderer.h"
 #include "Rendering/Mesh.h"
 #include "ECS/Registry.h"
-#include "Messages/AddedEntityMessage.h"
+#include "Messages/CreatedEntityMessage.h"
 #include "Components/RendererComponent.h"
 #include "Components/TransformComponent.h"
 #include "Components/CameraComponent.h"

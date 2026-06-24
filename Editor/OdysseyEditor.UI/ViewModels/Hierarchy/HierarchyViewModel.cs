@@ -16,7 +16,8 @@ public partial class HierarchyViewModel(IMessenger messenger, IEngineMessenger e
 
     public void Init()
     {
-        engineMessenger.On<AddedEntity>(AddedEntity.Key, addedEntity => Entities.Add(addedEntity.Index));
+        engineMessenger.On<DestroyedEntity>(DestroyedEntity.Key, addedEntity => System.Windows.Application.Current.Dispatcher.Invoke(() => Entities.Remove(addedEntity.Index)));
+        engineMessenger.On<CreatedEntity>(CreatedEntity.Key, addedEntity => System.Windows.Application.Current.Dispatcher.Invoke(() => Entities.Add(addedEntity.Index)));
         messenger.RegisterAll(this);
     }
 

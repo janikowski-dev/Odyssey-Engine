@@ -17,7 +17,7 @@ namespace Source::ECS
             FreeList.pop_back();
         }
 
-        OnEntityAdded(Index);
+        OnEntityCreated(Index);
         return Entity{ Index, Versions[Index] };
     }
 
@@ -43,6 +43,7 @@ namespace Source::ECS
             Pool->Remove(InEntity.Index);
         }
 
+        OnEntityDestroyed(InEntity.Index);
         ++Versions[InEntity.Index];
         FreeList.push_back(InEntity.Index);
     }

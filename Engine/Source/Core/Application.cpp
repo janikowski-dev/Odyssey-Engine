@@ -6,6 +6,7 @@
 #include "Modules/RenderingModule.h"
 #include "Modules/ResourcesModule.h"
 #include "Modules/RuntimeModule.h"
+#include "Modules/TimeModule.h"
 #include "Modules/PersistanceModule.h"
 #include "Modules/WorldModule.h"
 
@@ -13,24 +14,44 @@
 
 namespace Source::Core
 {
-	Application::Application(const ApplicationConfig& InConfig) 
+	Application::Application(const ApplicationConfig& InConfig) : Config(InConfig)
 	{
         CreateInternalModules(InConfig);
         CreateExternalModules(this);
-        InitInternalModules(InConfig);
+        InitAllModules(InConfig);
 	}
 
 	void Application::Run()
 	{
+        if (Config.LaunchType == LaunchType::Game)
+        {
+            Context.Runtime->ShouldBePlaying = true;
+        }
+
     	while (!Context.Window->ShouldClose())
     	{
-            for (auto& Module : InternalModules)
+            if (Context.Runtime->BeganPlaying)
             {
-                Module->Tick(Context);
+                for (auto& Module : Modules)
+                {
+                    Module->OnBeginPlay(Context);
+                }
+            }
+            else if (Context.Runtime->EndedPlaying)
+            {
+                for (auto& Module : Modules)
+                {
+                    Module->OnEndPlay(Context);
+                }
             }
 
-            for (auto& Module : ExternalModules)
+            for (auto& Module : Modules)
             {
+                if (Module->GetTickPolicy() == TickPolicy::Never || (Module->GetTickPolicy() == TickPolicy::Playtime && !Context.Runtime->IsPlaying))
+                {
+                    continue;
+                }
+
                 Module->Tick(Context);
             }
     	}
@@ -38,34 +59,29 @@ namespace Source::Core
 
     void Application::RegisterModule(UniquePtr<IModule> Module)
     {
-        ExternalModules.push_back(std::move(Module));
+        Modules.push_back(std::move(Module));
     }
 
     void Application::CreateInternalModules(const ApplicationConfig& InConfig)
 	{
-        InternalModules.push_back(MakeUnique<Modules::WorldModule>());
-        InternalModules.push_back(MakeUnique<Modules::RuntimeModule>());
-        InternalModules.push_back(MakeUnique<Modules::MessagingModule>());
-        InternalModules.push_back(MakeUnique<Modules::RenderingModule>());
-        InternalModules.push_back(MakeUnique<Modules::PersistanceModule>());
-        InternalModules.push_back(MakeUnique<Modules::PlatformModule>());
-        InternalModules.push_back(MakeUnique<Modules::ResourcesModule>());
+        Modules.push_back(MakeUnique<Modules::WorldModule>());
+        Modules.push_back(MakeUnique<Modules::TimeModule>());
+        Modules.push_back(MakeUnique<Modules::RuntimeModule>());
+        Modules.push_back(MakeUnique<Modules::MessagingModule>());
+        Modules.push_back(MakeUnique<Modules::RenderingModule>());
+        Modules.push_back(MakeUnique<Modules::PersistanceModule>());
+        Modules.push_back(MakeUnique<Modules::PlatformModule>());
+        Modules.push_back(MakeUnique<Modules::ResourcesModule>());
 
         if (InConfig.LaunchType == LaunchType::Editor)
         {
-            InternalModules.push_back(MakeUnique<Modules::EditorModule>());
+            Modules.push_back(MakeUnique<Modules::EditorModule>());
         }
 	}
 
-    void Application::InitInternalModules(const ApplicationConfig& InConfig)
+    void Application::InitAllModules(const ApplicationConfig& InConfig)
     {
-		for (auto& Module : InternalModules)
-        {
-            Module->Init(InConfig, Context);
-        }
-        
-        // Temporary
-		for (auto& Module : ExternalModules)
+		for (auto& Module : Modules)
         {
             Module->Init(InConfig, Context);
         }

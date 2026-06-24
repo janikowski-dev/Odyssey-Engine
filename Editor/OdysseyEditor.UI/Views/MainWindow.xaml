@@ -32,8 +32,7 @@
                 <ColumnDefinition Width="300" MinWidth="200" MaxWidth="500"/>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0"
-                    Style="{StaticResource PanelBorderStyle}">
+            <Border Grid.Column="0" Style="{StaticResource PanelBorderStyle}">
                 <ContentControl Content="{Binding Hierarchy}"/>
             </Border>
 
@@ -41,17 +40,24 @@
                           HorizontalAlignment="Stretch"
                           ResizeBehavior="PreviousAndNext"/>
 
-            <Border Grid.Column="2"
-                    Style="{StaticResource PanelBorderStyle}">
-                <ContentControl Content="{Binding Workspace}"/>
+            <Border Grid.Column="2" Style="{StaticResource PanelBorderStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <ContentControl Grid.Row="0" Content="{Binding ControlsBar}"/>
+
+                    <ContentControl Grid.Row="1" Content="{Binding Workspace}"/>
+                </Grid>
             </Border>
 
             <GridSplitter Grid.Column="3"
                           HorizontalAlignment="Stretch"
                           ResizeBehavior="PreviousAndNext"/>
 
-            <Border Grid.Column="4"
-                    Style="{StaticResource PanelBorderStyle}">
+            <Border Grid.Column="4" Style="{StaticResource PanelBorderStyle}">
                 <ContentControl Content="{Binding Inspector}"/>
             </Border>
         </Grid>

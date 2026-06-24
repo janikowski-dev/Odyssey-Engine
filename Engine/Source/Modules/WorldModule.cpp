@@ -1,6 +1,7 @@
 #include "Modules/WorldModule.h"
 
-#include "Messages/AddedEntityMessage.h"
+#include "Messages/DestroyedEntityMessage.h"
+#include "Messages/CreatedEntityMessage.h"
 #include "Messaging/MessageBus.h"
 #include "ECS/Registry.h"
 
@@ -10,9 +11,14 @@ namespace Source::Modules
     {
         Context.World = MakeUnique<ECS::Registry>();
 
-        Context.World->OnEntityAdded += [&Context](uint32 Index)
+        Context.World->OnEntityDestroyed += [&Context](uint32 Index)
         {
-            Context.MessageBus->Enqueue(Messages::AddedEntityMessage { Index });
+            Context.MessageBus->Enqueue(Messages::DestroyedEntityMessage { Index });
+        };
+
+        Context.World->OnEntityCreated += [&Context](uint32 Index)
+        {
+            Context.MessageBus->Enqueue(Messages::CreatedEntityMessage { Index });
         };
     }
 }

@@ -8,7 +8,10 @@ namespace Source::Modules
     class EditorModule final : public Core::IModule
     {
     public:
+        Core::TickPolicy GetTickPolicy() const override { return Core::TickPolicy::Always; }
+        
         void Init(const Core::ApplicationConfig Config, Core::Context& Context) override;
+
         void Tick(const Core::Context& Context) override;
 
     private:
@@ -17,6 +20,7 @@ namespace Source::Modules
         void InitOutgoingEvents(const Core::ApplicationConfig Config, Core::Context& Context);
 
     private:
-        Messaging::Subscription AddedEntitySubscribtion;
+        Messaging::Subscription DestroyedEntitySubscribtion;
+        Messaging::Subscription CreatedEntitySubscribtion;
     };
 }
