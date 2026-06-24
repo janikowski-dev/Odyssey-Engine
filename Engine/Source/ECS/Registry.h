@@ -36,6 +36,9 @@ namespace Source::ECS
         template<typename... TComponents, typename TFunction>
         void View(TFunction&& InFunction);
 
+        template<typename TFunction>
+        void Each(TFunction&& InFunction);
+
     private:
         template<typename TComponent>
         Pool<TComponent>& GetPool();

@@ -33,7 +33,7 @@ namespace Source::ECS
 
     void Registry::Destroy(Entity InEntity)
     {
-        if (!IsValid(InEntity))
+        if (InEntity.Index >= Versions.size() || Versions[InEntity.Index] != InEntity.Version)
         {
             return;
         }
@@ -50,6 +50,16 @@ namespace Source::ECS
 
     void Registry::Clear()    
     {
+        for (uint32 Index = 0; Index < Versions.size(); ++Index)
+        {
+            if (std::find(FreeList.begin(), FreeList.end(), Index) != FreeList.end())
+            {
+                continue;
+            }
+
+            OnEntityDestroyed(Index);
+        }
+
         for (auto& [Type, Pool] : Pools)
         {
             Pool->Clear();

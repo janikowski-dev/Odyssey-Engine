@@ -10,6 +10,8 @@ public partial class ControlsBarViewModel(IEngineMessenger engineMessenger) : Ob
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(PlayCommand))]
     [NotifyCanExecuteChangedFor(nameof(StopCommand))]
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+    [NotifyCanExecuteChangedFor(nameof(LoadCommand))]
     private partial bool IsPlaying { get; set; }
 
     [RelayCommand(CanExecute = nameof(CanPlay))]
@@ -26,6 +28,20 @@ public partial class ControlsBarViewModel(IEngineMessenger engineMessenger) : Ob
         await engineMessenger.Send<StopRequest, StopResponse>(Stop.Key, new StopRequest());
     }
 
+    [RelayCommand(CanExecute = nameof(CanLoadSave))]
+    private async Task SaveAsync()
+    {
+        await engineMessenger.Send<SaveSceneRequest, SaveSceneResponse>(SaveScene.Key, new SaveSceneRequest());
+    }
+
+    [RelayCommand(CanExecute = nameof(CanLoadSave))]
+    private async Task LoadAsync()
+    {
+        await engineMessenger.Send<LoadSceneRequest, LoadSceneResponse>(LoadScene.Key, new LoadSceneRequest());
+    }
+
+    private bool CanLoadSave() => !IsPlaying;
+    
     private bool CanPlay() => !IsPlaying;
 
     private bool CanStop() => IsPlaying;

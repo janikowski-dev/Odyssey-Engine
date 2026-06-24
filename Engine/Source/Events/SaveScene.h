@@ -8,12 +8,9 @@ namespace Source::Events
 
     struct SaveSceneRequest
     {
-        std::string Path;
     };
 
     struct SaveSceneResponse
     {
     };
-
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SaveSceneRequest, Path);
 }

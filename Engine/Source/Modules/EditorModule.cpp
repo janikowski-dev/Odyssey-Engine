@@ -9,13 +9,10 @@
 #include "Events/Play.h"
 #include "Events/Stop.h"
 #include "Events/GetSchema.h"
+#include "Events/GetEntities.h"
 #include "Events/CreatedEntity.h"
 #include "Events/DestroyedEntity.h"
-#include "Components/CameraComponent.h"
-#include "Components/TransformComponent.h"
-#include "Components/RendererComponent.h"
-#include "Messages/CreatedEntityMessage.h"
-#include "Messages/DestroyedEntityMessage.h"
+#include "Serialization/SceneSerializer.h"
 #include "Serialization/ReflectionHandler.h"
 
 namespace Source::Modules
@@ -40,23 +37,6 @@ namespace Source::Modules
 
     void EditorModule::InitIncomingEvents(const Core::ApplicationConfig Config, Core::Context& Context)
     {
-		Context.EditorBridge->On<Events::GetViewportRequest, Events::GetViewportResponse>(Events::GetViewportKey, [&Context](const Events::GetViewportRequest&)
-    	{
-    	    return Events::GetViewportResponse { Context.Window->GetHandle() };
-    	});
-
-		Context.EditorBridge->On<Events::PlayRequest, Events::PlayResponse>(Events::PlayKey, [&Context](const Events::PlayRequest&)
-    	{
-            Context.Runtime->ShouldBePlaying = true;
-    	    return Events::PlayResponse();
-    	});
-
-		Context.EditorBridge->On<Events::StopRequest, Events::StopResponse>(Events::StopKey, [&Context](const Events::StopRequest&)
-    	{
-            Context.Runtime->ShouldBePlaying = false;
-    	    return Events::StopResponse();
-    	});
-        
         Context.EditorBridge->On<Events::ModifyEntityRequest, Events::ModifyEntityResponse>(Events::ModifyEntityKey, [&Context](const Events::ModifyEntityRequest& Request)
         {
             Serialization::SetComponent(Context.World->Get(Request.Index), Request.Component, Request.Fields);
@@ -80,33 +60,56 @@ namespace Source::Modules
 
         Context.EditorBridge->On<Events::SaveSceneRequest, Events::SaveSceneResponse>(Events::SaveSceneKey, [&Context](const Events::SaveSceneRequest& Request)
         {
+            Serialization::SaveScene(*Context.World);
             return Events::SaveSceneResponse();
         });
 
         Context.EditorBridge->On<Events::LoadSceneRequest, Events::LoadSceneResponse>(Events::LoadSceneKey, [&Context](const Events::LoadSceneRequest& Request)
         {
-            Context.World->View<Components::RendererComponent>(
-                [&Context](ECS::Entity, Components::RendererComponent& R)
-                {
-                    R.Shader = Context.ResourceCache->Shaders.Get(R.ShaderId);
-                    R.Mesh = Context.ResourceCache->Meshes.Get(R.MeshId);
-                }
-            );
-
+            Serialization::LoadScene(*Context.World);
             return Events::LoadSceneResponse();
+        });
+
+		Context.EditorBridge->On<Events::GetViewportRequest, Events::GetViewportResponse>(Events::GetViewportKey, [&Context](const Events::GetViewportRequest&)
+    	{
+    	    return Events::GetViewportResponse { Context.Window->GetHandle() };
+    	});
+
+		Context.EditorBridge->On<Events::PlayRequest, Events::PlayResponse>(Events::PlayKey, [&Context](const Events::PlayRequest&)
+    	{
+            Context.Runtime->ShouldBePlaying = true;
+    	    return Events::PlayResponse();
+    	});
+
+		Context.EditorBridge->On<Events::StopRequest, Events::StopResponse>(Events::StopKey, [&Context](const Events::StopRequest&)
+    	{
+            Context.Runtime->ShouldBePlaying = false;
+    	    return Events::StopResponse();
+    	});
+
+        Context.EditorBridge->On<Events::GetEntitiesRequest, Events::GetEntitiesResponse>(Events::GetEntitiesKey, [&Context](const Events::GetEntitiesRequest&)
+        {
+            std::vector<uint32> Indexes;
+
+            Context.World->Each([&](ECS::Entity Entity)
+            {
+                Indexes.push_back(Entity.Index);
+            });
+
+            return Events::GetEntitiesResponse { std::move(Indexes) };
         });
     }
 
     void EditorModule::InitOutgoingEvents(const Core::ApplicationConfig Config, Core::Context& Context)
     {
-        Context.World->OnEntityDestroyed += [](uint32 Index)
+        Context.World->OnEntityDestroyed += [&Context](uint32 Index)
         {
-            Context.EditorBridge->Send(Events::DestroyedEntityKey, Events::DestroyedEntity { M.Index });
-        });
+            Context.EditorBridge->Send(Events::DestroyedEntityKey, Events::DestroyedEntity { Index });
+        };
 
-        Context.World->OnEntityCreated += [](uint32 Index)
+        Context.World->OnEntityCreated += [&Context](uint32 Index)
         {
-            Context.EditorBridge->Send(Events::CreatedEntityKey, Events::CreatedEntity { M.Index });
+            Context.EditorBridge->Send(Events::CreatedEntityKey, Events::CreatedEntity { Index });
         };
     }
 }

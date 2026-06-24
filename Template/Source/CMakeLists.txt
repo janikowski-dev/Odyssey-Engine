@@ -12,8 +12,8 @@ endif()
 
 # Sources
 set(SOURCES
-    Example/SpinModule.h
     Example/SpinComponent.h
+    Example/SpinModule.h
 )
 
 # Properties parsing
@@ -62,7 +62,7 @@ target_include_directories(Source PUBLIC
     ${INCLUDE_DIRS}
 )
 
-# Settings
+# Copy settings
 set(CONFIG_FILE "${CMAKE_CURRENT_SOURCE_DIR}/../Launch.odysettings")
 
 add_custom_command(TARGET Game POST_BUILD

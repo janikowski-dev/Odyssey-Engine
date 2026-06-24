@@ -1,6 +1,9 @@
 param(
     [Parameter(Mandatory = $true)]
-    [string]$ProjectPath
+    [string]$ProjectPath,
+
+    [Parameter(Mandatory = $true)]
+    [string]$CallerPath
 )
 
 $configPath = Join-Path $PSScriptRoot "../justconfig.json"
@@ -26,6 +29,8 @@ cmd /c "`"$vsDevCmd`" && set" | ForEach-Object {
 }
 
 Write-Host "MSVC environment loaded" -ForegroundColor Green
+
+$env:ODYSSEY_ENGINE_ROOT = (Resolve-Path (Join-Path $CallerPath  "/Engine")).Path
 
 Push-Location (Join-Path $ProjectPath "Source")
 

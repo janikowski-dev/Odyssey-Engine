@@ -1,5 +1,7 @@
 #include "Serialization/ReflectionHandler.h"
+
 #include "Serialization/TypeRegistry.h"
+#include "ECS/Entity.h"
 
 namespace Source::Serialization
 {
@@ -15,7 +17,7 @@ namespace Source::Serialization
         for (const auto& [Name, Info] : TypeRegistry::Get().GetTypes())
         {
             void* Component = Info.Resolve(Entity);
-
+            
             if (!Component)
             {
                 continue;
@@ -43,7 +45,7 @@ namespace Source::Serialization
             return;
         }
 
-        void* Component = Info->Resolve(Entity);
+        void* Component = Info->Emplace(Entity);
         
         if (!Component)
         {

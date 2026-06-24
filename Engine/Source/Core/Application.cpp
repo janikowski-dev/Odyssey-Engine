@@ -1,13 +1,12 @@
 #include "Application.h"
 
 #include "Modules/EditorModule.h"
-#include "Modules/MessagingModule.h"
 #include "Modules/PlatformModule.h"
 #include "Modules/RenderingModule.h"
 #include "Modules/ResourcesModule.h"
 #include "Modules/RuntimeModule.h"
 #include "Modules/TimeModule.h"
-#include "Modules/PersistanceModule.h"
+#include "Modules/SerializationModule.h"
 #include "Modules/WorldModule.h"
 
 #include "Modules.generated.h"
@@ -65,11 +64,10 @@ namespace Source::Core
     void Application::CreateInternalModules(const ApplicationConfig& InConfig)
 	{
         Modules.push_back(MakeUnique<Modules::WorldModule>());
+        Modules.push_back(MakeUnique<Modules::SerializationModule>());
         Modules.push_back(MakeUnique<Modules::TimeModule>());
         Modules.push_back(MakeUnique<Modules::RuntimeModule>());
-        Modules.push_back(MakeUnique<Modules::MessagingModule>());
         Modules.push_back(MakeUnique<Modules::RenderingModule>());
-        Modules.push_back(MakeUnique<Modules::PersistanceModule>());
         Modules.push_back(MakeUnique<Modules::PlatformModule>());
         Modules.push_back(MakeUnique<Modules::ResourcesModule>());
 

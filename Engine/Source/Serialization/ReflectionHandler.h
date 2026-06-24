@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Core/Minimal.h"
-#include "ECS/Entity.h"
+
+namespace Source::ECS { class Entity; }
 
 namespace Source::Serialization
 {

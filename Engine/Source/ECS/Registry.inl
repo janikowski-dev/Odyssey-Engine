@@ -67,6 +67,20 @@ namespace Source::ECS
         }
     }
 
+    template<typename TFunction>
+    void Registry::Each(TFunction&& InFunction)
+    {
+        for (uint32 Index = 0; Index < Versions.size(); ++Index)
+        {
+            if (std::find(FreeList.begin(), FreeList.end(), Index) != FreeList.end())
+            {
+                continue;
+            }
+            
+            InFunction(Entity{ Index, Versions[Index] });
+        }
+    }
+
     template<typename TComponent>
     Pool<TComponent>& Registry::GetPool()
     {

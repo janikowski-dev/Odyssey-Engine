@@ -8,12 +8,9 @@ namespace Source::Events
 
     struct LoadSceneRequest
     {
-        std::string Path;
     };
 
     struct LoadSceneResponse
     {
     };
-
-    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(LoadSceneRequest, Path);
 }

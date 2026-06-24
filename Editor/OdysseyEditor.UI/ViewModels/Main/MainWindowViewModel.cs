@@ -25,9 +25,9 @@ public partial class MainWindowViewModel(
     [RelayCommand]
     private async Task InitAsync()
     {
-        Hierarchy.Init();
         Console.Init();
         await Workspace.InitAsync();
         await Inspector.InitAsync();
+        await Hierarchy.InitAsync();
     }
 }

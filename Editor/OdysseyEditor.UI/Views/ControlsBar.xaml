@@ -10,6 +10,8 @@
     <StackPanel Orientation="Horizontal">
         <Button Content="Play" Command="{Binding PlayCommand}" ToolTip="Begin Play" />
         <Button Content="Stop" Command="{Binding StopCommand}" ToolTip="End Play" />
+        <Button Content="Save" Command="{Binding SaveCommand}" ToolTip="Save Scene" />
+        <Button Content="Load" Command="{Binding LoadCommand}" ToolTip="Load Scene" />
     </StackPanel>
     
 </UserControl>

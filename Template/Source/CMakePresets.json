@@ -8,7 +8,6 @@
       "binaryDir": "${sourceDir}/../Build",
       "cacheVariables":
       {
-        "ODYSSEY_ENGINE_ROOT": "C:/Projekty/Odyssey-Engine/Engine",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
         "CMAKE_CXX_STANDARD": "23"
       }

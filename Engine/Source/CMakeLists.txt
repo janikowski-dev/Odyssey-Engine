@@ -31,6 +31,7 @@ set(SOURCES
     Events/CreatedEntity.h
     Events/DestroyedEntity.h
     Events/GetSchema.h
+    Events/GetEntities.h
     Events/GetViewport.h
     Events/LoadScene.h
     Events/Ping.h
@@ -55,6 +56,8 @@ set(SOURCES
     Serialization/FieldTraits.h
     Serialization/ReflectionHandler.cpp
     Serialization/ReflectionHandler.h
+    Serialization/SceneSerializer.cpp
+    Serialization/SceneSerializer.h
     Serialization/TypeBuilder.h
     Serialization/TypeBuilder.inl
     Serialization/TypeInfo.h
@@ -64,10 +67,8 @@ set(SOURCES
 
     Modules/EditorModule.cpp
     Modules/EditorModule.h
-    Modules/MessagingModule.cpp
-    Modules/MessagingModule.h
-    Modules/PersistanceModule.cpp
-    Modules/PersistanceModule.h
+    Modules/SerializationModule.cpp
+    Modules/SerializationModule.h
     Modules/PlatformModule.cpp
     Modules/PlatformModule.h
     Modules/ResourcesModule.cpp

@@ -14,11 +14,11 @@ public partial class HierarchyViewModel(IMessenger messenger, IEngineMessenger e
     
     public ObservableCollection<int> Entities { get; } = [];
 
-    public void Init()
+    public async Task InitAsync()
     {
-        engineMessenger.On<DestroyedEntity>(DestroyedEntity.Key, addedEntity => System.Windows.Application.Current.Dispatcher.Invoke(() => Entities.Remove(addedEntity.Index)));
-        engineMessenger.On<CreatedEntity>(CreatedEntity.Key, addedEntity => System.Windows.Application.Current.Dispatcher.Invoke(() => Entities.Add(addedEntity.Index)));
-        messenger.RegisterAll(this);
+        InitEngineMessaging();
+        InitMessaging();
+        await GetExistingEntities();
     }
 
     public void Receive(AddedEntityMessage message) => Entities.Add(message.Index);
@@ -31,5 +31,26 @@ public partial class HierarchyViewModel(IMessenger messenger, IEngineMessenger e
         }
         
         messenger.Send(new SelectedEntityMessage { Index = value.Value });
+    }
+
+    private void InitEngineMessaging()
+    {
+        engineMessenger.On<DestroyedEntity>(DestroyedEntity.Key, addedEntity => System.Windows.Application.Current.Dispatcher.Invoke(() => Entities.Remove(addedEntity.Index)));
+        engineMessenger.On<CreatedEntity>(CreatedEntity.Key, addedEntity => System.Windows.Application.Current.Dispatcher.Invoke(() => Entities.Add(addedEntity.Index)));
+    }
+
+    private void InitMessaging()
+    {
+        messenger.RegisterAll(this);
+    }
+
+    private async Task GetExistingEntities()
+    {
+        GetEntitiesResponse response = await engineMessenger.Send<GetEntitiesRequest, GetEntitiesResponse>(GetEntities.Key, new GetEntitiesRequest());
+
+        foreach (int index in response.Indexes)
+        {
+            Entities.Add(index);
+        }
     }
 }
