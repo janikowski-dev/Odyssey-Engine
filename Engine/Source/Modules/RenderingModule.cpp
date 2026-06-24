@@ -1,13 +1,11 @@
 #include "Modules/RenderingModule.h"
 
-#include "Messaging/MessageBus.h"
+#include "Components/TransformComponent.h"
+#include "Components/RendererComponent.h"
+#include "Components/CameraComponent.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/Mesh.h"
 #include "ECS/Registry.h"
-#include "Messages/CreatedEntityMessage.h"
-#include "Components/RendererComponent.h"
-#include "Components/TransformComponent.h"
-#include "Components/CameraComponent.h"
 
 namespace Source::Modules
 {

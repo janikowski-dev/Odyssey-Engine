@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Messaging/Subscription.h"
 #include "Core/IModule.h"
 
 namespace Source::Modules
@@ -18,9 +17,5 @@ namespace Source::Modules
         void InitBridge(const Core::ApplicationConfig Config, Core::Context& Context);
         void InitIncomingEvents(const Core::ApplicationConfig Config, Core::Context& Context);
         void InitOutgoingEvents(const Core::ApplicationConfig Config, Core::Context& Context);
-
-    private:
-        Messaging::Subscription DestroyedEntitySubscribtion;
-        Messaging::Subscription CreatedEntitySubscribtion;
     };
 }

@@ -62,17 +62,6 @@ set(SOURCES
     Serialization/TypeRegistry.h
     Serialization/TypeRegistry.inl
 
-    Messages/CreatedEntityMessage.h
-    Messages/DestroyedEntityMessage.h
-
-    Messaging/MessageBus.cpp
-    Messaging/MessageBus.h
-    Messaging/MessageBus.inl
-    Messaging/HandlerData.h
-    Messaging/HandlerData.cpp
-    Messaging/Subscription.cpp
-    Messaging/Subscription.h
-
     Modules/EditorModule.cpp
     Modules/EditorModule.h
     Modules/MessagingModule.cpp

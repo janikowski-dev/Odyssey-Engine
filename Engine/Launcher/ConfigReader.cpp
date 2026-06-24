@@ -60,7 +60,7 @@ void ConfigReader::ParseCliArguments(Source::Core::ApplicationConfig& Config, in
 
 void ConfigReader::ReadSettingsJson(Source::Core::ApplicationConfig& Config)
 {
-    std::ifstream File("Settings.json");
+    std::ifstream File("Launch.odysettings");
 
     if (!File)
     {

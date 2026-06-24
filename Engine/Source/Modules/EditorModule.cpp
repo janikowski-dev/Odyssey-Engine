@@ -99,14 +99,14 @@ namespace Source::Modules
 
     void EditorModule::InitOutgoingEvents(const Core::ApplicationConfig Config, Core::Context& Context)
     {
-        DestroyedEntitySubscribtion = Context.MessageBus->Subscribe<Messages::DestroyedEntityMessage>([&Context](const Messages::DestroyedEntityMessage& M)
+        Context.World->OnEntityDestroyed += [](uint32 Index)
         {
             Context.EditorBridge->Send(Events::DestroyedEntityKey, Events::DestroyedEntity { M.Index });
         });
 
-        CreatedEntitySubscribtion = Context.MessageBus->Subscribe<Messages::CreatedEntityMessage>([&Context](const Messages::CreatedEntityMessage& M)
+        Context.World->OnEntityCreated += [](uint32 Index)
         {
             Context.EditorBridge->Send(Events::CreatedEntityKey, Events::CreatedEntity { M.Index });
-        });
+        };
     }
 }
