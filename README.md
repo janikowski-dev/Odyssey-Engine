@@ -76,10 +76,6 @@ Set the path to your `VsDevCmd.bat` in `justconfig.json`.
 
 Build engine:
 
-```sh
-just build-engine
-```
-
 Create new project:
 
 ```sh
@@ -92,8 +88,10 @@ Build project and run editor:
 just build-and-run {parent_directory}/{project_name}
 ```
 
-# Release
+# Modify codebase
 
-```sh
-just build-and-pack {parent_directory}/{project_name} {output_directory}
-```
+Open `{parent_directory}/{project_name}` in VS Code.
+
+# Rebuild & release
+
+There are buttons in the top right corner of the editor that allow rebuilding codebase and packaging project into usable output directory.
