@@ -23,6 +23,7 @@ public partial class ResourcesViewModel(IOptions<EngineConfig> config, IEngineMe
     public async Task InitAsync()
     {
         GetAllFiles();
+        await Task.Delay(500);
         await RefreshResources();
     }
 

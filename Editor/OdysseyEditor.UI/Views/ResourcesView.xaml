@@ -11,7 +11,7 @@
              d:DataContext="{d:DesignInstance Type=resources:ResourcesViewModel}">
     <Grid>
         <b:Interaction.Behaviors>
-            <behaviors:WindowActivatedBehavior Command="{Binding GetAllFilesCommand}"/>
+            <behaviors:WindowActivatedBehavior Command="{Binding InitCommand}"/>
         </b:Interaction.Behaviors>
         
         <Grid.Resources>

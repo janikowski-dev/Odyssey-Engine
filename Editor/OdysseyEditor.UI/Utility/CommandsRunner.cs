@@ -33,6 +33,18 @@ public static class CommandsRunner
         process?.WaitForExit();
     }
     
+    public static void KillEngine()
+    {
+        string processName = Path.GetFileNameWithoutExtension("Launcher.exe");
+    
+        foreach (Process process in Process.GetProcessesByName(processName))
+        {
+            process.Kill();
+            process.WaitForExit();
+            process.Dispose();
+        }
+    }
+    
     public static void Rebuild(string projectRoot)
     {
         ProcessStartInfo psi = new()

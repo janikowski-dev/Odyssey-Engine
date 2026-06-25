@@ -28,6 +28,7 @@ public partial class ControlsBarViewModel(IOptions<EngineConfig> config, IMessen
     [RelayCommand]
     private void RebuildAndRestart()
     {
+        CommandsRunner.KillEngine();
         CommandsRunner.Rebuild(config.Value.ProjectRoot);
         CommandsRunner.Restart();
     }
