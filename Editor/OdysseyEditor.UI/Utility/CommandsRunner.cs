@@ -4,13 +4,13 @@ using Microsoft.Win32;
 
 namespace OdysseyEditor.UI.Utility;
 
-public static class CommandRunner
+public static class CommandsRunner
 {
     public static void Package(string projectRoot)
     {
         OpenFolderDialog dialog = new()
         {
-            Title = "Select Project Directory",
+            Title = "Select Output Directory",
             Multiselect = false
         };
 
@@ -21,7 +21,7 @@ public static class CommandRunner
         
         ProcessStartInfo psi = new()
         {
-            WorkingDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..", "..")),
+            WorkingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..")),
             UseShellExecute = false,
             FileName = "just"
         };
@@ -37,7 +37,7 @@ public static class CommandRunner
     {
         ProcessStartInfo psi = new()
         {
-            WorkingDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..", "..")),
+            WorkingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..")),
             UseShellExecute = false,
             FileName = "just"
         };

@@ -22,14 +22,14 @@ public partial class ControlsBarViewModel(IOptions<EngineConfig> config, IMessen
     [RelayCommand]
     private void Package()
     {
-        CommandRunner.Package(config.Value.ProjectRoot);
+        CommandsRunner.Package(config.Value.ProjectRoot);
     }
     
     [RelayCommand]
     private void RebuildAndRestart()
     {
-        CommandRunner.Rebuild(config.Value.ProjectRoot);
-        CommandRunner.Restart();
+        CommandsRunner.Rebuild(config.Value.ProjectRoot);
+        CommandsRunner.Restart();
     }
 
     [RelayCommand(CanExecute = nameof(CanPlay))]
