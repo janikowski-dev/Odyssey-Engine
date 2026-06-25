@@ -53,7 +53,7 @@ The result is a single editor window with the real, live C++ OpenGL viewport ren
 | Editor UI | WPF, MVVM (CommunityToolkit.Mvvm) |
 | DI / hosting | Microsoft.Extensions.Hosting |
 | Engine ↔ editor | TCP, length-prefixed JSON (RPC + events) |
-| Task runner | `just` |
+| Task runner | just |
 
 ---
 ## Prerequisites
