@@ -59,7 +59,7 @@ The result is a single editor window with the real, live C++ OpenGL viewport ren
 ## Prerequisites
 
 > Windows-only - the editor uses WPF and native HWND reparenting, and the engine builds with MSVC.
-> 
+
 - [Visual Studio 2022 Build Tools](https://visualstudio.microsoft.com/downloads/) (MSVC toolchain) - `winget install Microsoft.VisualStudio.2022.BuildTools`
 - [Ninja](https://ninja-build.org/) - `winget install Ninja-build.Ninja`
 - [just](https://github.com/casey/just) - `winget install Casey.Just`
