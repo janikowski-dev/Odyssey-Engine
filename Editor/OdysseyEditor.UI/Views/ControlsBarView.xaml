@@ -22,6 +22,7 @@
                       Fill="Transparent"
                       Stretch="Uniform" Width="15" Height="15"/>
             </Button>
+            
             <Button Style="{StaticResource IconButtonStyle}" Command="{Binding LoadCommand}" ToolTip="Load Scene">
                 <Path Data="M 1,3 H 6 L 8,5 H 15 V 13 H 1 Z"
                       Stroke="{StaticResource ForegroundBrush}"
@@ -37,10 +38,25 @@
                       Fill="{StaticResource ForegroundBrush}"
                       Stretch="Uniform" Width="12" Height="12"/>
             </Button>
+            
             <Button Style="{StaticResource IconButtonStyle}" Command="{Binding StopCommand}" ToolTip="End Play">
                 <Path Data="M 0,0 H 12 V 12 H 0 Z"
                       Fill="{StaticResource ForegroundBrush}"
                       Stretch="Uniform" Width="11" Height="11"/>
+            </Button>
+        </StackPanel>
+        
+        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Style="{StaticResource IconButtonStyle}" Command="{Binding RebuildAndRestartCommand}" ToolTip="Rebuild &amp; Restart">
+                <Path Data="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"
+                      Fill="{StaticResource ForegroundBrush}"
+                      Stretch="Uniform" Width="15" Height="15"/>
+            </Button>
+            
+            <Button Style="{StaticResource IconButtonStyle}" Command="{Binding PackageCommand}" ToolTip="Package">
+                <Path Data="M21 8.94c0-.36-.19-.69-.5-.87l-7.9-4.56c-.37-.21-.83-.21-1.2 0L3.5 8.07c-.31.18-.5.51-.5.87v8.12c0 .36.19.69.5.87l7.9 4.56c.37.21.83.21 1.2 0l7.9-4.56c.31-.18.5-.51.5-.87V8.94zM12 4.15L18.85 8 12 11.85 5.15 8 12 4.15zM5 9.75l6 3.46v6.84l-6-3.46V9.75zm8 10.3v-6.84l6-3.46v6.84l-6 3.46z"
+                      Fill="{StaticResource ForegroundBrush}"
+                      Stretch="Uniform" Width="15" Height="15"/>
             </Button>
         </StackPanel>
     </Grid>

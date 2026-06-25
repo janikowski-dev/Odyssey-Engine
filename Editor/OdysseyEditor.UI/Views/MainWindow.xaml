@@ -34,8 +34,7 @@
             <Style TargetType="Grid">
                 <Setter Property="Margin" Value="0"/>
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}"
-                                 Value="Maximized">
+                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
                         <Setter Property="Margin" Value="7"/>
                     </DataTrigger>
                 </Style.Triggers>

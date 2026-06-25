@@ -1,13 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.Options;
+using OdysseyEditor.Domain.Data;
 using OdysseyEditor.Domain.Events;
 using OdysseyEditor.Domain.Interfaces;
+using OdysseyEditor.UI.Utility;
 using OdysseyEditor.UI.ViewModels.Messages;
 
 namespace OdysseyEditor.UI.ViewModels.ControlsBar;
 
-public partial class ControlsBarViewModel(IMessenger messenger, IEngineMessenger engineMessenger) : ObservableObject
+public partial class ControlsBarViewModel(IOptions<EngineConfig> config, IMessenger messenger, IEngineMessenger engineMessenger) : ObservableObject
 {
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(PlayCommand))]
@@ -15,6 +18,19 @@ public partial class ControlsBarViewModel(IMessenger messenger, IEngineMessenger
     [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
     [NotifyCanExecuteChangedFor(nameof(LoadCommand))]
     private partial bool IsPlaying { get; set; }
+    
+    [RelayCommand]
+    private void Package()
+    {
+        CommandRunner.Package(config.Value.ProjectRoot);
+    }
+    
+    [RelayCommand]
+    private void RebuildAndRestart()
+    {
+        CommandRunner.Rebuild(config.Value.ProjectRoot);
+        CommandRunner.Restart();
+    }
 
     [RelayCommand(CanExecute = nameof(CanPlay))]
     private async Task PlayAsync()
