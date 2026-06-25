@@ -32,4 +32,8 @@
         <views:ResourcesView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type workspace:FocusWarningViewModel}">
+        <views:FocusWarningView/>
+    </DataTemplate>
+
 </ResourceDictionary>

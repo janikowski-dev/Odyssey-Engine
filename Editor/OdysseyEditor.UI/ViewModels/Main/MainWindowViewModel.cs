@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using OdysseyEditor.UI.ViewModels.Resources;
@@ -11,6 +12,7 @@ using OdysseyEditor.UI.ViewModels.Workspace;
 namespace OdysseyEditor.UI.ViewModels.Main;
 
 public partial class MainWindowViewModel(
+    FocusWarningViewModel focusWarning,
     ControlsBarViewModel controlsBar,
     HierarchyViewModel hierarchy,
     WorkspaceViewModel workspace,
@@ -19,16 +21,20 @@ public partial class MainWindowViewModel(
     ResourcesViewModel resources
 ) : ObservableObject
 {
+    public FocusWarningViewModel FocusWarning { get; } = focusWarning;
     public ControlsBarViewModel ControlsBar { get; } = controlsBar;
     public HierarchyViewModel Hierarchy { get; } = hierarchy;
     public WorkspaceViewModel Workspace { get; } = workspace;
     public InspectorViewModel Inspector { get; } = inspector;
-    public ConsoleViewModel Console { get; } = console;
     public ResourcesViewModel Resources { get; } = resources;
+    public ConsoleViewModel Console { get; } = console;
+
+    public ICommand FocusEngineCommand => Workspace.FocusEngineCommand;
 
     [RelayCommand]
     private async Task InitAsync()
     {
+        FocusWarning.Init();
         Resources.Init();
         Console.Init();
         await Workspace.InitAsync();

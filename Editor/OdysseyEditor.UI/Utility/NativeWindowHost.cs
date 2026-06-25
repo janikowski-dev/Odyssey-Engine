@@ -41,6 +41,17 @@ public sealed class NativeWindowHost : IDisposable
         SetWindowLongPtr(childHwnd, GwlStyle, WsChild | WsVisible | WsClipSiblings);
         SetWindowPos(childHwnd, IntPtr.Zero, 0, 0, 0, 0, SwpNoMove | SwpNoSize | SwpNoZOrder | SwpFrameChanged);
         ShowWindow(childHwnd, 5);
+        AttachThreadInput(GetCurrentThreadId(), GetWindowThreadProcessId(_childHwnd, IntPtr.Zero), true);
+    }
+
+    public void Focus()
+    {
+        if (!HasChild())
+        {
+            return;
+        }
+
+        SetFocus(_childHwnd);
     }
 
     public void Resize()
@@ -69,6 +80,8 @@ public sealed class NativeWindowHost : IDisposable
     private void CacheChild(IntPtr childHwnd) => _childHwnd = childHwnd;
 
     private bool HasHost() => _hostHwnd != IntPtr.Zero;
+    
+    private bool HasChild() => _childHwnd != IntPtr.Zero;
 
     [StructLayout(LayoutKind.Sequential)]
     private struct Rect { public int Left, Top, Right, Bottom; }
@@ -100,4 +113,16 @@ public sealed class NativeWindowHost : IDisposable
         int x, int y, int width, int height,
         IntPtr parent, IntPtr menu, IntPtr instance, IntPtr param
     );
+    
+    [DllImport("user32.dll")]
+    private static extern IntPtr SetFocus(IntPtr hwnd);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+
+    [DllImport("user32.dll")]
+    private static extern uint GetWindowThreadProcessId(IntPtr hwnd, IntPtr processId);
+
+    [DllImport("kernel32.dll")]
+    private static extern uint GetCurrentThreadId();
 }

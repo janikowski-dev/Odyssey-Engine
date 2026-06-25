@@ -1,15 +1,16 @@
 ﻿using System.Runtime.InteropServices;
 using System.Windows.Interop;
+using CommunityToolkit.Mvvm.Input;
 using OdysseyEditor.Domain.Events;
 using OdysseyEditor.Domain.Interfaces;
 using OdysseyEditor.UI.Utility;
 
 namespace OdysseyEditor.UI.ViewModels.Workspace;
 
-public class WorkspaceViewModel(IEngineLauncher engineLauncher, IEngineMessenger engineMessenger) : HwndHost
+public partial class WorkspaceViewModel(IEngineLauncher engineLauncher, IEngineMessenger engineMessenger) : HwndHost
 {
     private readonly NativeWindowHost _window = new();
-
+    
     public async Task InitAsync()
     {
         AttachEngine(await LaunchEngine());
@@ -38,6 +39,13 @@ public class WorkspaceViewModel(IEngineLauncher engineLauncher, IEngineMessenger
     {
         await engineLauncher.LaunchAsync();
         return await engineMessenger.Send<GetViewportRequest, GetViewportResponse>(GetViewport.Key, new GetViewportRequest());
+    }
+
+    [RelayCommand]
+    private async Task FocusEngineAsync()
+    {
+        _window.Focus();
+        await engineMessenger.Send<FocusWindowRequest, FocusWindowResponse>(FocusWindow.Key, new FocusWindowRequest());
     }
 
     private void AttachEngine(GetViewportResponse response)

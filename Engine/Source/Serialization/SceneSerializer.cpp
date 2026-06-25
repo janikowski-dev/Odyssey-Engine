@@ -9,8 +9,6 @@ namespace Source::Serialization
     {
         std::ofstream Stream(Path);
 
-        DebugLog << Path;
-
         if (!Stream)
         {
             return false;

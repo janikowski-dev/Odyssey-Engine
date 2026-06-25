@@ -2,6 +2,7 @@
 
 #include "Resources/ResourceCache.h"
 #include "Platform/Window.h"
+#include "Platform/Input.h"
 #include "Editor/Bridge.h"
 #include "ECS/Registry.h"
 #include "Core/Minimal.h"
@@ -26,6 +27,7 @@ namespace Source::Core
 		UniquePtr<Resources::ResourceCache> ResourceCache;
 		UniquePtr<Editor::Bridge> EditorBridge;
 		UniquePtr<Platform::Window> Window;
+		UniquePtr<Platform::Input> Input;
 		UniquePtr<Core::Runtime> Runtime;
 		UniquePtr<ECS::Registry> World;
 		UniquePtr<Core::Time> Time;

@@ -78,6 +78,7 @@ public partial class App
         services.AddSingleton<IPropertyFieldFactory, PropertyFieldFactory>();
         services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
         services.AddSingleton<WorkspaceViewModel>();
+        services.AddSingleton<FocusWarningViewModel>();
         services.AddSingleton<ControlsBarViewModel>();
         services.AddSingleton<HierarchyViewModel>();
         services.AddSingleton<InspectorViewModel>();

@@ -40,11 +40,16 @@ set(SOURCES
     Events/SaveScene.h
     Events/RemoveComponent.h
     Events/SelectEntity.h
+    Events/FocusWindow.h
     Events/Play.h
     Events/Stop.h
 
+    Platform/Input.cpp
+    Platform/Input.h
     Platform/Window.cpp
     Platform/Window.h
+    Platform/Context.cpp
+    Platform/Context.h
 
     Rendering/Mesh.cpp
     Rendering/Mesh.h

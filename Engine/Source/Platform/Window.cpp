@@ -1,6 +1,8 @@
 #include "Platform/Window.h"
 
 #include "Core/ApplicationConfig.h"
+#include "Platform/Context.h"
+#include "Platform/Input.h"
 #include "Editor/Bridge.h"
 #include "ECS/Registry.h"
 #include "ECS/Entity.h"
@@ -10,7 +12,6 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
-#include "Window.h"
 
 namespace Source::Platform
 {
@@ -27,7 +28,7 @@ namespace Source::Platform
 	{
 		Init();
 
-		if (!TryCache(TryGet()))
+		if (!TryCache(TryCreate()))
 		{
 			return;
 		}
@@ -47,16 +48,21 @@ namespace Source::Platform
     	glfwPollEvents();
 	}
 
-	bool Window::ShouldClose() const
+	void Window::Focus() const
 	{
+	    glfwFocusWindow(Handle);
+	}
+
+    bool Window::ShouldClose() const
+    {
 		return glfwWindowShouldClose(Handle);
 	}
 
-    uint64 Window::GetHandle() const
+    uint64 Window::GetWindowHandle() const
     {
 		return (uint64)(uintptr_t)glfwGetWin32Window(Handle);
     }
-	
+
     void Window::Init() const
     {
         glfwInit();
@@ -72,14 +78,23 @@ namespace Source::Platform
 		glfwMakeContextCurrent(Handle);
 		gladLoadGL(glfwGetProcAddress);
 		glfwSwapInterval(Config->UseVSync ? 1 : 0);
-		glfwSetWindowUserPointer(Handle, this);
+
+	    glfwSetWindowFocusCallback(Handle, [](GLFWwindow* W, int Focused)
+	    {
+			static_cast<Context*>(glfwGetWindowUserPointer(W))->WindowPtr->OnFocusChanged(Focused == GLFW_TRUE);
+	    });
 	}
 
-	GLFWwindow* Window::TryGet() const
+	GLFWwindow* Window::TryCreate() const
 	{
 		return glfwCreateWindow(Config->Width, Config->Height, "Window", nullptr, nullptr);
 	}
 
+	void* Window::GetHandle() const
+	{
+		return Handle;
+	}
+	
 	bool Window::TryCache(GLFWwindow* NewHandle)
 	{
 		Handle = NewHandle;

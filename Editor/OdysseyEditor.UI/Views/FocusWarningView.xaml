@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="OdysseyEditor.UI.Views.FocusWarningView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:workspace="clr-namespace:OdysseyEditor.UI.ViewModels.Workspace"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviors="clr-namespace:OdysseyEditor.UI.Behaviors"
+             mc:Ignorable="d"
+             x:Name="Root"
+             d:DataContext="{d:DesignInstance Type=workspace:FocusWarningViewModel, IsDesignTimeCreatable=False}">
+
+    <Popup PlacementTarget="{Binding ElementName=Root}"
+           Placement="Right"
+           HorizontalOffset="-35" VerticalOffset="10"
+           AllowsTransparency="True"
+           Focusable="False">
+        <b:Interaction.Behaviors>
+            <behaviors:PopupFollowWindowBehavior/>
+        </b:Interaction.Behaviors>
+        
+        <Popup.IsOpen>
+            <MultiBinding Converter="{StaticResource WarningVisibilityConverter}" Mode="OneWay">
+                <Binding Path="IsEngineFocused"/>
+                <Binding Path="IsActive" RelativeSource="{RelativeSource AncestorType=Window}"/>
+            </MultiBinding>
+        </Popup.IsOpen>
+        
+        <Border Background="#CC3A2F00" CornerRadius="4" Padding="4"
+                BorderBrush="#FFD23F" BorderThickness="1"
+                ToolTip="Focus With F1">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="&#xE7BA;" FontFamily="Segoe MDL2 Assets" Foreground="#FFC23F" FontSize="14" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+    </Popup>
+
+</UserControl>

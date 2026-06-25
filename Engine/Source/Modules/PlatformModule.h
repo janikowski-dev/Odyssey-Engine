@@ -1,8 +1,7 @@
 #pragma once
 
+#include "Platform/Context.h"
 #include "Core/IModule.h"
-
-namespace Source::Platfom { class Window; }
 
 namespace Source::Modules
 {
@@ -12,5 +11,13 @@ namespace Source::Modules
         Core::TickPolicy GetTickPolicy() const override { return Core::TickPolicy::Always; }
         void Init(const Core::ApplicationConfig Config, Core::Context& Context) override;
         void Tick(const Core::Context& Context) override;
+
+    private:
+        void InitWindow(const Core::ApplicationConfig Config, Core::Context& Context);
+        void InitInput(const Core::ApplicationConfig Config, Core::Context& Context);
+        void InitLocalContext(const Core::ApplicationConfig Config, Core::Context& Context);
+
+    private:
+        UniquePtr<Platform::Context> LocalContext;
     };
 }

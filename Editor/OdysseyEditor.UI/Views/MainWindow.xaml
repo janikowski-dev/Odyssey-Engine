@@ -18,6 +18,10 @@
                       GlassFrameThickness="0"
                       UseAeroCaptionButtons="False"/>
     </WindowChrome.WindowChrome>
+    
+    <Window.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding FocusEngineCommand}"/>
+    </Window.InputBindings>
 
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
@@ -68,7 +72,10 @@
             <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" ResizeBehavior="PreviousAndNext"/>
 
             <Border Grid.Column="2" Style="{StaticResource PanelBorderStyle}">
-                <ContentControl Content="{Binding Workspace}"/>
+                <Grid>
+                    <ContentControl Content="{Binding FocusWarning}"/>
+                    <ContentControl Content="{Binding Workspace}"/>
+                </Grid>
             </Border>
 
             <GridSplitter Grid.Column="3" HorizontalAlignment="Stretch" ResizeBehavior="PreviousAndNext"/>

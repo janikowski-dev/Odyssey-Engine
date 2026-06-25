@@ -10,7 +10,7 @@
     
     <Border Style="{StaticResource PanelBorderStyle}">
         <Grid>
-            <TextBlock Text="Editor is not open." HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="Editor is not opened." HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
     </Border>
 

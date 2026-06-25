@@ -13,7 +13,9 @@
 #include "Events/CreatedEntity.h"
 #include "Events/CreateEntity.h"
 #include "Events/DestroyEntity.h"
+#include "Events/FocusWindow.h"
 #include "Events/RefreshResources.h"
+#include "Events/WindowFocusChanged.h"
 #include "Events/DestroyedEntity.h"
 #include "Events/RemoveComponent.h"
 #include "Serialization/SceneSerializer.h"
@@ -41,6 +43,11 @@ namespace Source::Modules
 
     void EditorModule::InitIncomingEvents(const Core::ApplicationConfig Config, Core::Context& Context)
     {
+        Context.EditorBridge->On<Events::PingRequest, Events::PingResponse>(Events::PingKey, [](const Events::PingRequest&)
+        {
+            return Events::PingResponse();
+        });
+
         Context.EditorBridge->On<Events::SelectEntityRequest, Events::SelectEntityResponse>(Events::SelectEntityKey, [&Context](const Events::SelectEntityRequest& Request)
         {
             return Events::SelectEntityResponse { Serialization::GetComponents(Context.World->Get(Request.Index)) };
@@ -51,14 +58,15 @@ namespace Source::Modules
             return Events::GetSchemaResponse { Serialization::GetComponentTypes() };
         });
 
-        Context.EditorBridge->On<Events::PingRequest, Events::PingResponse>(Events::PingKey, [](const Events::PingRequest&)
-        {
-            return Events::PingResponse();
-        });
-
 		Context.EditorBridge->On<Events::GetViewportRequest, Events::GetViewportResponse>(Events::GetViewportKey, [&Context](const Events::GetViewportRequest&)
     	{
-    	    return Events::GetViewportResponse { Context.Window->GetHandle() };
+    	    return Events::GetViewportResponse { Context.Window->GetWindowHandle() };
+    	});
+
+		Context.EditorBridge->On<Events::FocusWindowRequest, Events::FocusWindowResponse>(Events::FocusWindowKey, [&Context](const Events::FocusWindowRequest&)
+    	{
+            Context.Window->Focus();
+    	    return Events::FocusWindowResponse();
     	});
 
 		Context.EditorBridge->On<Events::RefreshResourcesRequest, Events::RefreshResourcesResponse>(Events::RefreshResourcesKey, [&Context](const Events::RefreshResourcesRequest&)
@@ -130,6 +138,11 @@ namespace Source::Modules
 
     void EditorModule::InitOutgoingEvents(const Core::ApplicationConfig Config, Core::Context& Context)
     {
+        Context.Window->OnFocusChanged += [&Context](bool IsFocused)
+        {
+            Context.EditorBridge->Send(Events::WindowFocusChangedKey, Events::WindowFocusChanged { IsFocused });
+        };
+
         Context.World->OnEntityDestroyed += [&Context](uint32 Index)
         {
             Context.EditorBridge->Send(Events::DestroyedEntityKey, Events::DestroyedEntity { Index });
