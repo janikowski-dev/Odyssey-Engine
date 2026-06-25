@@ -12,6 +12,7 @@ endif()
 
 # Sources
 set(SOURCES
+    Example/MoveComponent.h
     Example/SpinComponent.h
     Example/SpinModule.h
 )

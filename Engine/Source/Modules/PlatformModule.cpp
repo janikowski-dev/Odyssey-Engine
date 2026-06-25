@@ -1,7 +1,12 @@
 #include "Modules/PlatformModule.h"
 
+#include "Platform/Context.h"
+
 namespace Source::Modules
 {
+    PlatformModule::PlatformModule() = default;
+    PlatformModule::~PlatformModule() = default;
+
     void PlatformModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
     {
         InitWindow(Config, Context);

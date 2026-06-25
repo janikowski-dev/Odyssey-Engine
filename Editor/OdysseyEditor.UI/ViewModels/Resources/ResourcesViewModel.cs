@@ -19,9 +19,11 @@ public partial class ResourcesViewModel(IOptions<EngineConfig> config, IEngineMe
 
     private string ResourcesPath => Path.Combine(config.Value.ProjectRoot, "Resources");
 
-    public void Init()
+    [RelayCommand]
+    public async Task InitAsync()
     {
         GetAllFiles();
+        await RefreshResources();
     }
 
     [RelayCommand]
@@ -56,7 +58,6 @@ public partial class ResourcesViewModel(IOptions<EngineConfig> config, IEngineMe
         });
     }
 
-    [RelayCommand]
     private void GetAllFiles()
     {
         Items.Clear();

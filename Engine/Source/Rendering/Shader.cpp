@@ -18,7 +18,7 @@ namespace Source::Rendering
         {
             GLchar Log[1024];
             glGetShaderInfoLog(Id, sizeof(Log), nullptr, Log);
-            DebugError << "[Shader] compile failed: " << Log << "\n";
+            DebugError("[Shader] Compile failed: %s", Log);
         }
 
         return Id;
@@ -41,7 +41,7 @@ namespace Source::Rendering
         {
             GLchar Log[1024];
             glGetProgramInfoLog(Program, sizeof(Log), nullptr, Log);
-            std::cerr << "[Shader] link failed: " << Log << "\n";
+            DebugError("[Shader] Link failed: %s", Log);
         }
 
         glDeleteShader(Vs);

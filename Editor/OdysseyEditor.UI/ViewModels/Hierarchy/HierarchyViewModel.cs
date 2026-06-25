@@ -8,7 +8,7 @@ using OdysseyEditor.UI.ViewModels.Messages;
 
 namespace OdysseyEditor.UI.ViewModels.Hierarchy;
 
-public partial class HierarchyViewModel(IMessenger messenger, IEngineMessenger engineMessenger) : ObservableObject, IRecipient<AddedEntityMessage>
+public partial class HierarchyViewModel(IMessenger messenger, IEngineMessenger engineMessenger) : ObservableObject, IRecipient<CreatedEntityMessage>
 {
     [ObservableProperty]
     public partial int? SelectedEntity { get; set; }
@@ -22,7 +22,7 @@ public partial class HierarchyViewModel(IMessenger messenger, IEngineMessenger e
         await InitEntities();
     }
 
-    public void Receive(AddedEntityMessage message) => Entities.Add(message.Index);
+    public void Receive(CreatedEntityMessage message) => Entities.Add(message.Index);
 
     partial void OnSelectedEntityChanged(int? value)
     {

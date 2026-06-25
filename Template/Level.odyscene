@@ -5,7 +5,7 @@
                 {
                     "Fields": {
                         "Aspect": 1.7777777910232544,
-                        "Far": 100.0,
+                        "Far": 250.0,
                         "FovDegrees": 60.0,
                         "Near": 0.10000000149011612,
                         "Position": [
@@ -14,14 +14,9 @@
                             6.0
                         ],
                         "Priority": 0,
-                        "Target": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "Up": [
-                            0.0,
-                            1.0,
+                        "Rotation": [
+                            -20.0,
+                            45.0,
                             0.0
                         ]
                     },
@@ -33,22 +28,12 @@
             "Components": [
                 {
                     "Fields": {
-                        "Speed": [
-                            0.0,
-                            0.800000011920929,
-                            0.0
-                        ]
-                    },
-                    "Name": "SpinComponent"
-                },
-                {
-                    "Fields": {
                         "Color": [
                             1.0,
                             1.0,
                             0.0
                         ],
-                        "MeshId": "Cube",
+                        "MeshId": "Dragon",
                         "ShaderId": "Lit"
                     },
                     "Name": "RendererComponent"
@@ -56,13 +41,13 @@
                 {
                     "Fields": {
                         "Position": [
-                            -4.0,
-                            0.0,
-                            2.0
+                            -120.0,
+                            -50.0,
+                            -30.0
                         ],
                         "Rotation": [
                             0.0,
-                            0.9932270050048828,
+                            80.0,
                             0.0
                         ],
                         "Scale": [
@@ -81,7 +66,7 @@
                     "Fields": {
                         "Speed": [
                             0.0,
-                            1.0,
+                            -20.0,
                             0.0
                         ]
                     },
@@ -126,7 +111,7 @@
                 {
                     "Fields": {
                         "Speed": [
-                            1.0,
+                            15.0,
                             0.0,
                             0.0
                         ]
@@ -140,7 +125,7 @@
                             0.0,
                             1.0
                         ],
-                        "MeshId": "Cube",
+                        "MeshId": "Prism",
                         "ShaderId": "Lit"
                     },
                     "Name": "RendererComponent"
@@ -171,12 +156,22 @@
             "Components": [
                 {
                     "Fields": {
+                        "Speed": [
+                            0.0,
+                            0.0,
+                            25.0
+                        ]
+                    },
+                    "Name": "SpinComponent"
+                },
+                {
+                    "Fields": {
                         "Color": [
                             0.0,
                             1.0,
                             0.0
                         ],
-                        "MeshId": "Cube",
+                        "MeshId": "Prism",
                         "ShaderId": "Lit"
                     },
                     "Name": "RendererComponent"

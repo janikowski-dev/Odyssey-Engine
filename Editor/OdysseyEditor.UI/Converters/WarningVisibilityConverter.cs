@@ -7,9 +7,10 @@ public sealed class WarningVisibilityConverter : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        bool isEngineFocused = values.Length > 0 && values[0] is true;
-        bool isWindowActive  = values.Length > 1 && values[1] is true;
-        return !isEngineFocused && isWindowActive;
+        bool isWindowActive  = values.Length > 0 && values[0] is true;
+        bool isEngineFocused = values.Length > 1 && values[1] is true;
+        bool isInPlay = values.Length > 2 && values[2] is true;
+        return !isEngineFocused && isWindowActive && isInPlay;
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => throw new NotSupportedException();

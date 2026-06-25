@@ -55,7 +55,7 @@
                         <DataTemplate DataType="{x:Type models:LogEntry}">
                             <TextBlock TextWrapping="NoWrap">
                                 <Run Text="["/>
-                                <Run Text="{Binding FormattedTimestamp}"/>
+                                <TextBlock Text="{Binding FormattedTimestamp, Mode=OneWay}" />
                                 <Run Text="] "/>
                                 <Run Text="{Binding Message}"/>
                             </TextBlock>

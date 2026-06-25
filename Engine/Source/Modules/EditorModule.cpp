@@ -17,6 +17,7 @@
 #include "Events/RefreshResources.h"
 #include "Events/WindowFocusChanged.h"
 #include "Events/DestroyedEntity.h"
+#include "Events/SentMessage.h"
 #include "Events/RemoveComponent.h"
 #include "Serialization/SceneSerializer.h"
 #include "Serialization/ReflectionHandler.h"
@@ -151,6 +152,11 @@ namespace Source::Modules
         Context.World->OnEntityCreated += [&Context](uint32 Index)
         {
             Context.EditorBridge->Send(Events::CreatedEntityKey, Events::CreatedEntity { Index });
+        };
+
+        LogForward() = [&Context](const std::string& Message)
+        {
+            Context.EditorBridge->Send(Events::SentMessageKey, Events::SentMessage { Message });
         };
     }
 }

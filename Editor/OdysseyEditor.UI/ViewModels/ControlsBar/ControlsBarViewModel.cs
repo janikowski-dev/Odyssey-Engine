@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using OdysseyEditor.Domain.Events;
 using OdysseyEditor.Domain.Interfaces;
+using OdysseyEditor.UI.ViewModels.Messages;
 
 namespace OdysseyEditor.UI.ViewModels.ControlsBar;
 
-public partial class ControlsBarViewModel(IEngineMessenger engineMessenger) : ObservableObject
+public partial class ControlsBarViewModel(IMessenger messenger, IEngineMessenger engineMessenger) : ObservableObject
 {
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(PlayCommand))]
@@ -19,6 +21,7 @@ public partial class ControlsBarViewModel(IEngineMessenger engineMessenger) : Ob
     {
         IsPlaying = true;
         await engineMessenger.Send<PlayRequest, PlayResponse>(Play.Key, new PlayRequest());
+        messenger.Send(new ToggledPlayMessage { State = true });
     }
 
     [RelayCommand(CanExecute = nameof(CanStop))]
@@ -26,6 +29,7 @@ public partial class ControlsBarViewModel(IEngineMessenger engineMessenger) : Ob
     {
         IsPlaying = false;
         await engineMessenger.Send<StopRequest, StopResponse>(Stop.Key, new StopRequest());
+        messenger.Send(new ToggledPlayMessage { State = false });
     }
 
     [RelayCommand(CanExecute = nameof(CanLoadSave))]

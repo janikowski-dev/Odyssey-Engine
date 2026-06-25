@@ -38,6 +38,7 @@ set(SOURCES
     Events/Ping.h
     Events/RefreshResources.h
     Events/SaveScene.h
+    Events/SentMessage.h
     Events/RemoveComponent.h
     Events/SelectEntity.h
     Events/FocusWindow.h

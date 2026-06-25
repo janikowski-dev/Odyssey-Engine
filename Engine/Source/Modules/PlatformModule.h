@@ -1,13 +1,17 @@
 #pragma once
 
-#include "Platform/Context.h"
 #include "Core/IModule.h"
+
+namespace Source::Platform { class Context; }
 
 namespace Source::Modules
 {
     class PlatformModule final : public Core::IModule
     {
     public:
+        PlatformModule();
+        ~PlatformModule();
+
         Core::TickPolicy GetTickPolicy() const override { return Core::TickPolicy::Always; }
         void Init(const Core::ApplicationConfig Config, Core::Context& Context) override;
         void Tick(const Core::Context& Context) override;

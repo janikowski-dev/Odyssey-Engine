@@ -35,9 +35,9 @@ public partial class MainWindowViewModel(
     private async Task InitAsync()
     {
         FocusWarning.Init();
-        Resources.Init();
         Console.Init();
         await Workspace.InitAsync();
+        await Resources.InitAsync();
         await Inspector.InitAsync();
         await Hierarchy.InitAsync();
     }

@@ -104,7 +104,7 @@ namespace Source::Platform
 			return true;
 		}
 
-		DebugError << "Failed window creation!\n";
+		DebugError("Failed window creation!");
 		return false;
 	}
 }

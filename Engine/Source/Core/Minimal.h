@@ -24,6 +24,8 @@
 #include <queue>
 #include <thread>
 #include <fstream>
+#include <cstdarg>
+#include <cstdio> 
 
 // Pointers
 template<typename T> using SharedPtr = std::shared_ptr<T>;
@@ -49,10 +51,6 @@ using int64 = std::int64_t;
 
 // Json
 using Json = nlohmann::json;
-
-// Logs
-inline std::ostream& DebugLog = std::cout;
-inline std::ostream& DebugError = std::cout;
 
 // Time
 using Duration = std::chrono::duration<float>;
@@ -125,6 +123,71 @@ public:
 private:
     std::vector<Handler> Handlers;
 };
+
+// Logs forwarding
+inline std::function<void(const std::string&)>& LogForward()
+{
+    static std::function<void(const std::string&)> Fn;
+    return Fn;
+}
+
+inline void LogDispatch(std::ostream& Console, const char* Prefix, const char* Format, va_list Args)
+{
+    va_list ArgsCopy;
+    va_copy(ArgsCopy, Args);
+    const int Needed = std::vsnprintf(nullptr, 0, Format, ArgsCopy);
+    va_end(ArgsCopy);
+
+    std::string Message;
+
+    if (Needed > 0)
+    {
+        Message.resize(static_cast<size_t>(Needed));
+        std::vsnprintf(Message.data(), Message.size() + 1, Format, Args);
+    }
+
+    const std::string Full = std::string(Prefix) + Message;
+
+    Console << Full << std::flush;
+
+    if (LogForward())
+    {
+        LogForward()(Full);
+    }
+}
+
+#if defined(__GNUC__) || defined(__clang__)
+    #define LOG_PRINTF_CHECK(FmtIdx, ArgIdx) __attribute__((format(printf, FmtIdx, ArgIdx)))
+#else
+    #define LOG_PRINTF_CHECK(FmtIdx, ArgIdx)
+#endif
+
+inline void DebugLog(const char* Format, ...) LOG_PRINTF_CHECK(1, 2);
+inline void DebugLog(const char* Format, ...)
+{
+    va_list Args;
+    va_start(Args, Format);
+    LogDispatch(std::cout, "[log] ", Format, Args);
+    va_end(Args);
+}
+
+inline void DebugWarn(const char* Format, ...) LOG_PRINTF_CHECK(1, 2);
+inline void DebugWarn(const char* Format, ...)
+{
+    va_list Args;
+    va_start(Args, Format);
+    LogDispatch(std::cout, "[warn] ", Format, Args);
+    va_end(Args);
+}
+
+inline void DebugError(const char* Format, ...) LOG_PRINTF_CHECK(1, 2);
+inline void DebugError(const char* Format, ...)
+{
+    va_list Args;
+    va_start(Args, Format);
+    LogDispatch(std::cout, "[error] ", Format, Args);
+    va_end(Args);
+}
 
 // Components serialization
 #if defined(REFLECTION_CODEGEN)
