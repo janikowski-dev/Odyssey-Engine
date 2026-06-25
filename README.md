@@ -56,18 +56,17 @@ The result is a single editor window with the real, live C++ OpenGL viewport ren
 | Task runner | `just` |
 
 ---
-
 ## Prerequisites
 
 > Windows-only - the editor uses WPF and native HWND reparenting, and the engine builds with MSVC.
-
-- Visual Studio 2022 **Build Tools** (MSVC toolchain)
+> 
+- [Visual Studio 2022 Build Tools](https://visualstudio.microsoft.com/downloads/) (MSVC toolchain) - `winget install Microsoft.VisualStudio.2022.BuildTools`
 - [Ninja](https://ninja-build.org/) - `winget install Ninja-build.Ninja`
 - [just](https://github.com/casey/just) - `winget install Casey.Just`
-- .NET 10 SDK (for the editor)
-- Python 3 with `libclang` (for the reflection code generator) - `pip install libclang`
+- [.NET 10 SDK](https://dotnet.microsoft.com/download) (for the editor) - `winget install Microsoft.DotNet.SDK.10`
+- [Python 3](https://www.python.org/) with `libclang` (for the reflection code generator) - `pip install libclang`
 
-CMake fetches GLFW, GLAD, GLM, and nlohmann/json automatically on first configure.
+CMake fetches other packages automatically on first configure.
 
 ## Setup
 
