@@ -13,6 +13,7 @@
 #include "Events/CreatedEntity.h"
 #include "Events/CreateEntity.h"
 #include "Events/DestroyEntity.h"
+#include "Events/RefreshResources.h"
 #include "Events/DestroyedEntity.h"
 #include "Events/RemoveComponent.h"
 #include "Serialization/SceneSerializer.h"
@@ -40,12 +41,6 @@ namespace Source::Modules
 
     void EditorModule::InitIncomingEvents(const Core::ApplicationConfig Config, Core::Context& Context)
     {
-        Context.EditorBridge->On<Events::ModifyEntityRequest, Events::ModifyEntityResponse>(Events::ModifyEntityKey, [&Context](const Events::ModifyEntityRequest& Request)
-        {
-            Serialization::SetComponent(Context.World->Get(Request.Index), Request.Component, Request.Fields);
-            return Events::ModifyEntityResponse();
-        });
-
         Context.EditorBridge->On<Events::SelectEntityRequest, Events::SelectEntityResponse>(Events::SelectEntityKey, [&Context](const Events::SelectEntityRequest& Request)
         {
             return Events::SelectEntityResponse { Serialization::GetComponents(Context.World->Get(Request.Index)) };
@@ -61,28 +56,46 @@ namespace Source::Modules
             return Events::PingResponse();
         });
 
-        Context.EditorBridge->On<Events::SaveSceneRequest, Events::SaveSceneResponse>(Events::SaveSceneKey, [&Context](const Events::SaveSceneRequest& Request)
-        {
-            Serialization::SaveScene(*Context.World);
-            return Events::SaveSceneResponse();
-        });
-
-        Context.EditorBridge->On<Events::RemoveComponentRequest, Events::RemoveComponentResponse>(Events::RemoveComponentKey, [&Context](const Events::RemoveComponentRequest& Request)
-        {
-            Serialization::RemoveComponent(Context.World->Get(Request.Index), Request.Component);
-            return Events::RemoveComponentResponse();
-        });
-
-        Context.EditorBridge->On<Events::LoadSceneRequest, Events::LoadSceneResponse>(Events::LoadSceneKey, [&Context](const Events::LoadSceneRequest& Request)
-        {
-            Serialization::LoadScene(*Context.World);
-            return Events::LoadSceneResponse();
-        });
-
 		Context.EditorBridge->On<Events::GetViewportRequest, Events::GetViewportResponse>(Events::GetViewportKey, [&Context](const Events::GetViewportRequest&)
     	{
     	    return Events::GetViewportResponse { Context.Window->GetHandle() };
     	});
+
+		Context.EditorBridge->On<Events::RefreshResourcesRequest, Events::RefreshResourcesResponse>(Events::RefreshResourcesKey, [&Context](const Events::RefreshResourcesRequest&)
+    	{
+            Context.ResourceCache->Refresh();
+    	    return Events::RefreshResourcesResponse();
+    	});
+
+        Context.EditorBridge->On<Events::SaveSceneRequest, Events::SaveSceneResponse>(Events::SaveSceneKey, [&Context, Config](const Events::SaveSceneRequest& Request)
+        {
+            Serialization::SaveScene(*Context.World, Config.EngineConfig.GetScenePath());
+            return Events::SaveSceneResponse();
+        });
+
+        Context.EditorBridge->On<Events::LoadSceneRequest, Events::LoadSceneResponse>(Events::LoadSceneKey, [&Context, Config](const Events::LoadSceneRequest& Request)
+        {
+            Serialization::LoadScene(*Context.World, Config.EngineConfig.GetScenePath());
+            return Events::LoadSceneResponse();
+        });
+
+        Context.EditorBridge->On<Events::GetEntitiesRequest, Events::GetEntitiesResponse>(Events::GetEntitiesKey, [&Context](const Events::GetEntitiesRequest&)
+        {
+            std::vector<uint32> Indexes;
+
+            Context.World->Each([&](ECS::Entity Entity)
+            {
+                Indexes.push_back(Entity.Index);
+            });
+
+            return Events::GetEntitiesResponse { std::move(Indexes) };
+        });
+
+        Context.EditorBridge->On<Events::ModifyEntityRequest, Events::ModifyEntityResponse>(Events::ModifyEntityKey, [&Context](const Events::ModifyEntityRequest& Request)
+        {
+            Serialization::SetComponent(Context.World->Get(Request.Index), Request.Component, Request.Fields);
+            return Events::ModifyEntityResponse();
+        });
 
 		Context.EditorBridge->On<Events::CreateEntityRequest, Events::CreateEntityResponse>(Events::CreateEntityKey, [&Context](const Events::CreateEntityRequest&)
     	{
@@ -96,6 +109,12 @@ namespace Source::Modules
     	    return Events::DestroyEntityResponse();
     	});
 
+        Context.EditorBridge->On<Events::RemoveComponentRequest, Events::RemoveComponentResponse>(Events::RemoveComponentKey, [&Context](const Events::RemoveComponentRequest& Request)
+        {
+            Serialization::RemoveComponent(Context.World->Get(Request.Index), Request.Component);
+            return Events::RemoveComponentResponse();
+        });
+
 		Context.EditorBridge->On<Events::PlayRequest, Events::PlayResponse>(Events::PlayKey, [&Context](const Events::PlayRequest&)
     	{
             Context.Runtime->ShouldBePlaying = true;
@@ -107,18 +126,6 @@ namespace Source::Modules
             Context.Runtime->ShouldBePlaying = false;
     	    return Events::StopResponse();
     	});
-
-        Context.EditorBridge->On<Events::GetEntitiesRequest, Events::GetEntitiesResponse>(Events::GetEntitiesKey, [&Context](const Events::GetEntitiesRequest&)
-        {
-            std::vector<uint32> Indexes;
-
-            Context.World->Each([&](ECS::Entity Entity)
-            {
-                Indexes.push_back(Entity.Index);
-            });
-
-            return Events::GetEntitiesResponse { std::move(Indexes) };
-        });
     }
 
     void EditorModule::InitOutgoingEvents(const Core::ApplicationConfig Config, Core::Context& Context)

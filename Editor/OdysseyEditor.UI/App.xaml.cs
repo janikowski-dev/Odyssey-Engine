@@ -8,6 +8,7 @@ using OdysseyEditor.Domain.Data;
 using OdysseyEditor.Domain.Interfaces;
 using OdysseyEditor.Domain.Services;
 using OdysseyEditor.UI.Factories;
+using OdysseyEditor.UI.ViewModels.Resources;
 using OdysseyEditor.UI.ViewModels.Console;
 using OdysseyEditor.UI.ViewModels.ControlsBar;
 using OdysseyEditor.UI.ViewModels.Hierarchy;
@@ -51,10 +52,12 @@ public partial class App
     {
         services.Configure<EngineConfig>(context.Configuration.GetSection("Engine"));
 
-        if (eventArgs.Args.Length == 1)
+        if (eventArgs.Args.Length != 1)
         {
-            services.Configure<EngineConfig>(config => config.EnginePath = $"{eventArgs.Args[0]}/Build/Launcher/Launcher.exe");
+            return;
         }
+        
+        services.Configure<EngineConfig>(config => config.ProjectRoot = eventArgs.Args[0]);
     }
 
     private static void ConfigureApplication(IServiceCollection services)
@@ -79,6 +82,7 @@ public partial class App
         services.AddSingleton<HierarchyViewModel>();
         services.AddSingleton<InspectorViewModel>();
         services.AddSingleton<ConsoleViewModel>();
+        services.AddSingleton<ResourcesViewModel>();
         services.AddSingleton<MainWindowViewModel>();
     }
 

@@ -1,0 +1,207 @@
+{
+    "Entities": [
+        {
+            "Components": [
+                {
+                    "Fields": {
+                        "Aspect": 1.7777777910232544,
+                        "Far": 100.0,
+                        "FovDegrees": 60.0,
+                        "Near": 0.10000000149011612,
+                        "Position": [
+                            4.0,
+                            3.0,
+                            6.0
+                        ],
+                        "Priority": 0,
+                        "Target": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Up": [
+                            0.0,
+                            1.0,
+                            0.0
+                        ]
+                    },
+                    "Name": "CameraComponent"
+                }
+            ]
+        },
+        {
+            "Components": [
+                {
+                    "Fields": {
+                        "Speed": [
+                            0.0,
+                            0.800000011920929,
+                            0.0
+                        ]
+                    },
+                    "Name": "SpinComponent"
+                },
+                {
+                    "Fields": {
+                        "Color": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ],
+                        "MeshId": "Cube",
+                        "ShaderId": "Lit"
+                    },
+                    "Name": "RendererComponent"
+                },
+                {
+                    "Fields": {
+                        "Position": [
+                            -4.0,
+                            0.0,
+                            2.0
+                        ],
+                        "Rotation": [
+                            0.0,
+                            0.9932270050048828,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "Name": "TransformComponent"
+                }
+            ]
+        },
+        {
+            "Components": [
+                {
+                    "Fields": {
+                        "Speed": [
+                            0.0,
+                            1.0,
+                            0.0
+                        ]
+                    },
+                    "Name": "SpinComponent"
+                },
+                {
+                    "Fields": {
+                        "Color": [
+                            1.0,
+                            0.0,
+                            1.0
+                        ],
+                        "MeshId": "Cube",
+                        "ShaderId": "Lit"
+                    },
+                    "Name": "RendererComponent"
+                },
+                {
+                    "Fields": {
+                        "Position": [
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "Rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "Name": "TransformComponent"
+                }
+            ]
+        },
+        {
+            "Components": [
+                {
+                    "Fields": {
+                        "Speed": [
+                            1.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    "Name": "SpinComponent"
+                },
+                {
+                    "Fields": {
+                        "Color": [
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "MeshId": "Cube",
+                        "ShaderId": "Lit"
+                    },
+                    "Name": "RendererComponent"
+                },
+                {
+                    "Fields": {
+                        "Position": [
+                            0.0,
+                            -1.0,
+                            0.0
+                        ],
+                        "Rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "Name": "TransformComponent"
+                }
+            ]
+        },
+        {
+            "Components": [
+                {
+                    "Fields": {
+                        "Color": [
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "MeshId": "Cube",
+                        "ShaderId": "Lit"
+                    },
+                    "Name": "RendererComponent"
+                },
+                {
+                    "Fields": {
+                        "Position": [
+                            -1.0,
+                            0.0,
+                            4.5
+                        ],
+                        "Rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "Name": "TransformComponent"
+                }
+            ]
+        }
+    ]
+}

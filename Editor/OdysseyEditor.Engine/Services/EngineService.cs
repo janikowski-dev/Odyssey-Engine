@@ -80,9 +80,9 @@ public sealed class EngineService(IOptions<EngineConfig> config) : IEngineLaunch
         }
     }
     
-    private void KillEngine()
+    private static void KillEngine()
     {
-        string processName = Path.GetFileNameWithoutExtension(config.Value.EnginePath);
+        string processName = Path.GetFileNameWithoutExtension("Launcher.exe");
     
         foreach (Process process in Process.GetProcessesByName(processName))
         {
@@ -94,13 +94,13 @@ public sealed class EngineService(IOptions<EngineConfig> config) : IEngineLaunch
 
     private void StartEngine()
     {
-        string enginePath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, config.Value.EnginePath));
+        string enginePath = Path.GetFullPath(Path.Combine(config.Value.ProjectRoot, "Build/Launcher/Launcher.exe"));
         
         _process = new Process
         {
             StartInfo = new ProcessStartInfo
             {
-                Arguments = $"-host {config.Value.Host} -port {config.Value.Port} -hide -editor",
+                Arguments = $"-host {config.Value.Host} -port {config.Value.Port} -hide -editor -root {config.Value.ProjectRoot}",
                 WorkingDirectory = Path.GetDirectoryName(enginePath),
                 UseShellExecute = false,
                 FileName = enginePath

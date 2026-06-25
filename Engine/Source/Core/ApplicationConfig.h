@@ -21,7 +21,25 @@ namespace Source::Core
 
 	struct EngineConfig
 	{
-        std::string ProjectFilePath;
+        std::string SettingsName = "Launch.odysettings";
+        std::string SceneName = "Level.odyscene";
+        std::string Resources = "Resources";
+        std::string Root = "";
+
+        std::string GetSettingsPath() const
+        {
+            return (std::filesystem::path(Root) / SettingsName).string();
+        }
+        
+        std::string GetScenePath() const
+        {
+            return (std::filesystem::path(Root) / SceneName).string();
+        }
+        
+        std::string GetResourcesPath() const
+        {
+            return (std::filesystem::path(Root) / Resources).string();
+        }
 	};
 
     struct EditorConfig
@@ -35,6 +53,6 @@ namespace Source::Core
         EngineConfig EngineConfig;
         WindowConfig WindowConfig;
         EditorConfig EditorConfig;
-        LaunchType LaunchType = LaunchType::Editor;
+        LaunchType LaunchType = LaunchType::Game;
     };
 }

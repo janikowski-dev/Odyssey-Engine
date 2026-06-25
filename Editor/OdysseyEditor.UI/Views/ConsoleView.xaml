@@ -10,61 +10,64 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=console:ConsoleViewModel, IsDesignTimeCreatable=False}">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <Border Grid.Row="0"
-                Background="{StaticResource PanelBackgroundBrush}"
-                BorderBrush="{StaticResource BorderBrushDark}"
-                BorderThickness="0,1,0,1"
-                Padding="8,6">
-
-            <DockPanel>
-
-                <Button DockPanel.Dock="Right" Command="{Binding ToggleCommand}" ToolTip="Toggle Console">
-                    <TextBlock Text="{Binding IsExpanded, Converter={StaticResource BoolToArrowConverter}}"/>
-                </Button>
-
-                <TextBlock Text="{Binding HeaderText}"
-                           FontSize="12"
-                           VerticalAlignment="Center"
-                           TextTrimming="CharacterEllipsis"/>
-            </DockPanel>
-        </Border>
-
-        <Border Grid.Row="1"
-                Height="200"
-                BorderThickness="0,1,0,0"
-                BorderBrush="{StaticResource BorderBrushDark}"
-                Visibility="{Binding IsExpanded, Converter={StaticResource BoolToVisibilityConverter}}">
-
-            <ListBox ItemsSource="{Binding Messages}"
-                     FontSize="12"
-                     FontFamily="Consolas"
-                     HorizontalContentAlignment="Stretch"
-                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                     ScrollViewer.VerticalScrollBarVisibility="Auto"
-                     VirtualizingPanel.IsVirtualizing="True">
-
-                <ListBox.ItemTemplate>
-                    <DataTemplate DataType="{x:Type models:LogEntry}">
-                        <TextBlock TextWrapping="NoWrap">
-                            <Run Text="["/>
-                            <Run Text="{Binding FormattedTimestamp}"/>
-                            <Run Text="] "/>
-                            <Run Text="{Binding Message}"/>
-                        </TextBlock>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-
-                <i:Interaction.Behaviors>
-                    <behaviors:ScrollToBottomBehavior/>
-                </i:Interaction.Behaviors>
-
-            </ListBox>
-        </Border>
-    </Grid>
+    <Border Style="{StaticResource PanelBorderStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+    
+            <Border Grid.Row="0"
+                    Background="{StaticResource PanelBackgroundBrush}"
+                    BorderBrush="{StaticResource BorderBrushDark}"
+                    BorderThickness="0,1,0,0"
+                    Padding="8,6">
+    
+                <DockPanel>
+                    
+                    <ToggleButton DockPanel.Dock="Right"
+                                  Style="{StaticResource ChevronToggleButtonStyle}"
+                                  IsChecked="{Binding IsExpanded, Mode=TwoWay}"
+                                  ToolTip="Toggle Console"/>
+    
+                    <TextBlock Text="{Binding HeaderText}"
+                               FontSize="12"
+                               VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis"/>
+                </DockPanel>
+            </Border>
+    
+            <Border Grid.Row="1"
+                    Height="300"
+                    BorderThickness="0,1,0,0"
+                    BorderBrush="{StaticResource BorderBrushDark}"
+                    Visibility="{Binding IsExpanded, Converter={StaticResource BoolToVisibilityConverter}}">
+    
+                <ListBox ItemsSource="{Binding Messages}"
+                         FontSize="12"
+                         FontFamily="Consolas"
+                         HorizontalContentAlignment="Stretch"
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                         VirtualizingPanel.IsVirtualizing="True">
+    
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type models:LogEntry}">
+                            <TextBlock TextWrapping="NoWrap">
+                                <Run Text="["/>
+                                <Run Text="{Binding FormattedTimestamp}"/>
+                                <Run Text="] "/>
+                                <Run Text="{Binding Message}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+    
+                    <i:Interaction.Behaviors>
+                        <behaviors:ScrollToBottomBehavior/>
+                    </i:Interaction.Behaviors>
+    
+                </ListBox>
+            </Border>
+        </Grid>
+    </Border>
 </UserControl>

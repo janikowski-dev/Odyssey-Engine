@@ -34,11 +34,15 @@ SharedPtr<T> MakeShared(Args&&... InArgs) { return std::make_shared<T>(std::forw
 template<typename T, typename... Args>
 UniquePtr<T> MakeUnique(Args&&... InArgs) { return std::make_unique<T>(std::forward<Args>(InArgs)...); }
 
-// Numbers
+// Unsigned integers
 using uint8 = std::uint8_t;
 using uint16 = std::uint16_t;
 using uint32 = std::uint32_t;
 using uint64 = std::uint64_t;
+
+// Integers
+using int8 = std::int8_t;
+using int16 = std::int16_t;
 using int32 = std::int32_t;
 using int64 = std::int64_t;
 

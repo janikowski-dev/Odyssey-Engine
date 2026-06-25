@@ -5,14 +5,11 @@
 
 namespace Source::Serialization
 {
-    namespace
+    bool SaveScene(ECS::Registry &World, const std::string& Path)
     {
-        constexpr const char* ScenePath = "Level.odyscene";
-    }
+        std::ofstream Stream(Path);
 
-    bool SaveScene(ECS::Registry &World)
-    {
-        std::ofstream Stream(ScenePath);
+        DebugLog << Path;
 
         if (!Stream)
         {
@@ -25,9 +22,9 @@ namespace Source::Serialization
         return Stream.good();
     }
 
-    bool LoadScene(ECS::Registry &World)
+    bool LoadScene(ECS::Registry &World, const std::string& Path)
     {
-        std::ifstream Stream(ScenePath);
+        std::ifstream Stream(Path);
 
         if (!Stream)
         {

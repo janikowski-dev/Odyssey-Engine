@@ -9,7 +9,7 @@ namespace Source::Modules
     void SerializationModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
     {
         Serialization::Init(*Context.World);
-        Serialization::LoadScene(*Context.World);
+        Serialization::LoadScene(*Context.World, Config.EngineConfig.GetScenePath());
     }
 
     void SerializationModule::OnBeginPlay(const Core::Context &Context)

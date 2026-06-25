@@ -5,8 +5,8 @@
 Source::Core::ApplicationConfig ConfigReader::Read(int Argc, char **Argv)
 {
     Source::Core::ApplicationConfig Config = Source::Core::ApplicationConfig();
-    ReadSettingsJson(Config);
     ParseCliArguments(Config, Argc, Argv);
+    ReadSettingsJson(Config);
     return Config;
 }
 
@@ -15,11 +15,6 @@ void ConfigReader::ParseCliArguments(Source::Core::ApplicationConfig& Config, in
     for (int I = 0; I < Argc; I++)
     {
         std::string Arg = Argv[I];
-
-        if (Arg == "-game")
-        {
-            Config.LaunchType = Source::Core::LaunchType::Game;
-        }
 
         if (Arg == "-editor")
         {
@@ -41,6 +36,11 @@ void ConfigReader::ParseCliArguments(Source::Core::ApplicationConfig& Config, in
             Config.EditorConfig.EditorPort = std::stoi(Argv[++I]);
         }
 
+        if (Arg == "-root" && I + 1 < Argc)
+        {
+            Config.EngineConfig.Root = Argv[++I];
+        }
+
         if (Arg == "-width" && I + 1 < Argc)
         {
             Config.WindowConfig.Width = std::stoi(Argv[++I]);
@@ -60,7 +60,12 @@ void ConfigReader::ParseCliArguments(Source::Core::ApplicationConfig& Config, in
 
 void ConfigReader::ReadSettingsJson(Source::Core::ApplicationConfig& Config)
 {
-    std::ifstream File("Launch.odysettings");
+    if (Config.LaunchType == Source::Core::LaunchType::Editor)
+    {
+        return;
+    }
+
+    std::ifstream File(Config.EngineConfig.GetScenePath());
 
     if (!File)
     {
@@ -83,10 +88,5 @@ void ConfigReader::ReadSettingsJson(Source::Core::ApplicationConfig& Config)
     if (SettingsJson.contains("VSync"))
     {
         Config.WindowConfig.UseVSync = SettingsJson["VSync"].get<uint32>() != 0;
-    }
-
-    if (SettingsJson.contains("Mode"))
-    {
-        Config.LaunchType = SettingsJson["Mode"].get<uint32>() != 0 ? Source::Core::LaunchType::Game : Source::Core::LaunchType::Editor;
     }
 }

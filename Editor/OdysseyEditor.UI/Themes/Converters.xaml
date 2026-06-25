@@ -4,10 +4,10 @@
     
     <converters:InverseZeroToVisibilityConverter x:Key="InverseZeroToVisibilityConverter"/>
     <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
+    <converters:PascalCaseToWordsConverter x:Key="PascalCaseToWordsConverter"/>
     <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter"/>
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <converters:LogLevelToColorConverter x:Key="LogLevelToColorConverter"/>
     <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
-    <converters:BoolToArrowConverter x:Key="BoolToArrowConverter"/>
     
 </ResourceDictionary>

@@ -1,8 +1,8 @@
 namespace OdysseyEditor.UI.Views;
 
-public partial class ControlsBar
+public partial class ControlsBarView
 {
-    public ControlsBar()
+    public ControlsBarView()
     {
         InitializeComponent();
     }

@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="OdysseyEditor.UI.Views.ResourcesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviors="clr-namespace:OdysseyEditor.UI.Behaviors"
+             xmlns:resources="clr-namespace:OdysseyEditor.UI.ViewModels.Resources"
+             xmlns:proxies="clr-namespace:OdysseyEditor.UI.Proxies"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=resources:ResourcesViewModel}">
+    <Grid>
+        <b:Interaction.Behaviors>
+            <behaviors:WindowActivatedBehavior Command="{Binding GetAllFilesCommand}"/>
+        </b:Interaction.Behaviors>
+        
+        <Grid.Resources>
+            <proxies:ResourcesProxy x:Key="ResourcesProxy" Data="{Binding}" />
+        </Grid.Resources>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ListBox Grid.Row="1"
+                 ItemsSource="{Binding Items}"
+                 SelectedItem="{Binding SelectedItem}"
+                 ItemContainerStyle="{StaticResource ResourceItemContainerStyle}"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 HorizontalContentAlignment="Stretch">
+            <b:Interaction.Behaviors>
+                <behaviors:FileDropBehavior Command="{Binding DropFilesCommand}"/>
+            </b:Interaction.Behaviors>
+            
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type resources:ResourceItem}">
+                    <Border x:Name="Bd" Background="Transparent" CornerRadius="4" Padding="6">
+                        <Border.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Explore"
+                                          Command="{Binding Data.ExploreCommand, Source={StaticResource ResourcesProxy}}"
+                                          CommandParameter="{Binding}"/>
+                                <MenuItem Header="Delete"
+                                          Command="{Binding Data.DeleteCommand, Source={StaticResource ResourcesProxy}}"
+                                          CommandParameter="{Binding}"/>
+                            </ContextMenu>
+                        </Border.ContextMenu>
+
+                        <StackPanel Width="84">
+                            <TextBlock Text="&#xE7C3;" HorizontalAlignment="Center" FontSize="32"/>
+                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxHeight="34"
+                                       TextTrimming="CharacterEllipsis"/>
+                        </StackPanel>
+
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{StaticResource AccentSubtleBrush}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

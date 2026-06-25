@@ -13,10 +13,9 @@
             <Border DockPanel.Dock="Top"
                     Background="{StaticResource ControlBackgroundBrush}"
                     BorderBrush="{StaticResource BorderBrushDark}"
-                    BorderThickness="0,0,0,1"
-                    Padding="10,10">
-                <TextBlock Text="Hierarchy"
-                           FontWeight="SemiBold"/>
+                    BorderThickness="0,0,0,3"
+                    Padding="10,8, 10, 10">
+                <TextBlock Text="Hierarchy" FontWeight="SemiBold"/>
             </Border>
 
             <ListBox ItemsSource="{Binding Entities}"

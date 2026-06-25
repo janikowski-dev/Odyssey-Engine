@@ -34,6 +34,20 @@ namespace Source::Serialization
         static uint64 FromJson(const Json& J) { return J.get<uint64>(); }
     };
     
+    template <> struct FieldTraits<int8>
+    {
+        static constexpr const char* TypeName = "Int";
+        static Json ToJson(const int& V) { return V; }
+        static int8 FromJson(const Json& J) { return J.get<int8>(); }
+    };
+    
+    template <> struct FieldTraits<int16>
+    {
+        static constexpr const char* TypeName = "Int";
+        static Json ToJson(const int& V) { return V; }
+        static int16 FromJson(const Json& J) { return J.get<int16>(); }
+    };
+    
     template <> struct FieldTraits<int32>
     {
         static constexpr const char* TypeName = "Int";

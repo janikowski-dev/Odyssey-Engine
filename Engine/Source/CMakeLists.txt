@@ -36,6 +36,7 @@ set(SOURCES
     Events/GetViewport.h
     Events/LoadScene.h
     Events/Ping.h
+    Events/RefreshResources.h
     Events/SaveScene.h
     Events/RemoveComponent.h
     Events/SelectEntity.h
@@ -84,11 +85,13 @@ set(SOURCES
     Modules/WorldModule.cpp
     Modules/WorldModule.h
 
+    Resources/ResourceCache.cpp
     Resources/ResourceCache.h
     Resources/ResourceLibrary.h
     Resources/ResourceLibrary.inl
 )
 
+# Libraries
 include(Dependencies.cmake)
 
 add_library(Source STATIC)
@@ -101,11 +104,11 @@ add_compile_definitions(
     GLFW_INCLUDE_NONE
 )
 
-# Libraries
 target_link_libraries(Source glfw)
 target_link_libraries(Source glad)
 target_link_libraries(Source glm)
 target_link_libraries(Source nlohmann_json)
+target_link_libraries(Source assimp)
 
 # Code generation - general
 find_package(Python3 REQUIRED COMPONENTS Interpreter)

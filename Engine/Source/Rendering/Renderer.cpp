@@ -32,9 +32,9 @@ namespace Source::Rendering
         glm::mat4 Matrix(1.0f);
 
         Matrix = glm::translate(Matrix, InModel.Position);
-        Matrix = glm::rotate(Matrix, InModel.Rotation.x, Vector3(1, 0, 0));
-        Matrix = glm::rotate(Matrix, InModel.Rotation.y, Vector3(0, 1, 0));
-        Matrix = glm::rotate(Matrix, InModel.Rotation.z, Vector3(0, 0, 1));
+        Matrix = glm::rotate(Matrix, glm::radians(InModel.Rotation.x), Vector3(1, 0, 0));
+        Matrix = glm::rotate(Matrix, glm::radians(InModel.Rotation.y), Vector3(0, 1, 0));
+        Matrix = glm::rotate(Matrix, glm::radians(InModel.Rotation.z), Vector3(0, 0, 1));
         Matrix = glm::scale(Matrix, InModel.Scale);
 
         InShader.Use();
@@ -48,6 +48,13 @@ namespace Source::Rendering
     void Renderer::CacheCamera(const Components::CameraComponent &InCamera)
     {
         Projection = glm::perspective(glm::radians(InCamera.FovDegrees), InCamera.Aspect, InCamera.Near, InCamera.Far);
-        View = glm::lookAt(InCamera.Position, InCamera.Target, InCamera.Up);
+
+        glm::mat4 World(1.0f);
+        World = glm::translate(World, InCamera.Position);
+        World = glm::rotate(World, glm::radians(InCamera.Rotation.y), Vector3(0, 1, 0));
+        World = glm::rotate(World, glm::radians(InCamera.Rotation.x), Vector3(1, 0, 0));
+        World = glm::rotate(World, glm::radians(InCamera.Rotation.z), Vector3(0, 0, 1));
+
+        View = glm::inverse(World);
     }
 }

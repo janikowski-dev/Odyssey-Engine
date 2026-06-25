@@ -4,11 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:views="clr-namespace:OdysseyEditor.UI.Views"
         xmlns:main="clr-namespace:OdysseyEditor.UI.ViewModels.Main"
         mc:Ignorable="d"
         Title="Odyssey Editor"
         Height="900" Width="1600"
         d:DataContext="{d:DesignInstance Type=main:MainWindowViewModel, IsDesignTimeCreatable=True}">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40"
+                      ResizeBorderThickness="6"
+                      CornerRadius="0"
+                      GlassFrameThickness="0"
+                      UseAeroCaptionButtons="False"/>
+    </WindowChrome.WindowChrome>
 
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
@@ -17,17 +26,33 @@
     </b:Interaction.Triggers>
 
     <Grid>
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Setter Property="Margin" Value="0"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}"
+                                 Value="Maximized">
+                        <Setter Property="Margin" Value="7"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+
         <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="250" MinHeight="120" MaxHeight="300"/>
         </Grid.RowDefinitions>
-        
-        <Border Grid.Column="0" Style="{StaticResource PanelBorderStyle}">
-            <ContentControl Grid.Row="0" Content="{Binding ControlsBar}"/>
+
+        <views:TitleBar Grid.Row="0"/>
+
+        <Border Grid.Row="1" Style="{StaticResource PanelBorderStyle}">
+            <ContentControl Content="{Binding ControlsBar}"/>
         </Border>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250" MinWidth="150" MaxWidth="400"/>
                 <ColumnDefinition Width="5"/>
@@ -40,24 +65,30 @@
                 <ContentControl Content="{Binding Hierarchy}"/>
             </Border>
 
-            <GridSplitter Grid.Column="1"
-                          HorizontalAlignment="Stretch"
-                          ResizeBehavior="PreviousAndNext"/>
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" ResizeBehavior="PreviousAndNext"/>
 
             <Border Grid.Column="2" Style="{StaticResource PanelBorderStyle}">
                 <ContentControl Content="{Binding Workspace}"/>
             </Border>
 
-            <GridSplitter Grid.Column="3"
-                          HorizontalAlignment="Stretch"
-                          ResizeBehavior="PreviousAndNext"/>
+            <GridSplitter Grid.Column="3" HorizontalAlignment="Stretch" ResizeBehavior="PreviousAndNext"/>
 
             <Border Grid.Column="4" Style="{StaticResource PanelBorderStyle}">
                 <ContentControl Content="{Binding Inspector}"/>
             </Border>
         </Grid>
 
-        <ContentControl Grid.Row="2" Content="{Binding Console}"/>
+        <GridSplitter Grid.Row="3" Height="5"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
+
+        <Border x:Name="ResourcesPanel" Grid.Row="4" Style="{StaticResource PanelBorderStyle}">
+            <ContentControl Content="{Binding Resources}"/>
+        </Border>
+
+        <Border Grid.Row="2" Grid.RowSpan="3" VerticalAlignment="Bottom" MaxHeight="{Binding ActualHeight, ElementName=ResourcesPanel}">
+            <ContentControl Content="{Binding Console}"/>
+        </Border>
 
     </Grid>
 
