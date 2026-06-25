@@ -34,9 +34,8 @@ A native WPF desktop application built on a clean, layered architecture.
 When the workspace opens, the editor:
 
 1. Launches the engine process headless (`-hide`) on a chosen port.
-2. Connects to the engine's socket and retries until the runtime is listening.
-3. Sends a `get_viewport` request and receives the engine window's native handle (HWND).
-4. Reparents that window into a WPF `HwndHost`, restyles it as a child window, and keeps it sized to the panel.
+2. Sends a `get_viewport` request and receives the engine window's native handle (HWND).
+3. Reparents that window into a WPF `HwndHost`, restyles it as a child window, and keeps it sized to the panel.
 
 The result is a single editor window with the real, live C++ OpenGL viewport rendering inside it.
 
