@@ -85,7 +85,7 @@ public partial class ResourcesViewModel(IOptions<EngineConfig> config, IEngineMe
         
             while (File.Exists(destination))
             {
-                destination = Path.Combine(ResourcesPath, $"{name} ({counter}){extension}");
+                destination = Path.Combine(ResourcesPath, $"{name}_{counter}{extension}");
                 counter++;
             }
 

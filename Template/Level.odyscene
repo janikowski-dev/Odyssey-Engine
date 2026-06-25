@@ -33,7 +33,7 @@
                             1.0,
                             0.0
                         ],
-                        "MeshId": "Dragon",
+                        "MeshId": "Maid",
                         "ShaderId": "Lit"
                     },
                     "Name": "RendererComponent"

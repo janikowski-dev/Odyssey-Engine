@@ -84,7 +84,8 @@ namespace Source::Resources
                 aiProcess_Triangulate |
                 aiProcess_GenSmoothNormals |
                 aiProcess_JoinIdenticalVertices |
-                aiProcess_PreTransformVertices
+                aiProcess_PreTransformVertices |
+                aiProcess_SortByPType
             );
 
             if (!Scene || (Scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) || !Scene->mRootNode)
@@ -124,6 +125,11 @@ namespace Source::Resources
                 for (unsigned int F = 0; F < SubMesh->mNumFaces; ++F)
                 {
                     const aiFace& Face = SubMesh->mFaces[F];
+
+                    if (Face.mNumIndices != 3)
+                    {
+                        continue;
+                    }
 
                     for (unsigned int I = 0; I < Face.mNumIndices; ++I)
                     {
