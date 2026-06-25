@@ -1,6 +1,3 @@
-> [!WARNING]
-> **🚧 Heavily work in progress.** Odyssey Engine is in early, active development.
-
 # Odyssey Engine
 
 A custom 3D game engine in C++23 with a separate C#/WPF editor. The editor communicates with the engine over a local socket, allowing the engine to be restarted independently if it crashes without taking down the editor.
@@ -94,4 +91,10 @@ Build project and run editor:
 
 ```sh
 just build-and-run {parent_directory}/{project_name}
+```
+
+# Release
+
+```sh
+just build-and-pack {parent_directory}/{project_name} {output_directory}
 ```

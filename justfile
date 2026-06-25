@@ -12,4 +12,9 @@ new-project parent name:
 build-project path:
     powershell -ExecutionPolicy Bypass -File Commands/BuildProject.ps1 "{{path}}" "{{justfile_directory()}}"
 
+pack-project path output:
+    powershell -ExecutionPolicy Bypass -File Commands/PackProject.ps1 "{{path}}" "{{output}}"
+
+build-and-pack path output: (build-project path) (pack-project path output)
+
 build-and-run path: (build-project path) (run-editor path)
