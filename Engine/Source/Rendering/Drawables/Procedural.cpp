@@ -23,6 +23,7 @@ namespace Source::Rendering
     Procedural& Procedural::operator=(Procedural&& Other) noexcept
     {
         Release();
+        Invalidate(*this);
         Copy(Other);
         Invalidate(Other);
         return *this;

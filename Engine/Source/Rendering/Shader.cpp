@@ -38,6 +38,7 @@ namespace Source::Rendering
     Shader& Shader::operator=(Shader&& Other) noexcept
     {
         Release();
+        Invalidate(*this);
         Copy(Other);
         Invalidate(Other);
         return *this;

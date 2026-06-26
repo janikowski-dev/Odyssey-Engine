@@ -41,6 +41,7 @@ namespace Source::Rendering
     Mesh& Mesh::operator=(Mesh&& Other) noexcept
     {
         Release();
+        Invalidate(*this);
         Copy(Other);
         Invalidate(Other);
         return *this;
