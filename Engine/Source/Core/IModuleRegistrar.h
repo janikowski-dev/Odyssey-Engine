@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core/IModule.h"
-#include "Core/Minimal.h"
 
 namespace Source::Core
 {

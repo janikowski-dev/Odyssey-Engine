@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Core/Minimal.h"
 #include "ECS/Entity.h"
 #include "ECS/Pool.h"
 

@@ -1,5 +1,7 @@
 #include "Modules/EditorModule.h"
 
+#include "Serialization/ReflectionHandler.h"
+#include "Serialization/SceneSerializer.h"
 #include "Events/GetViewport.h"
 #include "Events/SelectEntity.h"
 #include "Events/SaveScene.h"
@@ -19,8 +21,6 @@
 #include "Events/DestroyedEntity.h"
 #include "Events/SentMessage.h"
 #include "Events/RemoveComponent.h"
-#include "Serialization/SceneSerializer.h"
-#include "Serialization/ReflectionHandler.h"
 
 namespace Source::Modules
 {

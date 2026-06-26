@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Rendering/Drawables/Procedural.h"
 #include "Rendering/IRenderPass.h"
-#include "Core/Context.h"
+
+namespace Source::Core { struct Context; }
 
 namespace Source::Rendering
 {
+    class Procedural;
     class Material;
-    class Backend;
 
     class GridPass : public IRenderPass
     {

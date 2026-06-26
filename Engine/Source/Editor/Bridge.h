@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Editor/Connection.h"
-#include "Core/Minimal.h"
 
 namespace Source::Editor
 {

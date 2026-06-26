@@ -1,5 +1,4 @@
 #include "Editor/Bridge.h"
-#include "Bridge.h"
 
 namespace Source::Editor
 {

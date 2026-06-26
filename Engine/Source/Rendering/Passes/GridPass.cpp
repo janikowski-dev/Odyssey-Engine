@@ -1,7 +1,9 @@
 #include "Rendering/Passes/GridPass.h"
 
+#include "Rendering/Drawables/Procedural.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/Backend.h"
+#include "Core/Context.h"
 
 namespace Source::Rendering
 {

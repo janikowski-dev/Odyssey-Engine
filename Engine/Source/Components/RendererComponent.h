@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Rendering/Material.h"
-#include "Rendering/Drawables/Mesh.h"
 #include "Core/Minimal.h"
 
 namespace Source::Components

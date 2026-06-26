@@ -7,6 +7,26 @@ namespace Source::Serialization
 {
     bool SaveScene(ECS::Registry &World, const std::string& Path)
     {
+        Json Scene;
+        SerializeScene(World, Scene);
+        return SaveScene(Path, Scene);
+    }
+
+    bool LoadScene(ECS::Registry &World, const std::string& Path)
+    {
+        Json Scene;
+
+        if (!LoadScene(Path, Scene))
+        {
+            return false;
+        }
+
+        DeserializeScene(World, Scene);
+        return true;
+    }
+
+    bool SaveScene(const std::string& Path, const Json& Out)
+    {
         std::ofstream Stream(Path);
 
         if (!Stream)
@@ -14,13 +34,11 @@ namespace Source::Serialization
             return false;
         }
 
-        Json J;
-        SerializeScene(World, J);
-        Stream << J.dump(4);
+        Stream << Out.dump(4);
         return Stream.good();
     }
-
-    bool LoadScene(ECS::Registry &World, const std::string& Path)
+    
+    bool LoadScene(const std::string& Path, Json& In)
     {
         std::ifstream Stream(Path);
 
@@ -29,18 +47,15 @@ namespace Source::Serialization
             return false;
         }
 
-        Json Scene;
-
         try
         {
-            Stream >> Scene;
+            Stream >> In;
         }
         catch (const Json::exception&)
         {
             return false;
         }
 
-        DeserializeScene(World, Scene);
         return true;
     }
 

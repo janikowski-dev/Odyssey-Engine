@@ -1,6 +1,5 @@
 #include "Modules/RenderingModule.h"
 
-#include "Rendering/Drawables/Procedural.h"
 #include "Components/CameraComponent.h"
 #include "Rendering/Passes/GridPass.h"
 #include "Rendering/Passes/MeshPass.h"

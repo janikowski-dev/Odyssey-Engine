@@ -4,8 +4,8 @@
 #include "Platform/Window.h"
 #include "Platform/Input.h"
 #include "Editor/Bridge.h"
-#include "ECS/Registry.h"
 #include "Core/Minimal.h"
+#include "ECS/Registry.h"
 
 namespace Source::Core
 {
