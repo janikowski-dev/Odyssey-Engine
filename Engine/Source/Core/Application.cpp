@@ -67,8 +67,8 @@ namespace Source::Core
         Modules.push_back(MakeUnique<Modules::SerializationModule>());
         Modules.push_back(MakeUnique<Modules::TimeModule>());
         Modules.push_back(MakeUnique<Modules::RuntimeModule>());
-        Modules.push_back(MakeUnique<Modules::RenderingModule>());
         Modules.push_back(MakeUnique<Modules::PlatformModule>());
+        Modules.push_back(MakeUnique<Modules::RenderingModule>());
         Modules.push_back(MakeUnique<Modules::ResourcesModule>());
 
         if (InConfig.LaunchType == LaunchType::Editor)

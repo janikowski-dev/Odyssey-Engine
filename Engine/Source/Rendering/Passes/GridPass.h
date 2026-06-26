@@ -5,6 +5,7 @@
 
 namespace Source::Rendering
 {
+    class Procedural;
     class Backend;
 
     class GridPass : public IRenderPass
@@ -17,5 +18,6 @@ namespace Source::Rendering
 
     private:
         Core::Context* ContextPtr;
+        Procedural* GridPtr;
     };
 }
