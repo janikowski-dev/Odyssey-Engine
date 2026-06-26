@@ -1,4 +1,6 @@
-#include "Rendering/Mesh.h"
+#include "Rendering/Drawables/Mesh.h"
+
+#include <glad/gl.h>
 
 namespace Source::Rendering
 {
@@ -30,6 +32,27 @@ namespace Source::Rendering
         Release();
     }
 
+    Mesh::Mesh(Mesh&& Other) noexcept
+    {
+        Copy(Other);
+        Invalidate(Other);
+    }
+
+    Mesh& Mesh::operator=(Mesh&& Other) noexcept
+    {
+        Release();
+        Copy(Other);
+        Invalidate(Other);
+        return *this;
+    }
+
+    void Mesh::Draw() const
+    {
+        glBindVertexArray(Vao);
+        glDrawElements(GL_TRIANGLES, IndexCount, GL_UNSIGNED_INT, nullptr);
+        glBindVertexArray(0);
+    }
+
     void Mesh::Release()
     {
         if (Vbo)
@@ -46,34 +69,19 @@ namespace Source::Rendering
         {
             glDeleteVertexArrays(1, &Vao);
         }
-        
-        Vao = Vbo = Ebo = 0;
-        IndexCount = 0;
+    }
+    
+    void Mesh::Invalidate(Mesh& Mesh)
+    {
+        Mesh.Vao = Mesh.Vbo = Mesh.Ebo = 0;
+        Mesh.IndexCount = 0;
     }
 
-    Mesh::Mesh(Mesh&& Other) noexcept : Vao(Other.Vao), Vbo(Other.Vbo), Ebo(Other.Ebo), IndexCount(Other.IndexCount)
+    void Mesh::Copy(Mesh& Other)
     {
-        Other.Vao = Other.Vbo = Other.Ebo = 0;
-        Other.IndexCount = 0;
-    }
-
-    Mesh& Mesh::operator=(Mesh&& Other) noexcept
-    {
-        if (this != &Other)
-        {
-            Release();
-            Vao = Other.Vao; Vbo = Other.Vbo; Ebo = Other.Ebo; IndexCount = Other.IndexCount;
-            Other.Vao = Other.Vbo = Other.Ebo = 0;
-            Other.IndexCount = 0;
-        }
-
-        return *this;
-    }
-
-    void Mesh::Draw() const
-    {
-        glBindVertexArray(Vao);
-        glDrawElements(GL_TRIANGLES, IndexCount, GL_UNSIGNED_INT, nullptr);
-        glBindVertexArray(0);
+        IndexCount = Other.IndexCount;
+        Vao = Other.Vao;
+        Vbo = Other.Vbo;
+        Ebo = Other.Ebo;
     }
 }

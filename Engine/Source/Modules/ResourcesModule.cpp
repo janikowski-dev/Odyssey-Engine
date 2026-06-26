@@ -10,16 +10,4 @@ namespace Source::Modules
         Context.ResourceCache = MakeUnique<Resources::ResourceCache>(Config.EngineConfig.GetResourcesPath());
         Context.ResourceCache->Refresh();
     }
-
-    void Source::Modules::ResourcesModule::Tick(const Core::Context &Context)
-    {
-        Context.World->View<Components::RendererComponent>(
-            [&Context](ECS::Entity, Components::RendererComponent& R)
-            {
-                R.Shader = Context.ResourceCache->Shaders.Get(R.ShaderId);
-                R.Mesh = Context.ResourceCache->Meshes.Get(R.MeshId);
-            }
-        );
-    }
-
 }

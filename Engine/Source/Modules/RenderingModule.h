@@ -2,7 +2,7 @@
 
 #include "Core/IModule.h"
 
-namespace Source::Rendering { class Renderer; class Mesh; }
+namespace Source::Rendering { class Backend; class Procedural; class IRenderPass; }
 
 namespace Source::Modules
 {
@@ -17,6 +17,7 @@ namespace Source::Modules
         void Tick(const Core::Context& Context) override;
 
     private:
-        UniquePtr<Rendering::Renderer> RendererBackend;
+        std::vector<UniquePtr<Rendering::IRenderPass>> Passes;
+        UniquePtr<Rendering::Backend> Backend;
     };
 }

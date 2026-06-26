@@ -52,12 +52,28 @@ set(SOURCES
     Platform/Context.cpp
     Platform/Context.h
 
-    Rendering/Mesh.cpp
-    Rendering/Mesh.h
+    Rendering/Passes/GridPass.cpp
+    Rendering/Passes/GridPass.h
+    Rendering/Passes/MeshPass.cpp
+    Rendering/Passes/MeshPass.h
+    Rendering/Drawables/Mesh.cpp
+    Rendering/Drawables/Mesh.h
     Rendering/Renderer.cpp
     Rendering/Renderer.h
     Rendering/Shader.cpp
     Rendering/Shader.h
+    Rendering/Backend.cpp
+    Rendering/Backend.h
+    Rendering/Camera.cpp
+    Rendering/Camera.h
+    Rendering/Material.cpp
+    Rendering/Material.h
+    Rendering/Transform.cpp
+    Rendering/Transform.h
+    Rendering/Drawables/Procedural.cpp
+    Rendering/Drawables/Procedural.h
+    Rendering/IRenderPass.h
+    Rendering/IDrawable.h
 
     Serialization/ECSBinding.h
     Serialization/ECSBinding.inl

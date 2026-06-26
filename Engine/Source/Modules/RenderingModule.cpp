@@ -1,10 +1,14 @@
 #include "Modules/RenderingModule.h"
 
-#include "Components/TransformComponent.h"
-#include "Components/RendererComponent.h"
-#include "Components/CameraComponent.h"
+#include "Rendering/Drawables/Procedural.h"
+#include "Rendering/Drawables/Mesh.h"
+#include "Rendering/Passes/GridPass.h"
+#include "Rendering/Passes/MeshPass.h"
+#include "Rendering/Transform.h"
 #include "Rendering/Renderer.h"
-#include "Rendering/Mesh.h"
+#include "Rendering/Backend.h"
+#include "Rendering/Camera.h"
+#include "Components/CameraComponent.h"
 #include "ECS/Registry.h"
 
 namespace Source::Modules
@@ -14,47 +18,46 @@ namespace Source::Modules
 
     void RenderingModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
     {
-        RendererBackend = MakeUnique<Rendering::Renderer>();
+        Passes.push_back(MakeUnique<Rendering::GridPass>(Context));
+        Passes.push_back(MakeUnique<Rendering::MeshPass>(Context));
+        Backend = MakeUnique<Rendering::Backend>();
     }
 
     void RenderingModule::Tick(const Core::Context& Context)
     {
-        Components::CameraComponent* ActiveCamera = nullptr;
+        Components::CameraComponent* Camera = nullptr;
 
         Context.World->View<Components::CameraComponent>(
-            [&ActiveCamera](ECS::Entity, Components::CameraComponent& C)
+            [&Camera](ECS::Entity, Components::CameraComponent& C)
             {
-                if (!ActiveCamera || C.Priority > ActiveCamera->Priority)
+                if (!Camera || C.Priority > Camera->Priority)
                 {
-                    ActiveCamera = &C;
+                    Camera = &C;
                 }
             }
         );
 
-        if (!ActiveCamera)
+        if (!Camera)
         {
             return;
         }
 
-        RendererBackend->Begin(*ActiveCamera);
-
-        Context.World->View<Components::TransformComponent, Components::RendererComponent>(
-            [this, ActiveCamera](ECS::Entity, Components::TransformComponent& T, Components::RendererComponent& R)
-            {
-                if (!R.Mesh)
-                {
-                    return;
-                }
-
-                if (!R.Shader)
-                {
-                    return;
-                }
-                
-                RendererBackend->DrawMesh(T, *R.Mesh, *R.Shader, R.Color);
-            }
+        Rendering::Camera ActiveCamera(
+            Camera->Position,
+            Camera->Rotation,
+            Camera->FovDegrees,
+            Camera->Aspect,
+            Camera->Near,
+            Camera->Far
         );
 
-        RendererBackend->End();
+        Backend->Begin(ActiveCamera);
+
+        for (const auto& Pass : Passes)
+        {
+            Pass->Execute(*Backend);
+        }
+
+        Backend->End();
     }
 }

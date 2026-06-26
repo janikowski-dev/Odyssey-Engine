@@ -145,17 +145,80 @@ namespace Source::Resources
 
             return Rendering::Mesh(Vertices, Indices);
         }
+
+        using ShaderResolver = std::function<Rendering::Shader*(const std::string&)>;
+ 
+        std::optional<Rendering::Material> LoadMaterial(const std::filesystem::path& File, const ShaderResolver& Resolve)
+        {
+            std::ifstream Stream(File);
+        
+            if (!Stream)
+            {
+                return std::nullopt;
+            }
+        
+            Json Json;
+        
+            try
+            {
+                Stream >> Json;
+            }
+            catch(...)
+            {
+                return std::nullopt;
+            }
+        
+            auto ShaderField = Json.find("shader");
+        
+            if (ShaderField == Json.end() || !ShaderField->is_string())
+            {
+                return std::nullopt;
+            }
+        
+            Rendering::Shader* ShaderPtr = Resolve(ShaderField->get<std::string>());
+        
+            if (!ShaderPtr)
+            {
+                return std::nullopt;
+            }
+        
+            Rendering::Material Out(ShaderPtr);
+        
+            if (auto Floats = Json.find("floats"); Floats != Json.end() && Floats->is_object())
+            {
+                for (const auto& [Name, Value] : Floats->items())
+                {
+                    if (Value.is_number())
+                    {
+                        Out.Set(Name.c_str(), Value.get<float>());
+                    }
+                }
+            }
+        
+            if (auto Vectors = Json.find("vec3"); Vectors != Json.end() && Vectors->is_object())
+            {
+                for (const auto& [Name, Value] : Vectors->items())
+                {
+                    Vector3 Vec(Value[0].get<float>(), Value[1].get<float>(), Value[2].get<float>());
+                    Out.Set(Name.c_str(), Vec);
+                }
+            }
+        
+            return Out;
+        }
     }
 
-    ResourceCache::ResourceCache(const std::string& InPath) : Path(InPath), Shaders(&LoadShader), Meshes(&LoadMesh)
+    ResourceCache::ResourceCache(const std::string& InPath) : Path(InPath), Shaders(&LoadShader), Meshes(&LoadMesh), Materials([this](const std::filesystem::path& File) { return LoadMaterial(File, [this](const std::string& Name) { return Shaders.Get(Name); }); })
     {
+        Materials.SetExtensions({ ".mat" });
         Shaders.SetExtensions({ ".glsl" });
         Meshes.SetExtensions({ ".fbx" });
     }
 
     void ResourceCache::Refresh()
     {
-        Shaders.Refresh(Path);
         Meshes.Refresh(Path);
+        Shaders.Refresh(Path);
+        Materials.Refresh(Path);
     }
 }

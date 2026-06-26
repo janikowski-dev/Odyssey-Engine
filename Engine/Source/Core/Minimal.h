@@ -61,6 +61,7 @@ using Time = std::chrono::steady_clock::time_point;
 using Vector2 = glm::vec2;
 using Vector3 = glm::vec3;
 using Vector4 = glm::vec4;
+using Matrix4 = glm::mat4;
 
 // Is Empty
 template<typename T, typename = void>

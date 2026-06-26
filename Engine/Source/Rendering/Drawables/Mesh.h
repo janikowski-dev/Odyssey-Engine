@@ -1,8 +1,7 @@
 #pragma once
 
+#include "Rendering/IDrawable.h"
 #include "Core/Minimal.h"
-
-#include <glad/gl.h>
 
 namespace Source::Rendering
 {
@@ -12,7 +11,7 @@ namespace Source::Rendering
         Vector3 Normal;
     };
 
-    class Mesh
+    class Mesh : public IDrawable
     {
     public:
         Mesh(const std::vector<Vertex>& Vertices, const std::vector<uint32>& Indices);
@@ -23,15 +22,17 @@ namespace Source::Rendering
         Mesh(Mesh&& Other) noexcept;
         Mesh& operator=(Mesh&& Other) noexcept;
 
-        void Draw() const;
+        void Draw() const override;
 
     private:
         void Release();
+        void Invalidate(Mesh& Mesh);
+        void Copy(Mesh& Other);
 
     private:
-        GLsizei IndexCount = 0;
-        GLuint Vao = 0;
-        GLuint Vbo = 0;
-        GLuint Ebo = 0;
+        uint32 IndexCount = 0;
+        uint32 Vao = 0;
+        uint32 Vbo = 0;
+        uint32 Ebo = 0;
     };
 }
