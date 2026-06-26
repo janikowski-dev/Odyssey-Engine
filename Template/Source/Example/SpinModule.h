@@ -17,9 +17,9 @@ namespace Game::Example
         {
             Source::ECS::Entity E = Context.World->Create();
             Context.World->Add<Source::Components::TransformComponent>(E, Source::Components::TransformComponent{ {-2.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f} });
-            Context.World->Add<Source::Components::RendererComponent>(E, Source::Components::RendererComponent{ "Lit", "Prism", {0.85f, 0.30f, 0.22f} });
-            Context.World->Add<MoveComponent>(E, MoveComponent{ {0.0f, 5.0f, 0.0f} });
+            Context.World->Add<Source::Components::RendererComponent>(E, Source::Components::RendererComponent{ "Lit", "Prism" });
             Context.World->Add<SpinComponent>(E, SpinComponent{ {0.0f, 50.0f, 0.0f} });
+            Context.World->Add<MoveComponent>(E, MoveComponent{ {0.0f, 5.0f, 0.0f} });
             Entities.push_back(E);
         }
 

@@ -1,0 +1,10 @@
+{
+  "shader": "Grid",
+  "vec3": {
+    "uColor": [0.5, 0.5, 0.5]
+  },
+  "floats": {
+    "uScale": 1.0,
+    "uFade": 100.0
+  }
+}

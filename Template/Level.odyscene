@@ -38,13 +38,8 @@
                 },
                 {
                     "Fields": {
-                        "Color": [
-                            1.0,
-                            0.0,
-                            1.0
-                        ],
-                        "MeshId": "Cube",
-                        "ShaderId": "Lit"
+                        "MaterialId": "Lit",
+                        "MeshId": "Cube"
                     },
                     "Name": "RendererComponent"
                 },
@@ -84,13 +79,8 @@
                 },
                 {
                     "Fields": {
-                        "Color": [
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "MeshId": "Prism",
-                        "ShaderId": "Lit"
+                        "MaterialId": "Lit",
+                        "MeshId": "Prism"
                     },
                     "Name": "RendererComponent"
                 },
@@ -130,15 +120,30 @@
                 },
                 {
                     "Fields": {
-                        "Color": [
-                            0.0,
-                            1.0,
-                            0.0
-                        ],
-                        "MeshId": "Maid",
-                        "ShaderId": "Lit"
+                        "MaterialId": "Lit",
+                        "MeshId": "Maid"
                     },
                     "Name": "RendererComponent"
+                },
+                {
+                    "Fields": {
+                        "Aspect": 1.7777777910232544,
+                        "Far": 100.0,
+                        "FovDegrees": 60.0,
+                        "Near": 0.10000000149011612,
+                        "Position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Priority": 0,
+                        "Rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    "Name": "CameraComponent"
                 },
                 {
                     "Fields": {
