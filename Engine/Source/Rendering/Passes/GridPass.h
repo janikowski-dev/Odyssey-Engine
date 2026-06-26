@@ -18,7 +18,7 @@ namespace Source::Rendering
         void Execute(Backend& InBackend) override;
 
     private:
-        Material* MaterialPtr;
-        Procedural Grid;
+        Rendering::Procedural* ProceduralPtr;
+        Rendering::Material* MaterialPtr;
     };
 }

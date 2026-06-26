@@ -10,6 +10,8 @@ namespace Source::Rendering
     {
     public:
         MeshPass(Core::Context& InContext);
+        ~MeshPass();
+
         void Execute(Backend& InBackend) override;
 
     private:

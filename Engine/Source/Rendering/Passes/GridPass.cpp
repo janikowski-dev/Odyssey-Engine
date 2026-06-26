@@ -5,7 +5,7 @@
 
 namespace Source::Rendering
 {
-    GridPass::GridPass(Core::Context& InContext) : MaterialPtr(InContext.ResourceCache->Materials.Get("Grid")), Grid(6)
+    GridPass::GridPass(Core::Context& InContext) : MaterialPtr(InContext.ResourceCache->Materials.Get("Grid")), ProceduralPtr(InContext.ResourceCache->Procedurals.Get("Grid"))
     {
     }
 
@@ -13,6 +13,6 @@ namespace Source::Rendering
 
     void GridPass::Execute(Backend& InBackend)
     {
-        InBackend.Draw(Rendering::Renderer(MaterialPtr, &Grid));
+        InBackend.Draw(Rendering::Renderer(MaterialPtr, ProceduralPtr));
     }
 }

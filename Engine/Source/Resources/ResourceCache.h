@@ -1,9 +1,10 @@
 #pragma once
 
+#include "Rendering/Drawables/Procedural.h"
 #include "Resources/ResourceLibrary.h"
+#include "Rendering/Drawables/Mesh.h"
 #include "Rendering/Material.h"
 #include "Rendering/Shader.h"
-#include "Rendering/Drawables/Mesh.h"
 #include "Core/Minimal.h"
 
 namespace Source::Resources
@@ -15,6 +16,7 @@ namespace Source::Resources
         void Refresh();
 
     public:
+        ResourceLibrary<Rendering::Procedural> Procedurals;
         ResourceLibrary<Rendering::Material> Materials;
         ResourceLibrary<Rendering::Shader> Shaders;
         ResourceLibrary<Rendering::Mesh> Meshes;

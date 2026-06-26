@@ -206,10 +206,23 @@ namespace Source::Resources
         
             return Out;
         }
+        
+        std::optional<Rendering::Procedural> LoadProcedural(const std::filesystem::path& File)
+        {
+            std::ifstream Stream(File);
+        
+            if (!Stream)
+            {
+                return std::nullopt;
+            }
+        
+            return Rendering::Procedural(6);
+        }
     }
 
-    ResourceCache::ResourceCache(const std::string& InPath) : Path(InPath), Shaders(&LoadShader), Meshes(&LoadMesh), Materials([this](const std::filesystem::path& File) { return LoadMaterial(File, [this](const std::string& Name) { return Shaders.Get(Name); }); })
+    ResourceCache::ResourceCache(const std::string& InPath) : Path(InPath), Procedurals(&LoadProcedural), Shaders(&LoadShader), Meshes(&LoadMesh), Materials([this](const std::filesystem::path& File) { return LoadMaterial(File, [this](const std::string& Name) { return Shaders.Get(Name); }); })
     {
+        Procedurals.SetExtensions({ ".proc" });
         Materials.SetExtensions({ ".mat" });
         Shaders.SetExtensions({ ".glsl" });
         Meshes.SetExtensions({ ".fbx" });
@@ -220,5 +233,6 @@ namespace Source::Resources
         Meshes.Refresh(Path);
         Shaders.Refresh(Path);
         Materials.Refresh(Path);
+        Procedurals.Refresh(Path);
     }
 }

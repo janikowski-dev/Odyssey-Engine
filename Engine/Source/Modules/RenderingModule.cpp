@@ -1,14 +1,13 @@
 #include "Modules/RenderingModule.h"
 
 #include "Rendering/Drawables/Procedural.h"
-#include "Rendering/Drawables/Mesh.h"
+#include "Components/CameraComponent.h"
 #include "Rendering/Passes/GridPass.h"
 #include "Rendering/Passes/MeshPass.h"
 #include "Rendering/Transform.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/Backend.h"
 #include "Rendering/Camera.h"
-#include "Components/CameraComponent.h"
 #include "ECS/Registry.h"
 
 namespace Source::Modules
@@ -18,9 +17,25 @@ namespace Source::Modules
 
     void RenderingModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
     {
-        Passes.push_back(MakeUnique<Rendering::GridPass>(Context));
-        Passes.push_back(MakeUnique<Rendering::MeshPass>(Context));
+        IsInEditor = Config.LaunchType == Core::LaunchType::Editor;
+
+        if (IsInEditor)
+        {
+            EditorPasses.push_back(MakeUnique<Rendering::GridPass>(Context));
+        }
+
+        ProjectPasses.push_back(MakeUnique<Rendering::MeshPass>(Context));
         Backend = MakeUnique<Rendering::Backend>();
+    }
+    
+    void RenderingModule::OnBeginPlay(const Core::Context &Context)
+    {
+        IsInPlay = true;
+    }
+
+    void RenderingModule::OnEndPlay(const Core::Context &Context)
+    {
+        IsInPlay = false;
     }
 
     void RenderingModule::Tick(const Core::Context& Context)
@@ -53,7 +68,15 @@ namespace Source::Modules
 
         Backend->Begin(ActiveCamera);
 
-        for (const auto& Pass : Passes)
+        if (IsInEditor && !IsInPlay)
+        {
+            for (const auto& Pass : EditorPasses)
+            {
+                Pass->Execute(*Backend);
+            }
+        }
+
+        for (const auto& Pass : ProjectPasses)
         {
             Pass->Execute(*Backend);
         }

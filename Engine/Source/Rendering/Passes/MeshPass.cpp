@@ -10,27 +10,30 @@
 #include "Core/Context.h"
 #include "ECS/Registry.h"
 
-#include <glm/gtc/matrix_transform.hpp>
-
 namespace Source::Rendering
 {
     MeshPass::MeshPass(Core::Context& InContext) : ContextPtr(&InContext)
     {
     }
 
+    MeshPass::~MeshPass() = default;
+
     void MeshPass::Execute(Backend& InBackend)
     {
-        ContextPtr->World->View<Components::TransformComponent, Components::RendererComponent>(
-            [&InBackend, this](ECS::Entity, Components::TransformComponent& T, Components::RendererComponent& R)
+        auto ResourcesPtr = ContextPtr->ResourceCache.get();
+        auto WorldPtr = ContextPtr->World.get();
+
+        WorldPtr->View<Components::TransformComponent, Components::RendererComponent>(
+            [&InBackend, ResourcesPtr](ECS::Entity, Components::TransformComponent& T, Components::RendererComponent& R)
             {
-                const auto Material = ContextPtr->ResourceCache->Materials.Get(R.MaterialId);
+                const auto Material = ResourcesPtr->Materials.Get(R.MaterialId);
 
                 if (!Material)
                 {
                     return;
                 }
 
-                const auto Mesh = ContextPtr->ResourceCache->Meshes.Get(R.MeshId);
+                const auto Mesh = ResourcesPtr->Meshes.Get(R.MeshId);
 
                 if (!Mesh)
                 {

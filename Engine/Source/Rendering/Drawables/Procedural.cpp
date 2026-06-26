@@ -45,11 +45,13 @@ namespace Source::Rendering
 
     void Procedural::Invalidate(Procedural& Procedural)
     {
+        Procedural.VertexCount = 0;
         Procedural.EmptyVao = 0;
     }
 
     void Procedural::Copy(Procedural& Other)
     {
+        VertexCount = Other.VertexCount;
         EmptyVao = Other.EmptyVao;
     }
 }
