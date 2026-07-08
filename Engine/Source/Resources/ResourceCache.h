@@ -12,7 +12,7 @@ namespace Source::Resources
     class ResourceCache
     {
     public:
-        ResourceCache(const std::string& InLocalPath, const std::string& InGlobalPath);
+        ResourceCache(const std::string& InProjectResourcesPath, const std::string& InEngineResourcesPath);
         void Refresh();
 
     public:
