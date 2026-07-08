@@ -56,6 +56,8 @@ set(SOURCES
     Rendering/Passes/GridPass.h
     Rendering/Passes/MeshPass.cpp
     Rendering/Passes/MeshPass.h
+    Rendering/Passes/SelectionPass.cpp
+    Rendering/Passes/SelectionPass.h
     Rendering/Drawables/Mesh.cpp
     Rendering/Drawables/Mesh.h
     Rendering/Renderer.cpp
@@ -92,6 +94,8 @@ set(SOURCES
 
     Modules/EditorModule.cpp
     Modules/EditorModule.h
+    Modules/WorkspaceModule.cpp
+    Modules/WorkspaceModule.h
     Modules/SerializationModule.cpp
     Modules/SerializationModule.h
     Modules/PlatformModule.cpp

@@ -1,5 +1,6 @@
 #include "Modules/RenderingModule.h"
 
+#include "Rendering/Passes/SelectionPass.h"
 #include "Components/CameraComponent.h"
 #include "Rendering/Passes/GridPass.h"
 #include "Rendering/Passes/MeshPass.h"
@@ -16,15 +17,17 @@ namespace Source::Modules
 
     void RenderingModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
     {
-        IsInEditor = Config.LaunchType == Core::LaunchType::Editor;
-
-        if (IsInEditor)
-        {
-            EditorPasses.push_back(MakeUnique<Rendering::GridPass>(Context));
-        }
-
         ProjectPasses.push_back(MakeUnique<Rendering::MeshPass>(Context));
+        IsInEditor = Config.LaunchType == Core::LaunchType::Editor;
         Backend = MakeUnique<Rendering::Backend>();
+
+        if (!IsInEditor)
+        {
+            return;
+        }
+        
+        EditorPasses.push_back(MakeUnique<Rendering::SelectionPass>(Context));
+        EditorPasses.push_back(MakeUnique<Rendering::GridPass>(Context));
     }
     
     void RenderingModule::OnBeginPlay(const Core::Context &Context)

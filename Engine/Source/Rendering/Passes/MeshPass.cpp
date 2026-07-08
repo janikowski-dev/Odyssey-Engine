@@ -26,21 +26,21 @@ namespace Source::Rendering
         WorldPtr->View<Components::TransformComponent, Components::RendererComponent>(
             [&InBackend, ResourcesPtr](ECS::Entity, Components::TransformComponent& T, Components::RendererComponent& R)
             {
-                const auto Material = ResourcesPtr->Materials.Get(R.MaterialId);
+                const auto MaterialPtr = ResourcesPtr->Materials.Get(R.MaterialId);
 
-                if (!Material)
+                if (!MaterialPtr)
                 {
                     return;
                 }
 
-                const auto Mesh = ResourcesPtr->Meshes.Get(R.MeshId);
+                const auto MeshPtr = ResourcesPtr->Meshes.Get(R.MeshId);
 
-                if (!Mesh)
+                if (!MeshPtr)
                 {
                     return;
                 }
                 
-                InBackend.Draw(Rendering::Transform(T.Position, T.Rotation, T.Scale), Rendering::Renderer(Material, Mesh));
+                InBackend.Draw(Rendering::Transform(T.Position, T.Rotation, T.Scale), Rendering::Renderer(MaterialPtr, MeshPtr));
             }
         );
     }

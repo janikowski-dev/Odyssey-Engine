@@ -8,6 +8,7 @@
 #include "Modules/TimeModule.h"
 #include "Modules/SerializationModule.h"
 #include "Modules/WorldModule.h"
+#include "Modules/WorkspaceModule.h"
 
 #include "Modules.generated.h"
 
@@ -71,11 +72,14 @@ namespace Source::Core
         Modules.push_back(MakeUnique<Modules::ResourcesModule>());
         Modules.push_back(MakeUnique<Modules::RenderingModule>());
 
-        if (InConfig.LaunchType == LaunchType::Editor)
+        if (InConfig.LaunchType != LaunchType::Editor)
         {
-            Modules.push_back(MakeUnique<Modules::EditorModule>());
+            return;
         }
-	}
+
+        Modules.push_back(MakeUnique<Modules::WorkspaceModule>());
+        Modules.push_back(MakeUnique<Modules::EditorModule>());
+    }
 
     void Application::InitAllModules(const ApplicationConfig& InConfig)
     {

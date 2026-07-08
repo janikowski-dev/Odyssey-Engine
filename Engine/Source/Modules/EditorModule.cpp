@@ -51,6 +51,7 @@ namespace Source::Modules
 
         Context.EditorBridge->On<Events::SelectEntityRequest, Events::SelectEntityResponse>(Events::SelectEntityKey, [&Context](const Events::SelectEntityRequest& Request)
         {
+            Context.Workspace->SelectedIndex = Request.Index;
             return Events::SelectEntityResponse { Serialization::GetComponents(Context.World->Get(Request.Index)) };
         });
 

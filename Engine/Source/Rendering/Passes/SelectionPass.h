@@ -7,15 +7,18 @@ namespace Source::Core { struct Context; }
 
 namespace Source::Rendering
 {
-    class MeshPass : public IRenderPass
+    class Material;
+
+    class SelectionPass : public IRenderPass
     {
     public:
-        MeshPass(Core::Context& InContext);
-        ~MeshPass();
+        SelectionPass(Core::Context& InContext);
+        ~SelectionPass();
 
         void Execute(Backend& InBackend) override;
 
     private:
+        Rendering::Material* MaterialPtr;
         Core::Context* ContextPtr;
     };
 }

@@ -20,6 +20,7 @@ namespace Source::Rendering
     void Backend::Begin()
     {
         glEnable(GL_DEPTH_TEST);
+        glEnable(GL_CULL_FACE);
         glClearColor(0.10f, 0.11f, 0.13f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }

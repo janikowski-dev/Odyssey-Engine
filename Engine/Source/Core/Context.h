@@ -22,10 +22,16 @@ namespace Source::Core
         float DeltaTime = 0.0f;
     };
 
+    struct Workspace
+    {
+        int SelectedIndex = -1;
+    };
+
     struct Context
     {
 		UniquePtr<Resources::ResourceCache> ResourceCache;
 		UniquePtr<Editor::Bridge> EditorBridge;
+		UniquePtr<Core::Workspace> Workspace;
 		UniquePtr<Platform::Window> Window;
 		UniquePtr<Platform::Input> Input;
 		UniquePtr<Core::Runtime> Runtime;
