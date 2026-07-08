@@ -16,10 +16,10 @@ namespace Source::Modules
     void WorkspaceModule::RotateCamera(const Core::Context& Context)
     {
         constexpr float Sensitivity = 0.2f;
-        
-        Context.Workspace->CameraRotation.y += Context.Workspace->CameraXDelta * Sensitivity;
-        Context.Workspace->CameraRotation.x += Context.Workspace->CameraYDelta * Sensitivity;
-        Context.Workspace->CameraRotation.x = std::clamp(Context.Workspace->CameraRotation.x, -89.0f, 89.0f);
+
+        Context.Workspace->CameraRotation.y -= Context.Workspace->CameraXDelta * Sensitivity;
+        Context.Workspace->CameraRotation.x -= Context.Workspace->CameraYDelta * Sensitivity;
+        Context.Workspace->CameraRotation.x = std::clamp(Context.Workspace->CameraRotation.x, -87.5f, 87.5f);
 
         Context.Workspace->CameraXDelta = 0.0f;
         Context.Workspace->CameraYDelta = 0.0f;
