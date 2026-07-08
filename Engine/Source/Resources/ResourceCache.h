@@ -12,7 +12,7 @@ namespace Source::Resources
     class ResourceCache
     {
     public:
-        ResourceCache(const std::string& InPath);
+        ResourceCache(const std::string& InLocalPath, const std::string& InGlobalPath);
         void Refresh();
 
     public:
@@ -22,6 +22,7 @@ namespace Source::Resources
         ResourceLibrary<Rendering::Mesh> Meshes;
 
     private:
-        std::string Path;
+        std::string ProjectResourcesPath;
+        std::string EngineResourcesPath;
     };
 }

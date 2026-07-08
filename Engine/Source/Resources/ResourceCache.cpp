@@ -220,7 +220,7 @@ namespace Source::Resources
         }
     }
 
-    ResourceCache::ResourceCache(const std::string& InPath) : Path(InPath), Procedurals(&LoadProcedural), Shaders(&LoadShader), Meshes(&LoadMesh), Materials([this](const std::filesystem::path& File) { return LoadMaterial(File, [this](const std::string& Name) { return Shaders.Get(Name); }); })
+    ResourceCache::ResourceCache(const std::string& InProjectResourcesPath, const std::string& InEngineResourcesPath) : ProjectResourcesPath(InProjectResourcesPath), EngineResourcesPath(InEngineResourcesPath), Procedurals(&LoadProcedural), Shaders(&LoadShader), Meshes(&LoadMesh), Materials([this](const std::filesystem::path& File) { return LoadMaterial(File, [this](const std::string& Name) { return Shaders.Get(Name); }); })
     {
         Procedurals.SetExtensions({ ".proc" });
         Materials.SetExtensions({ ".mat" });
@@ -230,9 +230,14 @@ namespace Source::Resources
 
     void ResourceCache::Refresh()
     {
-        Meshes.Refresh(Path);
-        Shaders.Refresh(Path);
-        Materials.Refresh(Path);
-        Procedurals.Refresh(Path);
+        Meshes.Refresh(ProjectResourcesPath);
+        Shaders.Refresh(ProjectResourcesPath);
+        Materials.Refresh(ProjectResourcesPath);
+        Procedurals.Refresh(ProjectResourcesPath);
+
+        Meshes.Refresh(EngineResourcesPath);
+        Shaders.Refresh(EngineResourcesPath);
+        Materials.Refresh(EngineResourcesPath);
+        Procedurals.Refresh(EngineResourcesPath);
     }
 }

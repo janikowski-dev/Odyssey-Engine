@@ -23,7 +23,8 @@ namespace Source::Core
 	{
         std::string SettingsName = "Launch.odysettings";
         std::string SceneName = "Level.odyscene";
-        std::string Resources = "Resources";
+        std::string ProjectResources = "Resources";
+        std::string EngineResources = "Static";
         std::string Root = "";
 
         std::string GetSettingsPath() const
@@ -36,9 +37,14 @@ namespace Source::Core
             return (std::filesystem::path(Root) / SceneName).string();
         }
         
-        std::string GetResourcesPath() const
+        std::string GetProjectResourcesPath() const
         {
-            return (std::filesystem::path(Root) / Resources).string();
+            return (std::filesystem::path(Root) / ProjectResources).string();
+        }
+        
+        std::string GetEngineResourcesPath() const
+        {
+            return (std::filesystem::path(Root) / EngineResources).string();
         }
 	};
 

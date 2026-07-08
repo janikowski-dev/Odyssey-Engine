@@ -1,0 +1,9 @@
+{
+  "shader": "Outline",
+  "vec3": {
+    "uColor": [1.0, 0.6 , 0.0]
+  },
+  "floats": {
+    "uThickness": 0.03
+  }
+}
