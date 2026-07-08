@@ -15,6 +15,11 @@ namespace Source::Modules
     RenderingModule::RenderingModule() = default;
     RenderingModule::~RenderingModule() = default;
 
+    void RenderingModule::Tick(const Core::Context& Context)
+    {
+        Render(GetActiveCamera(Context));
+    }
+
     void RenderingModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
     {
         ProjectPasses.push_back(MakeUnique<Rendering::MeshPass>(Context));
@@ -40,8 +45,20 @@ namespace Source::Modules
         IsInPlay = false;
     }
 
-    void RenderingModule::Tick(const Core::Context& Context)
+    std::optional<Rendering::Camera> RenderingModule::GetActiveCamera(const Core::Context& Context)
     {
+        if (IsInEditor && !IsInPlay)
+        {
+            return Rendering::Camera(
+                Context.Workspace->CameraPosition,
+                Context.Workspace->CameraRotation,
+                Context.Workspace->FovDegrees,
+                Context.Workspace->Aspect,
+                Context.Workspace->Near,
+                Context.Workspace->Far
+            );
+        }
+
         Components::CameraComponent* Camera = nullptr;
 
         Context.World->View<Components::CameraComponent>(
@@ -56,10 +73,10 @@ namespace Source::Modules
 
         if (!Camera)
         {
-            return;
+            return std::nullopt;
         }
 
-        Rendering::Camera ActiveCamera(
+        return Rendering::Camera(
             Camera->Position,
             Camera->Rotation,
             Camera->FovDegrees,
@@ -67,8 +84,16 @@ namespace Source::Modules
             Camera->Near,
             Camera->Far
         );
+    }
 
-        Backend->Begin(ActiveCamera);
+    void RenderingModule::Render(const std::optional<Rendering::Camera>& ActiveCamera)
+    {
+        if (!ActiveCamera)
+        {
+            return;
+        }
+
+        Backend->Begin(*ActiveCamera);
 
         if (IsInEditor && !IsInPlay)
         {

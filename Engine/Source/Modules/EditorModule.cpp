@@ -18,8 +18,11 @@
 #include "Events/FocusWindow.h"
 #include "Events/RefreshResources.h"
 #include "Events/WindowFocusChanged.h"
+#include "Events/RotateCamera.h"
 #include "Events/DestroyedEntity.h"
+#include "Events/RotateCamera.h"
 #include "Events/SentMessage.h"
+#include "Events/MoveCamera.h"
 #include "Events/RemoveComponent.h"
 
 namespace Source::Modules
@@ -136,6 +139,27 @@ namespace Source::Modules
             Context.Runtime->ShouldBePlaying = false;
     	    return Events::StopResponse();
     	});
+
+        Context.EditorBridge->On<Events::MoveCameraRequest, Events::MoveCameraResponse>(Events::MoveCameraKey, [&Context](const Events::MoveCameraRequest& Request)
+        {
+            if (Request.Move)
+            {
+                Context.Workspace->CameraMoveDirection |= static_cast<int>(Request.Direction);
+            }
+            else
+            {
+                Context.Workspace->CameraMoveDirection &= ~static_cast<int>(Request.Direction);
+            }
+
+            return Events::MoveCameraResponse();
+        });
+
+        Context.EditorBridge->On<Events::RotateCameraRequest, Events::RotateCameraResponse>(Events::RotateCameraKey, [&Context](const Events::RotateCameraRequest& Request)
+        {
+            Context.Workspace->CameraXDelta = Request.XDelta;
+            Context.Workspace->CameraYDelta = Request.YDelta;
+            return Events::RotateCameraResponse();
+        });
     }
 
     void EditorModule::InitOutgoingEvents(const Core::ApplicationConfig Config, Core::Context& Context)

@@ -10,8 +10,6 @@
 #include "Core/Context.h"
 #include "ECS/Registry.h"
 
-#include <glad/gl.h>
-
 namespace Source::Rendering
 {
     SelectionPass::SelectionPass(Core::Context& InContext) : ContextPtr(&InContext), MaterialPtr(InContext.ResourceCache->Materials.Get("Outline"))
@@ -44,8 +42,7 @@ namespace Source::Rendering
             return;
         }
         
-        glCullFace(GL_FRONT);
+        InBackend.Cull(true, true);
         InBackend.Draw(Rendering::Transform(T.Position, T.Rotation, T.Scale), Rendering::Renderer(MaterialPtr, MeshPtr));
-        glCullFace(GL_BACK);
     }
 }

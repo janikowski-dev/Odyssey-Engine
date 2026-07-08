@@ -15,6 +15,7 @@
            HorizontalOffset="-35" VerticalOffset="10"
            AllowsTransparency="True"
            Focusable="False">
+        
         <b:Interaction.Behaviors>
             <behaviors:PopupFollowWindowBehavior/>
         </b:Interaction.Behaviors>

@@ -2,7 +2,7 @@
 
 #include "Core/IModule.h"
 
-namespace Source::Rendering { class Backend; class Procedural; class IRenderPass; }
+namespace Source::Rendering { class Camera; class Backend; class Procedural; class IRenderPass; }
 
 namespace Source::Modules
 {
@@ -20,6 +20,10 @@ namespace Source::Modules
 		virtual void OnEndPlay(const Core::Context& Context);
 
         void Tick(const Core::Context& Context) override;
+
+    private:
+        std::optional<Rendering::Camera> GetActiveCamera(const Core::Context& Context);
+        void Render(const std::optional<Rendering::Camera>& ActiveCamera);
 
     private:
         std::vector<UniquePtr<Rendering::IRenderPass>> ProjectPasses;

@@ -40,8 +40,10 @@ set(SOURCES
     Events/SaveScene.h
     Events/SentMessage.h
     Events/RemoveComponent.h
+    Events/MoveCamera.h
     Events/SelectEntity.h
     Events/FocusWindow.h
+    Events/RotateCamera.h
     Events/Play.h
     Events/Stop.h
 

@@ -20,7 +20,6 @@ namespace Source::Rendering
     void Backend::Begin()
     {
         glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
         glClearColor(0.10f, 0.11f, 0.13f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
@@ -28,6 +27,27 @@ namespace Source::Rendering
     void Backend::End()
     {
         glUseProgram(0);
+    }
+
+    void Backend::Cull(bool InCull, bool InFront)
+    {
+        if (InCull)
+        {
+            glEnable(GL_CULL_FACE);
+        }
+        else
+        {
+            glDisable(GL_CULL_FACE);
+        }
+        
+        if (InFront)
+        {
+            glCullFace(GL_FRONT);
+        }
+        else
+        {
+            glCullFace(GL_BACK);
+        }
     }
 
     void Backend::Draw(const Transform& InTransform, const Renderer& InRenderer)

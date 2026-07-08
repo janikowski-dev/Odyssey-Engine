@@ -12,6 +12,7 @@ namespace Source::Rendering
     {
     public:
         void Begin(const Camera& InCamera);
+        void Cull(bool InCull, bool InFront = false);
         void Draw(const Transform& InTransform, const Renderer& InRenderer);
         void Draw(const Renderer& InRenderer);
         void End();

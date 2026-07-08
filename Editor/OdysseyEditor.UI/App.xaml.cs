@@ -79,6 +79,7 @@ public partial class App
         services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
         services.AddSingleton<WorkspaceViewModel>();
         services.AddSingleton<FocusWarningViewModel>();
+        services.AddSingleton<RotationHandleViewModel>();
         services.AddSingleton<ControlsBarViewModel>();
         services.AddSingleton<HierarchyViewModel>();
         services.AddSingleton<InspectorViewModel>();

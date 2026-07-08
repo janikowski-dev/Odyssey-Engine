@@ -24,7 +24,30 @@ namespace Source::Core
 
     struct Workspace
     {
+        enum class Direction
+        {
+            None = 0,
+            Up = 1 << 0,
+            Down = 1 << 1,
+            Left = 1 << 2,
+            Right = 1 << 3,
+            Forward = 1 << 4,
+            Back = 1 << 5
+        };
+
+        Vector3 CameraPosition { 1.0f };
+        Vector3 CameraRotation { 0.0f };
+
+        float FovDegrees = 60.0f;
+        float Aspect = 16.0f / 9.0f;
+        float Near = 0.1f;
+        float Far = 100.0f;
+
         int SelectedIndex = -1;
+        
+        int CameraMoveDirection = 0;
+        float CameraXDelta = 0.0f;
+        float CameraYDelta = 0.0f;
     };
 
     struct Context
