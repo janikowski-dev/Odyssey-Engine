@@ -11,7 +11,8 @@ namespace OdysseyEditor.UI.ViewModels.Workspace;
 
 public partial class WorkspaceViewModel(IEngineLauncher engineLauncher, IEngineMessenger engineMessenger) : HwndHost
 {
-    private readonly NativeWindowHost _window = new();
+    private NativeWindowHost _window = null!;
+    private bool _isDragging;
 
     private static readonly Dictionary<Key, MoveDirection> DirectionsByKey = new()
     {
@@ -28,7 +29,11 @@ public partial class WorkspaceViewModel(IEngineLauncher engineLauncher, IEngineM
         AttachEngine(await LaunchEngine());
     }
 
-    protected override HandleRef BuildWindowCore(HandleRef hwndParent) => new(this, _window.CreateHost(hwndParent.Handle));
+    protected override HandleRef BuildWindowCore(HandleRef hwndParent)
+    {
+        Cache(new NativeWindowHost(HandleButtonUp, HandleButtonDown, HandleMouseDelta));
+        return CreateHost(hwndParent);
+    }
 
     protected override void OnWindowPositionChanged(Rect rcBoundingBox)
     {
@@ -81,6 +86,30 @@ public partial class WorkspaceViewModel(IEngineLauncher engineLauncher, IEngineM
 
         await engineMessenger.Send<MoveCameraRequest, MoveCameraResponse>(MoveCamera.Key, new MoveCameraRequest(direction, false));
     }
+    
+    private void HandleButtonDown()
+    {
+        _isDragging = true;
+    }
+
+    private void HandleButtonUp()
+    {
+        _isDragging = false;
+    }
+    
+    private void HandleMouseDelta(float xDelta, float yDelta)
+    {
+        if (!_isDragging)
+        {
+            return;
+        }
+
+        engineMessenger.Send<RotateCameraRequest, RotateCameraResponse>(RotateCamera.Key, new RotateCameraRequest(xDelta, yDelta));
+    }
+    
+    private void Cache(NativeWindowHost window) => _window = window;
+
+    private HandleRef CreateHost(HandleRef hwndParent) => new(this, _window.CreateHost(hwndParent.Handle));
 
     private void AttachEngine(GetViewportResponse response)
     {

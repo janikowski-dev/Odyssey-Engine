@@ -12,7 +12,6 @@ using OdysseyEditor.UI.ViewModels.Workspace;
 namespace OdysseyEditor.UI.ViewModels.Main;
 
 public partial class MainWindowViewModel(
-    RotationHandleViewModel rotationHandle,
     FocusWarningViewModel focusWarning,
     ControlsBarViewModel controlsBar,
     HierarchyViewModel hierarchy,
@@ -22,7 +21,6 @@ public partial class MainWindowViewModel(
     ResourcesViewModel resources
 ) : ObservableObject
 {
-    public RotationHandleViewModel RotationHandle { get; } = rotationHandle;
     public FocusWarningViewModel FocusWarning { get; } = focusWarning;
     public ControlsBarViewModel ControlsBar { get; } = controlsBar;
     public HierarchyViewModel Hierarchy { get; } = hierarchy;
@@ -38,7 +36,6 @@ public partial class MainWindowViewModel(
     [RelayCommand]
     private async Task InitAsync()
     {
-        RotationHandle.Init();
         FocusWarning.Init();
         Console.Init();
         await Workspace.InitAsync();
