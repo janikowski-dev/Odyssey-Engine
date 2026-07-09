@@ -38,6 +38,11 @@
                 },
                 {
                     "Fields": {
+                        "Color": [
+                            1.0,
+                            0.0,
+                            0.0
+                        ],
                         "MaterialId": "Lit",
                         "MeshId": "Cube"
                     },
@@ -46,54 +51,13 @@
                 {
                     "Fields": {
                         "Position": [
-                            0.0,
                             1.0,
-                            0.0
+                            1.0,
+                            -1.0
                         ],
                         "Rotation": [
                             0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "Scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ]
-                    },
-                    "Name": "TransformComponent"
-                }
-            ]
-        },
-        {
-            "Components": [
-                {
-                    "Fields": {
-                        "Speed": [
-                            0.0,
-                            15.0,
-                            0.0
-                        ]
-                    },
-                    "Name": "SpinComponent"
-                },
-                {
-                    "Fields": {
-                        "MaterialId": "Lit",
-                        "MeshId": "Prism"
-                    },
-                    "Name": "RendererComponent"
-                },
-                {
-                    "Fields": {
-                        "Position": [
-                            0.0,
-                            -1.0,
-                            0.0
-                        ],
-                        "Rotation": [
-                            0.0,
-                            0.0,
+                            -1.1350740194320679,
                             0.0
                         ],
                         "Scale": [
@@ -120,6 +84,11 @@
                 },
                 {
                     "Fields": {
+                        "Color": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ],
                         "MaterialId": "Lit",
                         "MeshId": "Maid"
                     },
@@ -154,7 +123,7 @@
                         ],
                         "Rotation": [
                             0.0,
-                            90.0,
+                            91.4188461303711,
                             0.0
                         ],
                         "Scale": [

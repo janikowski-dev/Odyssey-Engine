@@ -41,7 +41,7 @@ namespace Source::Rendering
                 }
                 
                 InBackend.Cull(true);
-                InBackend.Draw(Rendering::Transform(T.Position, T.Rotation, T.Scale), Rendering::Renderer(MaterialPtr, MeshPtr));
+                InBackend.Draw(Rendering::Transform(T.Position, T.Rotation, T.Scale), Rendering::Renderer(MaterialPtr, MeshPtr, R.Color));
             }
         );
     }

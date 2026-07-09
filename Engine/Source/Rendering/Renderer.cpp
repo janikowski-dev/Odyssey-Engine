@@ -5,7 +5,7 @@
 
 namespace Source::Rendering
 {
-    Renderer::Renderer(Material* InMaterialPtr, IDrawable* InDrawablePtr) : MaterialPtr(InMaterialPtr), DrawablePtr(InDrawablePtr)
+    Renderer::Renderer(Material* InMaterialPtr, IDrawable* InDrawablePtr, const Vector3& InColor) : MaterialPtr(InMaterialPtr), DrawablePtr(InDrawablePtr), Color(InColor)
     {
     }
 }

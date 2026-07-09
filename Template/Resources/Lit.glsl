@@ -18,6 +18,7 @@ void main()
 #fragment
 #version 330 core
 in vec3 vNormal;
+uniform vec3 uBaseColor;
 uniform vec3 uColor;
 out vec4 FragColor;
 
@@ -26,6 +27,6 @@ void main()
     vec3 N = normalize(vNormal);
     vec3 L = normalize(vec3(0.4, 1.0, 0.6));
     float diff = max(dot(N, L), 0.0);
-    vec3 c = uColor * (0.25 + 0.75 * diff);
+    vec3 c = uColor * uBaseColor * (0.25 + 0.75 * diff);
     FragColor = vec4(c, 1.0);
 }

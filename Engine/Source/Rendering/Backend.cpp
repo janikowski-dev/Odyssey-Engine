@@ -55,6 +55,7 @@ namespace Source::Rendering
         InRenderer.MaterialPtr->Bind();
         InRenderer.MaterialPtr->Use();
         InRenderer.MaterialPtr->SetSoft("uModel", InTransform.Matrix);
+        InRenderer.MaterialPtr->SetSoft("uColor", InRenderer.Color);
         InRenderer.MaterialPtr->SetSoft("uProj", Projection);
         InRenderer.MaterialPtr->SetSoft("uView", View);
         InRenderer.DrawablePtr->Draw();

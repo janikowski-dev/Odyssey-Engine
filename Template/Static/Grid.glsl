@@ -42,7 +42,7 @@ in vec3 FarPoint;
 uniform mat4 uView;
 uniform mat4 uProj;
 
-uniform vec3 uColor;
+uniform vec3 uBaseColor;
 uniform float uScale;
 uniform float uFade;
 
@@ -63,7 +63,7 @@ vec4 GridColor(vec3 pos, float scale)
     vec2 grid = abs(fract(coord - 0.5) - 0.5) / d;
     float line = min(grid.x, grid.y);
 
-    vec4 color = vec4(uColor, 1.0 - min(line, 1.0));
+    vec4 color = vec4(uBaseColor, 1.0 - min(line, 1.0));
 
     float xAxis = 1.0 - smoothstep(
         0.0,
