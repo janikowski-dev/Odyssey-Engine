@@ -26,7 +26,7 @@ public partial class WorkspaceViewModel(IEngineLauncher engineLauncher, IEngineM
     
     public async Task InitAsync()
     {
-        AttachEngine(await LaunchEngine());
+        AttachEngine(await LaunchEngine(InitAsync));
     }
 
     protected override HandleRef BuildWindowCore(HandleRef hwndParent)
@@ -52,9 +52,9 @@ public partial class WorkspaceViewModel(IEngineLauncher engineLauncher, IEngineM
         base.Dispose(disposing);
     }
 
-    private async Task<GetViewportResponse> LaunchEngine()
+    private async Task<GetViewportResponse> LaunchEngine(Func<Task> relaunch)
     {
-        await engineLauncher.LaunchAsync();
+        await engineLauncher.LaunchAsync(relaunch);
         return await engineMessenger.Send<GetViewportRequest, GetViewportResponse>(GetViewport.Key, new GetViewportRequest());
     }
 

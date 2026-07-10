@@ -23,11 +23,15 @@ public static class CommandsRunner
         {
             WorkingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..")),
             UseShellExecute = false,
-            FileName = "just"
+            FileName = "cmd.exe"
         };
+        psi.ArgumentList.Add("/c");
+        psi.ArgumentList.Add("just");
         psi.ArgumentList.Add("build-and-pack");
         psi.ArgumentList.Add(projectRoot);
         psi.ArgumentList.Add(dialog.FolderName);
+        psi.ArgumentList.Add("&");
+        psi.ArgumentList.Add("pause");
 
         using Process? process = Process.Start(psi);
         process?.WaitForExit();
@@ -51,10 +55,14 @@ public static class CommandsRunner
         {
             WorkingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..")),
             UseShellExecute = false,
-            FileName = "just"
+            FileName = "cmd.exe"
         };
+        psi.ArgumentList.Add("/c");
+        psi.ArgumentList.Add("just");
         psi.ArgumentList.Add("build-project");
         psi.ArgumentList.Add(projectRoot);
+        psi.ArgumentList.Add("&");
+        psi.ArgumentList.Add("pause");
 
         using Process? process = Process.Start(psi);
         process?.WaitForExit();

@@ -22,11 +22,13 @@ public sealed class EngineService(IOptions<EngineConfig> config) : IEngineLaunch
     private volatile bool _running;
     private Thread _reader = null!;
     private Process? _process;
+    private Func<Task> _relaunch = null!;
     
     private static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(5);
 
-    public async Task LaunchAsync()
+    public async Task LaunchAsync(Func<Task> relaunch)
     {
+        Cache(relaunch);
         KillEngine();
         StartEngine();
         await ConnectToEngine();
@@ -41,7 +43,7 @@ public sealed class EngineService(IOptions<EngineConfig> config) : IEngineLaunch
         catch (Exception caughtException)
         {
             FailAll(caughtException);
-            await LaunchAsync();
+            await Relaunch();
             return default!;
         }
     }
@@ -299,6 +301,10 @@ public sealed class EngineService(IOptions<EngineConfig> config) : IEngineLaunch
             }
         }
     }
+
+    private void Cache(Func<Task> relaunch) => _relaunch = relaunch;
+
+    private async Task Relaunch() => await _relaunch();
 
     private void StopClient()
     {

@@ -2,5 +2,5 @@
 
 public interface IEngineLauncher
 {
-    Task LaunchAsync();
+    Task LaunchAsync(Func<Task> relaunch);
 }
