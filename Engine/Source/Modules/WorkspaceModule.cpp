@@ -2,15 +2,26 @@
 
 namespace Source::Modules
 {
+    void WorkspaceModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
+    {
+        InitWorkspace(Config, Context);
+        InitTime();
+    }
+
     void WorkspaceModule::Tick(const Core::Context& Context)
     {
         RotateCamera(Context);
         MoveCamera(Context);
     }
-
-    void WorkspaceModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
+    
+    void WorkspaceModule::InitWorkspace(const Core::ApplicationConfig Config, Core::Context& Context)
     {
 	    Context.Workspace = MakeUnique<Core::Workspace>();
+    }
+    
+    void WorkspaceModule::InitTime()
+    {
+        LastTime = Clock::now();
     }
 
     void WorkspaceModule::RotateCamera(const Core::Context& Context)
@@ -28,6 +39,9 @@ namespace Source::Modules
     void WorkspaceModule::MoveCamera(const Core::Context& Context)
     {
         int MoveMask = Context.Workspace->CameraMoveDirection;
+        Time Now = Clock::now();
+        float EditorDeltaTime = Duration(Now - LastTime).count();
+        LastTime = Now;
 
         if (MoveMask == 0)
         {
@@ -53,9 +67,11 @@ namespace Source::Modules
 
         constexpr float MoveSpeed = 5.0f;
 
-        if (glm::length(Direction) > 0.0f)
+        if (glm::length(Direction) <= 0.0f)
         {
-            Context.Workspace->CameraPosition += glm::normalize(Direction) * MoveSpeed * Context.Time->DeltaTime;
+            return;
         }
+
+        Context.Workspace->CameraPosition += glm::normalize(Direction) * MoveSpeed * EditorDeltaTime;
     }
 }

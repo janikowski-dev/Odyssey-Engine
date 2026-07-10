@@ -6,6 +6,6 @@ namespace Game::Example
 {
     struct COMPONENT MoveComponent
     {
-        PROPERTY() Vector3 Speed { 0.0f };
+        PROPERTY() float Speed = 0.0f;
     };
 }

@@ -7,7 +7,7 @@ namespace Source::Modules
     class TimeModule final : public Core::IModule
     {
     public:
-        Core::TickPolicy GetTickPolicy() const override { return Core::TickPolicy::Always; }
+        Core::TickPolicy GetTickPolicy() const override { return Core::TickPolicy::Playtime; }
 
         void Init(const Core::ApplicationConfig Config, Core::Context& Context) override;
         

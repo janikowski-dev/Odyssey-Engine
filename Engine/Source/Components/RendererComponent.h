@@ -9,7 +9,6 @@ namespace Source::Components
     {
         PROPERTY() std::string MaterialId;
         PROPERTY() std::string MeshId;
-        
         PROPERTY() Vector3 Color;
     };
 }

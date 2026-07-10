@@ -12,9 +12,9 @@ endif()
 
 # Sources
 set(SOURCES
+    Example/ExampleModule.h
     Example/MoveComponent.h
     Example/SpinComponent.h
-    Example/SpinModule.h
 )
 
 # Properties parsing

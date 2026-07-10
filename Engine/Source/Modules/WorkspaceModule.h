@@ -12,7 +12,13 @@ namespace Source::Modules
         void Tick(const Core::Context& Context) override;
 
     private:
+        void InitWorkspace(const Core::ApplicationConfig Config, Core::Context& Context);
+        void InitTime();
         void RotateCamera(const Core::Context& Context);
         void MoveCamera(const Core::Context& Context);
+        
+
+    private:
+        Time LastTime {};
     };
 }
