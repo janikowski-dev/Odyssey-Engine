@@ -21,10 +21,9 @@ if (!(Test-Path $vsDevCmd)) {
     exit 1
 }
 
-cmd /c "`"$vsDevCmd`" && set" | ForEach-Object {
-    if ($_ -match "=") {
-        $name, $value = $_ -split "=", 2
-        Set-Item -Path "env:$name" -Value $value
+cmd /c "`"$vsDevCmd`" -arch=x64 -host_arch=x64 && set" | ForEach-Object {
+    if ($_ -match "^([^=]+)=(.*)$") {
+        Set-Item -Path "env:$($matches[1])" -Value $matches[2]
     }
 }
 

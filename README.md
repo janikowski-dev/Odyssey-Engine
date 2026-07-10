@@ -58,19 +58,20 @@ The result is a single editor window with the real, live C++ OpenGL viewport ren
 ---
 ## Prerequisites
 
-> Windows-only - the editor uses WPF and native HWND reparenting, and the engine builds with MSVC.
+> Windows-only — the editor uses WPF and native HWND reparenting, and the engine builds with MSVC.
 
-- [Visual Studio 2022 Build Tools](https://visualstudio.microsoft.com/downloads/) (MSVC toolchain) - `winget install Microsoft.VisualStudio.2022.BuildTools`
+- [Visual Studio 2022 Build Tools](https://visualstudio.microsoft.com/downloads/) - `winget install --id Microsoft.VisualStudio.2022.BuildTools --override "--quiet --wait --norestart --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.ManagedDesktopBuildTools --includeRecommended"`
+- [CMake](https://cmake.org/) - `winget install --id Kitware.CMake --override "ADD_CMAKE_TO_PATH=User"`
 - [Ninja](https://ninja-build.org/) - `winget install Ninja-build.Ninja`
 - [just](https://github.com/casey/just) - `winget install Casey.Just`
-- [.NET 10 SDK](https://dotnet.microsoft.com/download) (for the editor) - `winget install Microsoft.DotNet.SDK.10`
-- [Python 3](https://www.python.org/) with `libclang` (for the reflection code generator) - `pip install libclang`
+- [.NET 10 SDK](https://dotnet.microsoft.com/download) - `winget install Microsoft.DotNet.SDK.10`
+- [Python 3](https://www.python.org/) - `winget install --id Python.Python.3.14` then `pip install libclang jinja2 packaging`
 
 CMake fetches other packages automatically on first configure.
 
 ## Setup
 
-Set the path to your `VsDevCmd.bat` in `justconfig.json`.
+Set the path to your `VsDevCmd.bat` in `justconfig.json` (should be already matching if the install was fresh).
 
 ## Build & run
 
