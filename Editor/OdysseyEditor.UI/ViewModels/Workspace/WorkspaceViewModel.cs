@@ -68,6 +68,11 @@ public partial class WorkspaceViewModel(IEngineLauncher engineLauncher, IEngineM
     [RelayCommand]
     private async Task HandleKeyDownAsync(KeyEventArgs info)
     {
+        if (!_isDragging)
+        {
+            return;
+        }
+        
         if (!DirectionsByKey.TryGetValue(info.Key, out MoveDirection direction))
         {
             return;

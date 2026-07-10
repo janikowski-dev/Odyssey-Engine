@@ -1,0 +1,9 @@
+{
+  "shader": "Textured",
+  "vec3": {
+    "uBaseColor": [1.0, 1.0, 1.0]
+  },
+  "tex": {
+    "uAlbedo": "Maid"
+  }
+}

@@ -8,5 +8,9 @@ namespace Source::Modules
     {
     public:
         void Init(const Core::ApplicationConfig Config, Core::Context& Context) override;
+
+    private:
+        void InitCache(Core::Context& Context);
+        void LoadResources(const Core::ApplicationConfig Config, Core::Context& Context);
     };
 }

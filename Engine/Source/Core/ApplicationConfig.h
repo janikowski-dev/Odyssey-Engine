@@ -42,7 +42,7 @@ namespace Source::Core
             return (std::filesystem::path(Root) / ProjectResources).string();
         }
         
-        std::string GetEngineResourcesPath() const
+        std::string GetStaticResourcesPath() const
         {
             return (std::filesystem::path(Root) / EngineResources).string();
         }

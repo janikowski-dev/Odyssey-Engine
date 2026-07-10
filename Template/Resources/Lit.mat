@@ -1,6 +1,6 @@
 {
-  "shader": "Lit",
+  "shader": "Flat",
   "vec3": {
-    "uBaseColor": [0.5, 0.5, 0.5]
+    "uBaseColor": [1.0, 1.0, 1.0]
   }
 }

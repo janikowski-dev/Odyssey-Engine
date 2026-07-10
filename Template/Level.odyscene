@@ -87,9 +87,9 @@
                         "Color": [
                             1.0,
                             1.0,
-                            0.0
+                            1.0
                         ],
-                        "MaterialId": "Lit",
+                        "MaterialId": "Maid",
                         "MeshId": "Maid"
                     },
                     "Name": "RendererComponent"

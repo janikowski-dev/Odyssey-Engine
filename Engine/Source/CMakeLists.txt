@@ -60,22 +60,26 @@ set(SOURCES
     Rendering/Passes/MeshPass.h
     Rendering/Passes/SelectionPass.cpp
     Rendering/Passes/SelectionPass.h
+
+    Rendering/Drawables/Procedural.cpp
+    Rendering/Drawables/Procedural.h
     Rendering/Drawables/Mesh.cpp
     Rendering/Drawables/Mesh.h
+
     Rendering/Renderer.cpp
     Rendering/Renderer.h
     Rendering/Shader.cpp
     Rendering/Shader.h
     Rendering/Backend.cpp
     Rendering/Backend.h
+    Rendering/Texture.cpp
+    Rendering/Texture.h
     Rendering/Camera.cpp
     Rendering/Camera.h
     Rendering/Material.cpp
     Rendering/Material.h
     Rendering/Transform.cpp
     Rendering/Transform.h
-    Rendering/Drawables/Procedural.cpp
-    Rendering/Drawables/Procedural.h
     Rendering/IRenderPass.h
     Rendering/IDrawable.h
 
@@ -137,6 +141,7 @@ target_link_libraries(Source glad)
 target_link_libraries(Source glm)
 target_link_libraries(Source nlohmann_json)
 target_link_libraries(Source assimp)
+target_link_libraries(Source stb)
 
 # Code generation - general
 find_package(Python3 REQUIRED COMPONENTS Interpreter)

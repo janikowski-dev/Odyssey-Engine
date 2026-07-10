@@ -4,7 +4,18 @@ namespace Source::Modules
 {
     void ResourcesModule::Init(const Core::ApplicationConfig Config, Core::Context& Context)
     {
-        Context.ResourceCache = MakeUnique<Resources::ResourceCache>(Config.EngineConfig.GetProjectResourcesPath(), Config.EngineConfig.GetEngineResourcesPath());
-        Context.ResourceCache->Refresh();
+        InitCache(Context);
+        LoadResources(Config, Context);
+    }
+    
+    void ResourcesModule::InitCache(Core::Context& Context)
+    {
+        Context.ResourceCache = MakeUnique<Resources::ResourceCache>();
+    }
+
+    void ResourcesModule::LoadResources(const Core::ApplicationConfig Config, Core::Context& Context)
+    {
+        Context.ResourceCache->Refresh(Config.EngineConfig.GetStaticResourcesPath());
+        Context.ResourceCache->Refresh(Config.EngineConfig.GetProjectResourcesPath());
     }
 }

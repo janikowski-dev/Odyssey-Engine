@@ -69,16 +69,15 @@ namespace Source::Core
         Modules.push_back(MakeUnique<Modules::TimeModule>());
         Modules.push_back(MakeUnique<Modules::RuntimeModule>());
         Modules.push_back(MakeUnique<Modules::PlatformModule>());
-        Modules.push_back(MakeUnique<Modules::ResourcesModule>());
-        Modules.push_back(MakeUnique<Modules::RenderingModule>());
 
-        if (InConfig.LaunchType != LaunchType::Editor)
+        if (InConfig.LaunchType == LaunchType::Editor)
         {
-            return;
+            Modules.push_back(MakeUnique<Modules::WorkspaceModule>());
+            Modules.push_back(MakeUnique<Modules::EditorModule>());
         }
 
-        Modules.push_back(MakeUnique<Modules::WorkspaceModule>());
-        Modules.push_back(MakeUnique<Modules::EditorModule>());
+        Modules.push_back(MakeUnique<Modules::ResourcesModule>());
+        Modules.push_back(MakeUnique<Modules::RenderingModule>());
     }
 
     void Application::InitAllModules(const ApplicationConfig& InConfig)

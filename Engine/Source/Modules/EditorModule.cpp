@@ -74,9 +74,9 @@ namespace Source::Modules
     	    return Events::FocusWindowResponse();
     	});
 
-		Context.EditorBridge->On<Events::RefreshResourcesRequest, Events::RefreshResourcesResponse>(Events::RefreshResourcesKey, [&Context](const Events::RefreshResourcesRequest&)
+		Context.EditorBridge->On<Events::RefreshResourcesRequest, Events::RefreshResourcesResponse>(Events::RefreshResourcesKey, [&Context, Config](const Events::RefreshResourcesRequest&)
     	{
-            Context.ResourceCache->Refresh();
+            Context.ResourceCache->Refresh(Config.EngineConfig.GetProjectResourcesPath());
     	    return Events::RefreshResourcesResponse();
     	});
 

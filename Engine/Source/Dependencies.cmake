@@ -89,3 +89,19 @@ set(ASSIMP_BUILD_GLTF_IMPORTER ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(assimp)
 
 set_target_properties(assimp PROPERTIES FOLDER "Dependencies")
+
+# stb
+FetchContent_Declare(
+    stb
+    GIT_REPOSITORY https://github.com/nothings/stb.git
+    GIT_TAG master
+)
+FetchContent_GetProperties(stb)
+if (NOT stb_POPULATED)
+    set(FETCHCONTENT_QUIET NO)
+    FetchContent_Populate(stb)
+endif()
+
+add_library(stb INTERFACE)
+target_include_directories(stb INTERFACE ${stb_SOURCE_DIR})
+set_target_properties(stb PROPERTIES FOLDER "Dependencies")

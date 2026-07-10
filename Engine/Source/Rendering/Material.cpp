@@ -1,5 +1,6 @@
 #include "Rendering/Material.h"
 
+#include "Rendering/Texture.h"
 #include "Rendering/Shader.h"
 
 namespace Source::Rendering
@@ -23,6 +24,11 @@ namespace Source::Rendering
         Matrices[Name] = Value;
     }
 
+    void Material::Set(const char* Name, Texture* Value)
+    {
+        Textures[Name] = Value;
+    }
+
     void Material::Bind() const
     {
         ShaderPtr->Use();
@@ -40,6 +46,14 @@ namespace Source::Rendering
         for (const auto& [Name, Value] : Matrices)
         {
             ShaderPtr->Set(Name.c_str(), Value);
+        }
+
+        int Unit = 0;
+
+        for (const auto& [Name, Value] : Textures)
+        {
+            Value->Bind(Unit);
+            ShaderPtr->Set(Name.c_str(), Unit++);
         }
     }
 

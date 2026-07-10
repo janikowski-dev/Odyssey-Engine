@@ -1,5 +1,8 @@
 #include "Resources/ResourceCache.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+
+#include <stb_image.h>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -119,6 +122,16 @@ namespace Source::Resources
                         Out.Normal = Vector3{ 0.0f, 0.0f, 0.0f };
                     }
 
+                    if (SubMesh->HasTextureCoords(0))
+                    {
+                        const aiVector3D& T = SubMesh->mTextureCoords[0][V];
+                        Out.UV = Vector2{ T.x, T.y };
+                    }
+                    else
+                    {
+                        Out.UV = Vector2{ 0.0f, 0.0f };
+                    }
+
                     Vertices.push_back(Out);
                 }
 
@@ -146,9 +159,10 @@ namespace Source::Resources
             return Rendering::Mesh(Vertices, Indices);
         }
 
+        using TextureResolver = std::function<Rendering::Texture*(const std::string&)>;
         using ShaderResolver = std::function<Rendering::Shader*(const std::string&)>;
  
-        std::optional<Rendering::Material> LoadMaterial(const std::filesystem::path& File, const ShaderResolver& Resolve)
+        std::optional<Rendering::Material> LoadMaterial(const std::filesystem::path& File, const ShaderResolver& Shader, const TextureResolver& Texture)
         {
             std::ifstream Stream(File);
         
@@ -175,7 +189,7 @@ namespace Source::Resources
                 return std::nullopt;
             }
         
-            Rendering::Shader* ShaderPtr = Resolve(ShaderField->get<std::string>());
+            Rendering::Shader* ShaderPtr = Shader(ShaderField->get<std::string>());
         
             if (!ShaderPtr)
             {
@@ -203,6 +217,26 @@ namespace Source::Resources
                     Out.Set(Name.c_str(), Vec);
                 }
             }
+
+            if (auto Textures = Json.find("tex"); Textures != Json.end() && Textures->is_object())
+            {
+                for (const auto& [Name, Value] : Textures->items())
+                {
+                    if (!Value.is_string())
+                    {
+                        continue;
+                    }
+                
+                    Rendering::Texture* TexturePtr = Texture(Value.get<std::string>());
+                
+                    if (!TexturePtr)
+                    {
+                        continue;
+                    }
+                
+                    Out.Set(Name.c_str(), TexturePtr);
+                }
+            }
         
             return Out;
         }
@@ -218,26 +252,43 @@ namespace Source::Resources
         
             return Rendering::Procedural(6);
         }
+
+        std::optional<Rendering::Texture> LoadTexture(const std::filesystem::path& File)
+        {
+            stbi_set_flip_vertically_on_load(true);
+        
+            int Width = 0;
+            int Height = 0;
+            int Channels = 0;
+        
+            unsigned char* Data = stbi_load(File.string().c_str(), &Width, &Height, &Channels, 4);
+
+            if (!Data)
+            {
+                return std::nullopt;
+            }
+        
+            Rendering::Texture Out(Data, Width, Height, 4);
+            stbi_image_free(Data);
+            return Out;
+        }
     }
 
-    ResourceCache::ResourceCache(const std::string& InProjectResourcesPath, const std::string& InEngineResourcesPath) : ProjectResourcesPath(InProjectResourcesPath), EngineResourcesPath(InEngineResourcesPath), Procedurals(&LoadProcedural), Shaders(&LoadShader), Meshes(&LoadMesh), Materials([this](const std::filesystem::path& File) { return LoadMaterial(File, [this](const std::string& Name) { return Shaders.Get(Name); }); })
+    ResourceCache::ResourceCache() : Procedurals(&LoadProcedural), Shaders(&LoadShader), Meshes(&LoadMesh), Textures(&LoadTexture), Materials([this](const std::filesystem::path& File) { return LoadMaterial(File, [this](const std::string& Name) { return Shaders.Get(Name); }, [this](const std::string& Name) { return Textures.Get(Name); }); })
     {
         Procedurals.SetExtensions({ ".proc" });
         Materials.SetExtensions({ ".mat" });
+        Textures.SetExtensions({ ".png" });
         Shaders.SetExtensions({ ".glsl" });
         Meshes.SetExtensions({ ".fbx" });
     }
 
-    void ResourceCache::Refresh()
+    void ResourceCache::Refresh(const std::string& Path)
     {
-        Meshes.Refresh(ProjectResourcesPath);
-        Shaders.Refresh(ProjectResourcesPath);
-        Materials.Refresh(ProjectResourcesPath);
-        Procedurals.Refresh(ProjectResourcesPath);
-
-        Meshes.Refresh(EngineResourcesPath);
-        Shaders.Refresh(EngineResourcesPath);
-        Materials.Refresh(EngineResourcesPath);
-        Procedurals.Refresh(EngineResourcesPath);
+        Meshes.Refresh(Path);
+        Shaders.Refresh(Path);
+        Textures.Refresh(Path);
+        Materials.Refresh(Path);
+        Procedurals.Refresh(Path);
     }
 }
