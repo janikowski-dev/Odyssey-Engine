@@ -67,15 +67,11 @@ The result is a single editor window with the real, live C++ OpenGL viewport ren
 - [.NET 10 SDK](https://dotnet.microsoft.com/download) - `winget install Microsoft.DotNet.SDK.10`
 - [Python 3](https://www.python.org/) - `winget install --id Python.Python.3.14` then `pip install libclang jinja2 packaging`
 
-CMake fetches other packages automatically on first configure.
-
 ## Setup
 
 Set the path to your `VsDevCmd.bat` in `justconfig.json` (should be already matching if the install was fresh).
 
 ## Build & run
-
-Build engine:
 
 Create new project:
 
